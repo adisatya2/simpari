@@ -3,14 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BedController;
 use App\Http\Controllers\DokterController;
-use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanPPIController;
 use App\Http\Controllers\SurveilansController;
-use App\Http\Controllers\LaporanHAIsController;
 use App\Http\Controllers\MasterPasienController;
 use App\Http\Controllers\PasienPulangController;
 use App\Http\Controllers\PasienDirawatController;

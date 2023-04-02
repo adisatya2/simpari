@@ -310,7 +310,7 @@
                             <div class="card-body">
                                 <div class="chart">
                                     <canvas id="barChart"
-                                        style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+                                        style="min-height: 300px; height: 350px; max-height: 500px; max-width: 100%;"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -381,11 +381,52 @@
                 dropdownCssClass: 'text-sm p-0'
             })
 
+            let table_count;
+
+            table_count = $("#table-count").DataTable({
+                "processing": true,
+                "autoWidth": false,
+                "paging": false,
+                "ordering": false,
+                "bDestroy": true,
+                "dom": 'Blfrtip',
+                "buttons": [{
+                        extend: 'excelHtml5',
+                        title: 'Count Data HAIs',
+                        text: `<i class="fa-fw fas fa-file-excel"></i>`,
+                        className: 'btn-xs',
+                        exportOptions: {
+                            columns: ':not(.notexport)'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Count Data HAIs',
+                        text: `<i class="fa-fw fas fa-print"></i>`,
+                        className: 'btn-xs',
+                        exportOptions: {
+                            columns: ':not(.notexport)'
+                        }
+                    },
+                    {
+                        text: `<i class="fa-fw fas fa-sync-alt"></i>`,
+                        action: function(e, dt, node, config) {
+                            dt.ajax.reload(null, false);
+                        },
+                        className: 'btn-xs'
+                    },
+                    {
+                        extend: 'colvis',
+                        text: `<i class="fa-fw fas fa-eye"></i>`,
+                        className: 'btn-xs'
+                    },
+                ],
+            });
+
 
         });
 
         function search() {
-            count();
             var active = $('#custom-tabs-four-tab a.nav-link.active').attr('value');
             if (active == "phlebitis") {
                 data_phlebitis();
@@ -402,6 +443,7 @@
             if (active == "ido") {
                 data_ido();
             }
+            count();
         }
 
         function data_phlebitis() {
@@ -545,7 +587,7 @@
                     // console.log(response);
                     $("#table-bundle").text('');
                     html = `
-                    <table class="table table-sm table-bordered table-hover" id="table-bundle">
+                    <table class="table table-sm table-bordered table-hover" id="table-bundle-phlebitis">
                         <thead>
                             <th class="text-center">Bundle Phlebitis</th>
                             <th class="text-center">Jumlah</th>
@@ -564,6 +606,46 @@
                     </table>
                     `;
                     $("#table-bundle").html(html);
+                    $("#table-bundle-phlebitis").DataTable({
+                        "processing": true,
+                        "autoWidth": false,
+                        "paging": false,
+                        "ordering": false,
+                        "stateSave": true,
+                        "bDestroy": true,
+                        "dom": 'Blfrtip',
+                        "buttons": [{
+                                extend: 'excelHtml5',
+                                title: 'Laporan Bundle Phlebitis',
+                                text: `<i class="fa-fw fas fa-file-excel"></i>`,
+                                className: 'btn-xs',
+                                exportOptions: {
+                                    columns: ':not(.notexport)'
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                title: 'Laporan Bundle Phlebitis',
+                                text: `<i class="fa-fw fas fa-print"></i>`,
+                                className: 'btn-xs',
+                                exportOptions: {
+                                    columns: ':not(.notexport)'
+                                }
+                            },
+                            {
+                                text: `<i class="fa-fw fas fa-sync-alt"></i>`,
+                                action: function(e, dt, node, config) {
+                                    dt.ajax.reload(null, false);
+                                },
+                                className: 'btn-xs'
+                            },
+                            {
+                                extend: 'colvis',
+                                text: `<i class="fa-fw fas fa-eye"></i>`,
+                                className: 'btn-xs'
+                            },
+                        ],
+                    });
 
                 }
             });
@@ -703,7 +785,7 @@
                     // console.log(response);
                     $("#table-bundle").text('');
                     html = `
-                    <table class="table table-sm table-bordered table-hover" id="table-bundle">
+                    <table class="table table-sm table-bordered table-hover" id="table-bundle-isk">
                         <thead>
                             <th class="text-center">Bundle ISK</th>
                             <th class="text-center">Jumlah</th>
@@ -722,6 +804,47 @@
                     </table>
                     `;
                     $("#table-bundle").html(html);
+
+                    $("#table-bundle-isk").DataTable({
+                        "processing": true,
+                        "autoWidth": false,
+                        "paging": false,
+                        "ordering": false,
+                        "stateSave": true,
+                        "bDestroy": true,
+                        "dom": 'Blfrtip',
+                        "buttons": [{
+                                extend: 'excelHtml5',
+                                title: 'Laporan Bundle ISK',
+                                text: `<i class="fa-fw fas fa-file-excel"></i>`,
+                                className: 'btn-xs',
+                                exportOptions: {
+                                    columns: ':not(.notexport)'
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                title: 'Laporan Bundle ISK',
+                                text: `<i class="fa-fw fas fa-print"></i>`,
+                                className: 'btn-xs',
+                                exportOptions: {
+                                    columns: ':not(.notexport)'
+                                }
+                            },
+                            {
+                                text: `<i class="fa-fw fas fa-sync-alt"></i>`,
+                                action: function(e, dt, node, config) {
+                                    dt.ajax.reload(null, false);
+                                },
+                                className: 'btn-xs'
+                            },
+                            {
+                                extend: 'colvis',
+                                text: `<i class="fa-fw fas fa-eye"></i>`,
+                                className: 'btn-xs'
+                            },
+                        ],
+                    });
 
                 }
             });
@@ -860,7 +983,7 @@
                     // console.log(response);
                     $("#table-bundle").text('');
                     html = `
-                    <table class="table table-sm table-bordered table-hover" id="table-bundle">
+                    <table class="table table-sm table-bordered table-hover" id="table-bundle-iadp">
                         <thead>
                             <th class="text-center">Bundle IADP</th>
                             <th class="text-center">Jumlah</th>
@@ -879,6 +1002,46 @@
                     </table>
                     `;
                     $("#table-bundle").html(html);
+                    $("#table-bundle-iadp").DataTable({
+                        "processing": true,
+                        "autoWidth": false,
+                        "paging": false,
+                        "ordering": false,
+                        "stateSave": true,
+                        "bDestroy": true,
+                        "dom": 'Blfrtip',
+                        "buttons": [{
+                                extend: 'excelHtml5',
+                                title: 'Laporan Bundle IADP',
+                                text: `<i class="fa-fw fas fa-file-excel"></i>`,
+                                className: 'btn-xs',
+                                exportOptions: {
+                                    columns: ':not(.notexport)'
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                title: 'Laporan Bundle IADP',
+                                text: `<i class="fa-fw fas fa-print"></i>`,
+                                className: 'btn-xs',
+                                exportOptions: {
+                                    columns: ':not(.notexport)'
+                                }
+                            },
+                            {
+                                text: `<i class="fa-fw fas fa-sync-alt"></i>`,
+                                action: function(e, dt, node, config) {
+                                    dt.ajax.reload(null, false);
+                                },
+                                className: 'btn-xs'
+                            },
+                            {
+                                extend: 'colvis',
+                                text: `<i class="fa-fw fas fa-eye"></i>`,
+                                className: 'btn-xs'
+                            },
+                        ],
+                    });
 
                 }
             });
@@ -1012,7 +1175,7 @@
                     // console.log(response);
                     $("#table-bundle").text('');
                     html = `
-                    <table class="table table-sm table-bordered table-hover" id="table-bundle">
+                    <table class="table table-sm table-bordered table-hover" id="table-bundle-vap">
                         <thead>
                             <th class="text-center">Bundle VAP</th>
                             <th class="text-center">Jumlah</th>
@@ -1031,6 +1194,46 @@
                     </table>
                     `;
                     $("#table-bundle").html(html);
+                    $("#table-bundle-vap").DataTable({
+                        "processing": true,
+                        "autoWidth": false,
+                        "paging": false,
+                        "ordering": false,
+                        "stateSave": true,
+                        "bDestroy": true,
+                        "dom": 'Blfrtip',
+                        "buttons": [{
+                                extend: 'excelHtml5',
+                                title: 'Laporan Bundle VAP',
+                                text: `<i class="fa-fw fas fa-file-excel"></i>`,
+                                className: 'btn-xs',
+                                exportOptions: {
+                                    columns: ':not(.notexport)'
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                title: 'Laporan Bundle VAP',
+                                text: `<i class="fa-fw fas fa-print"></i>`,
+                                className: 'btn-xs',
+                                exportOptions: {
+                                    columns: ':not(.notexport)'
+                                }
+                            },
+                            {
+                                text: `<i class="fa-fw fas fa-sync-alt"></i>`,
+                                action: function(e, dt, node, config) {
+                                    dt.ajax.reload(null, false);
+                                },
+                                className: 'btn-xs'
+                            },
+                            {
+                                extend: 'colvis',
+                                text: `<i class="fa-fw fas fa-eye"></i>`,
+                                className: 'btn-xs'
+                            },
+                        ],
+                    });
 
                 }
             });
@@ -1210,9 +1413,9 @@
                     $("#table-bundle").text('');
                     var waktu = '';
                     html = `
-                    <table class="table table-sm table-bordered table-hover" id="table-bundle">
+                    <table class="table table-sm table-bordered table-hover" id="table-bundle-ido">
                         <thead>
-                            <th class="text-center">Bundle VAP</th>
+                            <th class="text-center">Bundle IDO</th>
                             <th class="text-center">Jumlah</th>
                         </thead>
                         <tbody>`;
@@ -1220,7 +1423,8 @@
                         if (waktu != key) {
                             html += `
                             <tr>
-                                <td class="text-bold" colspan="2">${key}</td>
+                                <th class="text-bold">${key}</th>
+                                <td class="text-bold text-right"></td>
                             </tr>
                         `;
                             $.each(value, function(bundle, jumlah) {
@@ -1240,6 +1444,46 @@
                     </table>
                     `;
                     $("#table-bundle").html(html);
+                    $("#table-bundle-ido").DataTable({
+                        "processing": true,
+                        "autoWidth": false,
+                        "paging": false,
+                        "ordering": false,
+                        "stateSave": true,
+                        "bDestroy": true,
+                        "dom": 'Blfrtip',
+                        "buttons": [{
+                                extend: 'excelHtml5',
+                                title: 'Laporan Bundle IDO',
+                                text: `<i class="fa-fw fas fa-file-excel"></i>`,
+                                className: 'btn-xs',
+                                exportOptions: {
+                                    columns: ':not(.notexport)'
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                title: 'Laporan Bundle IDO',
+                                text: `<i class="fa-fw fas fa-print"></i>`,
+                                className: 'btn-xs',
+                                exportOptions: {
+                                    columns: ':not(.notexport)'
+                                }
+                            },
+                            {
+                                text: `<i class="fa-fw fas fa-sync-alt"></i>`,
+                                action: function(e, dt, node, config) {
+                                    dt.ajax.reload(null, false);
+                                },
+                                className: 'btn-xs'
+                            },
+                            {
+                                extend: 'colvis',
+                                text: `<i class="fa-fw fas fa-eye"></i>`,
+                                className: 'btn-xs'
+                            },
+                        ],
+                    });
                 }
             });
         }
@@ -1271,6 +1515,7 @@
                             </tr>
                         `);
                     });
+
                     var areaChartData = {
                         labels: ['Phlebitis', 'ISK', 'IADP', 'VAP', 'IDO'],
                         datasets: [{
