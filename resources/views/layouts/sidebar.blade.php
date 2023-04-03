@@ -22,7 +22,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                @if (auth()->user()->hasRole('IT SUPPORT'))
+                @if (auth()->user()->hasRole('IT SUPPORT BELUM RELEASE'))
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="fa-fw fas fa-user-cog nav-icon"></i>
