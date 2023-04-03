@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('bed_hinai', 15)->nullable();
             $table->date('tanggal_masuk')->nullable();
             $table->dateTime('tanggal_pindah')->nullable();
-            $table->tinyInteger('flagbor');
-            $table->tinyInteger('flagsetting');
+            $table->tinyInteger('flagbor')->default(1);
+            $table->tinyInteger('flagsetting')->default(0);
             $table->text('keterangan_fo')->nullable()->default(null);
             $table->text('keterangan_perawat')->nullable()->default(null);
             $table->tinyInteger('aktif')->default(1);

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_setting');
             $table->string('nama_rumahsakit')->default(config('app.nama_rs'));
             $table->string('kode_rumahsakit', 5)->default(config('app.kode_rs'));
-            $table->string('alias_rumahsakit', 5);
+            $table->string('alias_rumahsakit', 5)->default('PLB');
             $table->text('alamat')->nullable();
             $table->string('telepon')->nullable();
             $table->string('path_logo_square')->nullable();
