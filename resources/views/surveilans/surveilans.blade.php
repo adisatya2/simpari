@@ -328,7 +328,7 @@
                                 <div class="alert alert-danger alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                     <h5><i class="icon fas fa-ban"></i> Duplikat!</h5>
-                                    Data sudah pernah dimasukkan. Harap dicek kembali datanya!!!
+                                    Data dengan tanggal yang sama sudah pernah dimasukkan. Harap dicek kembali datanya!!!
                                 </div>
                                 `);
                             },
@@ -414,7 +414,7 @@
                                 <div class="alert alert-danger alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                     <h5><i class="icon fas fa-ban"></i> Duplikat!</h5>
-                                    Data sudah pernah dimasukkan. Harap dicek kembali datanya!!!
+                                    Data dengan tanggal yang sama sudah pernah dimasukkan. Harap dicek kembali datanya!!!
                                 </div>
                                 `);
                             },
@@ -497,21 +497,21 @@
                         statusCode: {
                             409: function(data) {
                                 $('#modal-detail-iadp #notifikasi').html(`
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h5><i class="icon fas fa-ban"></i> Duplikat!</h5>
-                        Data sudah pernah dimasukkan. Harap dicek kembali datanya!!!
-                    </div>
-                    `);
+                                <div class="alert alert-danger alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h5><i class="icon fas fa-ban"></i> Duplikat!</h5>
+                                    Data dengan tanggal yang sama sudah pernah dimasukkan. Harap dicek kembali datanya!!!
+                                </div>
+                                `);
                             },
                             500: function(data) {
                                 $('#modal-detail-iadp #notifikasi').html(`
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h5><i class="icon fas fa-ban"></i> Error!</h5>
-                        Harap dicek kembali datanya!!!
-                    </div>
-                    `);
+                                <div class="alert alert-danger alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h5><i class="icon fas fa-ban"></i> Error!</h5>
+                                    Harap dicek kembali datanya!!!
+                                </div>
+                                `);
                             },
                         },
                     });
@@ -583,21 +583,21 @@
                         statusCode: {
                             409: function(data) {
                                 $('#modal-detail-vap #notifikasi').html(`
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h5><i class="icon fas fa-ban"></i> Duplikat!</h5>
-                        Data sudah pernah dimasukkan. Harap dicek kembali datanya!!!
-                    </div>
-                    `);
+                                <div class="alert alert-danger alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h5><i class="icon fas fa-ban"></i> Duplikat!</h5>
+                                    Data dengan tanggal yang sama sudah pernah dimasukkan. Harap dicek kembali datanya!!!
+                                </div>
+                                `);
                             },
                             500: function(data) {
                                 $('#modal-detail-vap #notifikasi').html(`
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <h5><i class="icon fas fa-ban"></i> Error!</h5>
-                        Harap dicek kembali datanya!!!
-                    </div>
-                    `);
+                                <div class="alert alert-danger alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h5><i class="icon fas fa-ban"></i> Error!</h5>
+                                    Harap dicek kembali datanya!!!
+                                </div>
+                                `);
                             },
                         },
                     });
@@ -854,6 +854,7 @@
                         true)
                     $('#modal-detail-phlebitis #id_header').val(response.id_header).prop('readonly', true)
                     $('#modal-detail-phlebitis #observasi_ke').val(response.observasi_ke).prop('readonly', true)
+                    $('#modal-detail-phlebitis #tanggal_observasi').val(response.tanggal_observasi)
                     $('#modal-detail-phlebitis #antibiotik_phlebitis').val(response.antibiotik)
                     $('#modal-detail-phlebitis #hasil_kultur_phlebitis').val(response.hasil_kultur).trigger('change')
                     $('#modal-detail-phlebitis #tanggal_pemeriksaan_kultur_phlebitis').val(response
@@ -971,6 +972,7 @@
                         true)
                     $('#modal-detail-isk #id_header').val(response.id_header).prop('readonly', true)
                     $('#modal-detail-isk #observasi_ke').val(response.observasi_ke).prop('readonly', true)
+                    $('#modal-detail-isk #tanggal_observasi').val(response.tanggal_observasi)
                     $('#modal-detail-isk #antibiotik_isk').val(response.antibiotik)
                     $('#modal-detail-isk #hasil_kultur_isk').val(response.hasil_kultur).trigger('change')
                     $('#modal-detail-isk #tanggal_pemeriksaan_kultur_isk').val(response
@@ -1088,6 +1090,7 @@
                         true)
                     $('#modal-detail-iadp #id_header').val(response.id_header).prop('readonly', true)
                     $('#modal-detail-iadp #observasi_ke').val(response.observasi_ke).prop('readonly', true)
+                    $('#modal-detail-iadp #tanggal_observasi').val(response.tanggal_observasi)
                     $('#modal-detail-iadp #antibiotik_iadp').val(response.antibiotik)
                     $('#modal-detail-iadp #hasil_kultur_iadp').val(response.hasil_kultur).trigger('change')
                     $('#modal-detail-iadp #tanggal_pemeriksaan_kultur_iadp').val(response
@@ -1203,6 +1206,7 @@
                         true)
                     $('#modal-detail-vap #id_header').val(response.id_header).prop('readonly', true)
                     $('#modal-detail-vap #observasi_ke').val(response.observasi_ke).prop('readonly', true)
+                    $('#modal-detail-vap #tanggal_observasi').val(response.tanggal_observasi)
                     $('#modal-detail-vap #antibiotik_vap').val(response.antibiotik)
                     $('#modal-detail-vap #hasil_kultur_vap').val(response.hasil_kultur).trigger('change')
                     $('#modal-detail-vap #tanggal_pemeriksaan_kultur_vap').val(response

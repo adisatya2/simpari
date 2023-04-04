@@ -47,11 +47,24 @@
                             class="form-control select2 @error('roles') is-invalid @enderror" required autocomplete="roles">
                             <option value="" selected disabled>Choose a role</option>
                             @foreach ($roles as $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                <option value="{{ $item->name }}" {{ old('roles') == $item->name ? 'selected' : '' }}>
+                                    {{ $item->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     @error('roles')
+                        <small class="error text-danger">{{ $message }}</small>
+                    @enderror
+                    <div class="input-group mt-3">
+                        <select id="kode_rs" name="kode_rs"
+                            class="form-control select2 @error('kode_rs') is-invalid @enderror" required
+                            autocomplete="kode_rs">
+                            <option value="" selected disabled>Choose a role</option>
+                            <option value="015" {{ old('kode_rs') == '015' ? 'selected' : '' }}>
+                                HERMINA PALEMBANG</option>
+                        </select>
+                    </div>
+                    @error('kode_rs')
                         <small class="error text-danger">{{ $message }}</small>
                     @enderror
                     <div class="input-group mt-3">
@@ -113,9 +126,15 @@
 
 <script>
     $(function() {
-        $('.select2').select2({
+        $('#roles').select2({
             theme: 'bootstrap4',
             placeholder: "Select a Role",
+            allowClear: true,
+            dropdownCssClass: 'text-sm p-0'
+        });
+        $('#kode_rs').select2({
+            theme: 'bootstrap4',
+            placeholder: "Select a Branch",
             allowClear: true,
             dropdownCssClass: 'text-sm p-0'
         });

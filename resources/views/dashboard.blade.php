@@ -45,6 +45,8 @@
                         {{ auth()->user()->username }}
                         <br>
                         {{ auth()->user()->name }}
+                        <br>
+                        {{ auth()->user()->kode_rs }}
 
                     </div>
                     <!-- /.card-body -->

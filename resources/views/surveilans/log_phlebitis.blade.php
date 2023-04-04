@@ -92,7 +92,7 @@
                                     <a class="d-block w-100" data-toggle="collapse"
                                         href="#collapse{{ $list->id }}">
                                         Observasi Ke-{{ $list->observasi_ke }} -
-                                        {{ tanggal_indonesia($list->created_at) }}
+                                        {{ tanggal_indonesia($list->tanggal_observasi) }}
                                     </a>
                                 </h4>
                             </div>

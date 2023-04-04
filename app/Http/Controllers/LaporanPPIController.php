@@ -31,15 +31,15 @@ class LaporanPPIController extends Controller
     public function data_phlebitis(Request $request)
     {
         $ruangan = $request['ruangan'] ? $request['ruangan'] : '';
-        $from = $request['tanggal_awal'] ? $request['tanggal_awal'] . ' 00:00:00' : '';
-        $to = $request['tanggal_akhir'] ? $request['tanggal_akhir'] . ' 23:59:59' : '';
+        $from = $request['tanggal_awal'];
+        $to = $request['tanggal_akhir'];
 
         $phlebitis = PhlebitisDetail::with([
             'header',
             'header.data_registrasi',
             'header.data_registrasi.data_pasien'
         ])
-            ->whereBetween('created_at', [$from, $to])
+            ->whereBetween('tanggal_observasi', [$from, $to])
             ->whereRelation(
                 'header',
                 'ruang_perawatan',
@@ -77,15 +77,15 @@ class LaporanPPIController extends Controller
     public function data_isk(Request $request)
     {
         $ruangan = $request['ruangan'] ? $request['ruangan'] : '';
-        $from = $request['tanggal_awal'] ? $request['tanggal_awal'] . ' 00:00:00' : '';
-        $to = $request['tanggal_akhir'] ? $request['tanggal_akhir'] . ' 23:59:59' : '';
+        $from = $request['tanggal_awal'];
+        $to = $request['tanggal_akhir'];
 
         $isk = IskDetail::with([
             'header',
             'header.data_registrasi',
             'header.data_registrasi.data_pasien'
         ])
-            ->whereBetween('created_at', [$from, $to])
+            ->whereBetween('tanggal_observasi', [$from, $to])
             ->whereRelation(
                 'header',
                 'ruang_perawatan',
@@ -123,15 +123,15 @@ class LaporanPPIController extends Controller
     public function data_iadp(Request $request)
     {
         $ruangan = $request['ruangan'] ? $request['ruangan'] : '';
-        $from = $request['tanggal_awal'] ? $request['tanggal_awal'] . ' 00:00:00' : '';
-        $to = $request['tanggal_akhir'] ? $request['tanggal_akhir'] . ' 23:59:59' : '';
+        $from = $request['tanggal_awal'];
+        $to = $request['tanggal_akhir'];
 
         $iadp = IadpDetail::with([
             'header',
             'header.data_registrasi',
             'header.data_registrasi.data_pasien'
         ])
-            ->whereBetween('created_at', [$from, $to])
+            ->whereBetween('tanggal_observasi', [$from, $to])
             ->whereRelation(
                 'header',
                 'ruang_perawatan',
@@ -169,15 +169,15 @@ class LaporanPPIController extends Controller
     public function data_vap(Request $request)
     {
         $ruangan = $request['ruangan'] ? $request['ruangan'] : '';
-        $from = $request['tanggal_awal'] ? $request['tanggal_awal'] . ' 00:00:00' : '';
-        $to = $request['tanggal_akhir'] ? $request['tanggal_akhir'] . ' 23:59:59' : '';
+        $from = $request['tanggal_awal'];
+        $to = $request['tanggal_akhir'];
 
         $vap = VapDetail::with([
             'header',
             'header.data_registrasi',
             'header.data_registrasi.data_pasien'
         ])
-            ->whereBetween('created_at', [$from, $to])
+            ->whereBetween('tanggal_observasi', [$from, $to])
             ->whereRelation(
                 'header',
                 'ruang_perawatan',
@@ -256,38 +256,40 @@ class LaporanPPIController extends Controller
     public function count(Request $request)
     {
         $ruangan = $request['ruangan'] ? $request['ruangan'] : '';
-        $from = $request['tanggal_awal'] ? $request['tanggal_awal'] . ' 00:00:00' : '';
-        $to = $request['tanggal_akhir'] ? $request['tanggal_akhir'] . ' 23:59:59' : '';
+        $from = $request['tanggal_awal'];
+        $to = $request['tanggal_akhir'];
+        $from2 = $request['tanggal_awal'] ? $request['tanggal_awal'] . ' 00:00:00' : '';
+        $to2 = $request['tanggal_akhir'] ? $request['tanggal_akhir'] . ' 23:59:59' : '';
 
         $data = [
             'Phlebitis' => PhlebitisDetail::with(['header'])
                 ->selectRaw('status, count(*) as total')
-                ->whereBetween('created_at', [$from, $to])
+                ->whereBetween('tanggal_observasi', [$from, $to])
                 ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
                 ->groupBy('status')
                 ->pluck('total', 'status'),
             'ISK' => IskDetail::with(['header'])
                 ->selectRaw('status, count(*) as total')
-                ->whereBetween('created_at', [$from, $to])
+                ->whereBetween('tanggal_observasi', [$from, $to])
                 ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
                 ->groupBy('status')
                 ->pluck('total', 'status'),
             'IADP' => IadpDetail::with(['header'])
                 ->selectRaw('status, count(*) as total')
-                ->whereBetween('created_at', [$from, $to])
+                ->whereBetween('tanggal_observasi', [$from, $to])
                 ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
                 ->groupBy('status')
                 ->pluck('total', 'status'),
             'VAP' => VapDetail::with(['header'])
                 ->selectRaw('status, count(*) as total')
-                ->whereBetween('created_at', [$from, $to])
+                ->whereBetween('tanggal_observasi', [$from, $to])
                 ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
                 ->groupBy('status')
                 ->pluck('total', 'status'),
             'IDO' => IdoHeader::selectRaw('status, count(*) as total')
                 ->whereNotNull('ruang_perawatan')
                 ->where('ruang_perawatan', 'like', '%' . $ruangan . '%')
-                ->whereBetween('created_at', [$from, $to])
+                ->whereBetween('created_at', [$from2, $to2])
                 ->groupBy('status')
                 ->pluck('total', 'status'),
         ];
@@ -298,56 +300,88 @@ class LaporanPPIController extends Controller
     public function count_bundle(Request $request)
     {
         $ruangan = $request['ruangan'] ? $request['ruangan'] : '';
-        $from = $request['tanggal_awal'] ? $request['tanggal_awal'] . ' 00:00:00' : '';
-        $to = $request['tanggal_akhir'] ? $request['tanggal_akhir'] . ' 23:59:59' : '';
+        $from = $request['tanggal_awal'];
+        $to = $request['tanggal_akhir'];
+        $from2 = $request['tanggal_awal'] ? $request['tanggal_awal'] . ' 00:00:00' : '';
+        $to2 = $request['tanggal_akhir'] ? $request['tanggal_akhir'] . ' 23:59:59' : '';
 
         $data = [];
+        $total = [];
+        $bundle = [];
 
         if ($request['hais'] == "phlebitis") {
             $phlebitis_bundle = PhlebitisBundle::pluck('bundle', 'id');
+            $total = PhlebitisDetail::whereBetween('tanggal_observasi', [$from, $to])
+                ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
+                ->count();
             foreach ($phlebitis_bundle as $key => $item) {
                 $count = PhlebitisDetail::where('bundle', 'like', '%' . $item . '%')
-                    ->whereBetween('created_at', [$from, $to])
+                    ->whereBetween('tanggal_observasi', [$from, $to])
                     ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
                     ->count();
-                $data += [$item => $count];
+                $bundle += [$item => $count];
             }
+            $data = [
+                'total' => $total,
+                'bundle' => $bundle,
+            ];
 
             return $data;
         }
         if ($request['hais'] == "isk") {
             $isk_bundle = IskBundle::pluck('bundle', 'id');
+            $total = IskDetail::whereBetween('tanggal_observasi', [$from, $to])
+                ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
+                ->count();
             foreach ($isk_bundle as $key => $item) {
                 $count = IskDetail::where('bundle', 'like', '%' . $item . '%')
-                    ->whereBetween('created_at', [$from, $to])
+                    ->whereBetween('tanggal_observasi', [$from, $to])
                     ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
                     ->count();
-                $data += [$item => $count];
+                $bundle += [$item => $count];
             }
+            $data = [
+                'total' => $total,
+                'bundle' => $bundle,
+            ];
 
             return $data;
         }
         if ($request['hais'] == "iadp") {
             $iadp_bundle = IadpBundle::pluck('bundle', 'id');
+            $total = IadpDetail::whereBetween('tanggal_observasi', [$from, $to])
+                ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
+                ->count();
             foreach ($iadp_bundle as $key => $item) {
                 $count = IadpDetail::where('bundle', 'like', '%' . $item . '%')
-                    ->whereBetween('created_at', [$from, $to])
+                    ->whereBetween('tanggal_observasi', [$from, $to])
                     ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
                     ->count();
-                $data += [$item => $count];
+                $bundle += [$item => $count];
             }
+            $data = [
+                'total' => $total,
+                'bundle' => $bundle,
+            ];
 
             return $data;
         }
         if ($request['hais'] == "vap") {
             $vap_bundle = VapBundle::pluck('bundle', 'id');
+            $total = VapDetail::whereBetween('tanggal_observasi', [$from, $to])
+                ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
+                ->count();
             foreach ($vap_bundle as $key => $item) {
                 $count = VapDetail::where('bundle', 'like', '%' . $item . '%')
-                    ->whereBetween('created_at', [$from, $to])
+                    ->whereBetween('tanggal_observasi', [$from, $to])
                     ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
                     ->count();
-                $data += [$item => $count];
+                $bundle += [$item => $count];
             }
+            $data = [
+                'total' => $total,
+                'bundle' => $bundle,
+            ];
 
             return $data;
         }
@@ -361,7 +395,7 @@ class LaporanPPIController extends Controller
                     $count = IdoHeader::where('bundle_pre', 'like', '%' . $item->bundle . '%')
                         ->whereNotNull('ruang_perawatan')
                         ->where('ruang_perawatan', 'like', '%' . $ruangan . '%')
-                        ->whereBetween('created_at', [$from, $to])
+                        ->whereBetween('created_at', [$from2, $to2])
                         ->count();
                     $pre += [$item->bundle => $count];
                 }
@@ -370,7 +404,7 @@ class LaporanPPIController extends Controller
                     $count = IdoHeader::where('bundle_intra', 'like', '%' . $item->bundle . '%')
                         ->whereNotNull('ruang_perawatan')
                         ->where('ruang_perawatan', 'like', '%' . $ruangan . '%')
-                        ->whereBetween('created_at', [$from, $to])
+                        ->whereBetween('created_at', [$from2, $to2])
                         ->count();
                     $intra += [$item->bundle => $count];
                 }
@@ -379,7 +413,7 @@ class LaporanPPIController extends Controller
                     $count = IdoHeader::where('bundle_post', 'like', '%' . $item->bundle . '%')
                         ->whereNotNull('ruang_perawatan')
                         ->where('ruang_perawatan', 'like', '%' . $ruangan . '%')
-                        ->whereBetween('created_at', [$from, $to])
+                        ->whereBetween('created_at', [$from2, $to2])
                         ->count();
                     $post += [$item->bundle => $count];
                 }

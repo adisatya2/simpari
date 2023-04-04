@@ -78,7 +78,7 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="form-group">
-                                <label for="tanggal_awal">Tanggal Observasi</label>
+                                <label for="tanggal_awal">Tanggal</label>
                                 <div class="input-group">
                                     <input type="date" name="tanggal_awal" id="tanggal_awal"
                                         value="{{ date('Y-m-d', strtotime('-30 day', strtotime(date('Y-m-d')))) }}"
@@ -135,7 +135,7 @@
                                 <table class="table table-sm table-bordered table-hover" id="table-phlebitis">
                                     <thead>
                                         <th>Aksi</th>
-                                        <th>Tanggal Input</th>
+                                        <th>Tanggal</th>
                                         <th>MRN</th>
                                         <th>Nama Pasien</th>
                                         <th>Jenis Kelamin</th>
@@ -162,7 +162,7 @@
                                 <table class="table table-sm table-bordered table-hover" id="table-isk">
                                     <thead>
                                         <th>Aksi</th>
-                                        <th>Tanggal Input</th>
+                                        <th>Tanggal</th>
                                         <th>MRN</th>
                                         <th>Nama Pasien</th>
                                         <th>Jenis Kelamin</th>
@@ -187,7 +187,7 @@
                                 <table class="table table-sm table-bordered table-hover" id="table-iadp">
                                     <thead>
                                         <th>Aksi</th>
-                                        <th>Tanggal Input</th>
+                                        <th>Tanggal</th>
                                         <th>MRN</th>
                                         <th>Nama Pasien</th>
                                         <th>Jenis Kelamin</th>
@@ -212,7 +212,7 @@
                                 <table class="table table-sm table-bordered table-hover" id="table-vap">
                                     <thead>
                                         <th>Aksi</th>
-                                        <th>Tanggal Input</th>
+                                        <th>Tanggal</th>
                                         <th>MRN</th>
                                         <th>Nama Pasien</th>
                                         <th>Jenis Kelamin</th>
@@ -236,7 +236,7 @@
                                 <table class="table table-sm table-bordered table-hover" id="table-ido">
                                     <thead>
                                         <th>Aksi</th>
-                                        <th>Tanggal Input</th>
+                                        <th>Tanggal</th>
                                         <th>MRN</th>
                                         <th>Nama Pasien</th>
                                         <th>Jenis Kelamin</th>
@@ -509,7 +509,7 @@
                         sortable: false,
                         className: "text-center notexport",
                     }, {
-                        data: 'created_at',
+                        data: 'tanggal_observasi',
                         className: "text-nowrap"
                     },
                     {
@@ -584,20 +584,23 @@
                     hais: 'phlebitis'
                 },
                 success: function(response) {
-                    // console.log(response);
+                    console.log(response);
                     $("#table-bundle").text('');
                     html = `
                     <table class="table table-sm table-bordered table-hover" id="table-bundle-phlebitis">
                         <thead>
                             <th class="text-center">Bundle Phlebitis</th>
                             <th class="text-center">Jumlah</th>
+                            <th class="text-center">Persentase</th>
                         </thead>
                         <tbody>`;
-                    $.each(response, function(key, value) {
+                    $.each(response.bundle, function(key, value) {
+                        var persentase = (value / response.total) * 100;
                         html += `
                             <tr>
                                 <td>${key}</td>
                                 <td class="text-right">${value}</td>
+                                <td class="text-right">${persentase.toFixed(2)}%</td>
                             </tr>
                         `;
                     });
@@ -715,7 +718,7 @@
                         sortable: false,
                         className: "text-center notexport",
                     }, {
-                        data: 'created_at',
+                        data: 'tanggal_observasi',
                         className: "text-nowrap"
                     },
                     {
@@ -782,20 +785,23 @@
                     hais: 'isk'
                 },
                 success: function(response) {
-                    // console.log(response);
+                    console.log(response);
                     $("#table-bundle").text('');
                     html = `
                     <table class="table table-sm table-bordered table-hover" id="table-bundle-isk">
                         <thead>
                             <th class="text-center">Bundle ISK</th>
                             <th class="text-center">Jumlah</th>
+                            <th class="text-center">Persentase</th>
                         </thead>
                         <tbody>`;
-                    $.each(response, function(key, value) {
+                    $.each(response.bundle, function(key, value) {
+                        var persentase = (value / response.total) * 100;
                         html += `
                             <tr>
                                 <td>${key}</td>
                                 <td class="text-right">${value}</td>
+                                <td class="text-right">${persentase.toFixed(2)}%</td>
                             </tr>
                         `;
                     });
@@ -913,7 +919,7 @@
                         sortable: false,
                         className: "text-center notexport",
                     }, {
-                        data: 'created_at',
+                        data: 'tanggal_observasi',
                         className: "text-nowrap"
                     },
                     {
@@ -987,13 +993,16 @@
                         <thead>
                             <th class="text-center">Bundle IADP</th>
                             <th class="text-center">Jumlah</th>
+                            <th class="text-center">Persentase</th>
                         </thead>
                         <tbody>`;
-                    $.each(response, function(key, value) {
+                    $.each(response.bundle, function(key, value) {
+                        var persentase = (value / response.total) * 100;
                         html += `
                             <tr>
                                 <td>${key}</td>
                                 <td class="text-right">${value}</td>
+                                <td class="text-right">${persentase.toFixed(2)}%</td>
                             </tr>
                         `;
                     });
@@ -1110,7 +1119,7 @@
                         sortable: false,
                         className: "text-center notexport",
                     }, {
-                        data: 'created_at',
+                        data: 'tanggal_observasi',
                         className: "text-nowrap"
                     },
                     {
@@ -1179,13 +1188,16 @@
                         <thead>
                             <th class="text-center">Bundle VAP</th>
                             <th class="text-center">Jumlah</th>
+                            <th class="text-center">Persentase</th>
                         </thead>
                         <tbody>`;
-                    $.each(response, function(key, value) {
+                    $.each(response.bundle, function(key, value) {
+                        var persentase = (value / response.total) * 100;
                         html += `
                             <tr>
                                 <td>${key}</td>
                                 <td class="text-right">${value}</td>
+                                <td class="text-right">${persentase.toFixed(2)}%</td>
                             </tr>
                         `;
                     });

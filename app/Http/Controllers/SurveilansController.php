@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use id;
 use App\Models\Bed;
 use App\Models\Agama;
 use App\Models\Kelas;
@@ -28,16 +27,11 @@ use App\Models\JenisCairan;
 use App\Models\Profilaksis;
 use Illuminate\Http\Request;
 use App\Models\Registrasirwi;
-
 use App\Models\LokasiCatheter;
-use App\Models\PhlebitiHeader;
 use App\Models\PhlebitisBundle;
 use App\Models\PhlebitisDetail;
 use App\Models\PhlebitisGejala;
 use App\Models\PhlebitisHeader;
-use function Pest\Laravel\json;
-use App\Models\SurveilansPhlebitis;
-use App\Models\SurveilansAlatInvasif;
 
 class SurveilansController extends Controller
 {
@@ -203,9 +197,9 @@ class SurveilansController extends Controller
             );
         }
         if ($request['id_header']) {
-            $cek = PhlebitisDetail::where('id_header', '=', $request['id_header'])->where('observasi_ke', '=', $request['observasi_ke'])->get();
+            $cek = PhlebitisDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
             if ($cek->count() > 0) {
-                return response()->json(['pesan' => 'error'], 409);
+                return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
             }
 
             $detail['bundle'] = $request['phlebitis_bundle'] ? implode(", ", $request['phlebitis_bundle']) : null;
@@ -215,6 +209,7 @@ class SurveilansController extends Controller
                 [
                     'id_header' => $request['id_header'],
                     'observasi_ke' => $request['observasi_ke'],
+                    'tanggal_observasi' => $request['tanggal_observasi'],
                     'antibiotik' => $request['antibiotik_phlebitis'],
                     'bundle' => $detail['bundle'],
                     'gejala' => $detail['gejala'],
@@ -268,12 +263,17 @@ class SurveilansController extends Controller
             $phlebitis->save();
         }
         if ($request['id_header']) {
+            $cek = PhlebitisDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
+            if ($cek->count() > 0) {
+                return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
+            }
 
             $detail['bundle'] = $request['phlebitis_bundle'] ? implode(", ", $request['phlebitis_bundle']) : null;
             $detail['gejala'] = $request['phlebitis_gejala'] ? implode(", ", $request['phlebitis_gejala']) : null;
 
             $phlebitis = PhlebitisDetail::findOrFail($id);
 
+            $phlebitis->tanggal_observasi = $request['tanggal_observasi'];
             $phlebitis->antibiotik = $request['antibiotik_phlebitis'];
             $phlebitis->bundle = $detail['bundle'];
             $phlebitis->gejala = $detail['gejala'];
@@ -318,9 +318,9 @@ class SurveilansController extends Controller
             );
         }
         if ($request['id_header']) {
-            $cek = IskDetail::where('id_header', '=', $request['id_header'])->where('observasi_ke', '=', $request['observasi_ke'])->get();
+            $cek = IskDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
             if ($cek->count() > 0) {
-                return response()->json(['pesan' => 'error'], 409);
+                return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
             }
 
             $detail['bundle'] = $request['isk_bundle'] ? implode(", ", $request['isk_bundle']) : null;
@@ -330,6 +330,7 @@ class SurveilansController extends Controller
                 [
                     'id_header' => $request['id_header'],
                     'observasi_ke' => $request['observasi_ke'],
+                    'tanggal_observasi' => $request['tanggal_observasi'],
                     'antibiotik' => $request['antibiotik_isk'],
                     'bundle' => $detail['bundle'],
                     'gejala' => $detail['gejala'],
@@ -381,12 +382,17 @@ class SurveilansController extends Controller
             $isk->save();
         }
         if ($request['id_header']) {
+            $cek = IskDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
+            if ($cek->count() > 0) {
+                return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
+            }
 
             $detail['bundle'] = $request['isk_bundle'] ? implode(", ", $request['isk_bundle']) : null;
             $detail['gejala'] = $request['isk_gejala'] ? implode(", ", $request['isk_gejala']) : null;
 
             $isk = IskDetail::findOrFail($id);
 
+            $isk->tanggal_observasi = $request['tanggal_observasi'];
             $isk->antibiotik = $request['antibiotik_isk'];
             $isk->bundle = $detail['bundle'];
             $isk->gejala = $detail['gejala'];
@@ -430,9 +436,9 @@ class SurveilansController extends Controller
             );
         }
         if ($request['id_header']) {
-            $cek = IadpDetail::where('id_header', '=', $request['id_header'])->where('observasi_ke', '=', $request['observasi_ke'])->get();
+            $cek = IadpDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
             if ($cek->count() > 0) {
-                return response()->json(['pesan' => 'error'], 409);
+                return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
             }
 
             $detail['bundle'] = $request['iadp_bundle'] ? implode(", ", $request['iadp_bundle']) : null;
@@ -442,6 +448,7 @@ class SurveilansController extends Controller
                 [
                     'id_header' => $request['id_header'],
                     'observasi_ke' => $request['observasi_ke'],
+                    'tanggal_observasi' => $request['tanggal_observasi'],
                     'antibiotik' => $request['antibiotik_iadp'],
                     'bundle' => $detail['bundle'],
                     'gejala' => $detail['gejala'],
@@ -493,12 +500,17 @@ class SurveilansController extends Controller
             $isk->save();
         }
         if ($request['id_header']) {
+            $cek = IadpDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
+            if ($cek->count() > 0) {
+                return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
+            }
 
             $detail['bundle'] = $request['iadp_bundle'] ? implode(", ", $request['iadp_bundle']) : null;
             $detail['gejala'] = $request['iadp_gejala'] ? implode(", ", $request['iadp_gejala']) : null;
 
             $isk = IadpDetail::findOrFail($id);
 
+            $isk->tanggal_observasi = $request['tanggal_observasi'];
             $isk->antibiotik = $request['antibiotik_iadp'];
             $isk->bundle = $detail['bundle'];
             $isk->gejala = $detail['gejala'];
@@ -540,9 +552,9 @@ class SurveilansController extends Controller
             );
         }
         if ($request['id_header']) {
-            $cek = VapDetail::where('id_header', '=', $request['id_header'])->where('observasi_ke', '=', $request['observasi_ke'])->get();
+            $cek = VapDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
             if ($cek->count() > 0) {
-                return response()->json(['pesan' => 'error'], 409);
+                return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
             }
 
             $detail['bundle'] = $request['vap_bundle'] ? implode(", ", $request['vap_bundle']) : null;
@@ -552,6 +564,7 @@ class SurveilansController extends Controller
                 [
                     'id_header' => $request['id_header'],
                     'observasi_ke' => $request['observasi_ke'],
+                    'tanggal_observasi' => $request['tanggal_observasi'],
                     'antibiotik' => $request['antibiotik_vap'],
                     'bundle' => $detail['bundle'],
                     'gejala' => $detail['gejala'],
@@ -601,12 +614,17 @@ class SurveilansController extends Controller
             $isk->save();
         }
         if ($request['id_header']) {
+            $cek = VapDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
+            if ($cek->count() > 0) {
+                return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
+            }
 
             $detail['bundle'] = $request['vap_bundle'] ? implode(", ", $request['vap_bundle']) : null;
             $detail['gejala'] = $request['vap_gejala'] ? implode(", ", $request['vap_gejala']) : null;
 
             $isk = VapDetail::findOrFail($id);
 
+            $isk->tanggal_observasi = $request['tanggal_observasi'];
             $isk->antibiotik = $request['antibiotik_vap'];
             $isk->bundle = $detail['bundle'];
             $isk->gejala = $detail['gejala'];

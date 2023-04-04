@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formHeaderPhlebitis"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>
@@ -142,6 +142,12 @@
                                 <label for="observasi_ke">Observasi Ke<small class="text-danger">*</small></label>
                                 <input type="number" class="form-control form-control-sm" name="observasi_ke"
                                     id="observasi_ke" min="1" max="99" autofocus required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_observasi">Tanggal Observasi<small
+                                        class="text-danger">*</small></label>
+                                <input type="date" class="form-control form-control-sm" name="tanggal_observasi"
+                                    id="tanggal_observasi" value="{{ date('Y-m-d') }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="antibiotik_phlebitis">Antibiotik</label>
@@ -206,7 +212,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formDetailPhlebitis"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>
@@ -296,7 +302,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formHeaderISK"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>
@@ -332,6 +338,12 @@
                                 <label for="observasi_ke">Observasi Ke<small class="text-danger">*</small></label>
                                 <input type="number" class="form-control form-control-sm" name="observasi_ke"
                                     id="observasi_ke" min="1" max="99" autofocus required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_observasi">Tanggal Observasi<small
+                                        class="text-danger">*</small></label>
+                                <input type="date" class="form-control form-control-sm" name="tanggal_observasi"
+                                    id="tanggal_observasi" value="{{ date('Y-m-d') }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="antibiotik_isk">Antibiotik</label>
@@ -393,7 +405,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formDetailISK"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>
@@ -483,7 +495,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formHeaderIADP"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>
@@ -519,6 +531,12 @@
                                 <label for="observasi_ke">Observasi Ke<small class="text-danger">*</small></label>
                                 <input type="number" class="form-control form-control-sm" name="observasi_ke"
                                     id="observasi_ke" min="1" max="99" autofocus required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_observasi">Tanggal Observasi<small
+                                        class="text-danger">*</small></label>
+                                <input type="date" class="form-control form-control-sm" name="tanggal_observasi"
+                                    id="tanggal_observasi" value="{{ date('Y-m-d') }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="antibiotik_iadp">Antibiotik</label>
@@ -580,7 +598,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formDetailIADP"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>
@@ -660,7 +678,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formHeaderVAP"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>
@@ -696,6 +714,12 @@
                                 <label for="observasi_ke">Observasi Ke<small class="text-danger">*</small></label>
                                 <input type="number" class="form-control form-control-sm" name="observasi_ke"
                                     id="observasi_ke" min="1" max="99" autofocus required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_observasi">Tanggal Observasi<small
+                                        class="text-danger">*</small></label>
+                                <input type="date" class="form-control form-control-sm" name="tanggal_observasi"
+                                    id="tanggal_observasi" value="{{ date('Y-m-d') }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="antibiotik_vap">Antibiotik</label>
@@ -757,7 +781,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formDetailVAP"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>
@@ -818,7 +842,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formHeaderIDO"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>
@@ -952,7 +976,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formPreOperasiIDO"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>
@@ -1052,7 +1076,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formIntraOperasiIDO"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>
@@ -1129,7 +1153,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="reset" class="btn btn-default btn-reset mx-3">Reset</button>
+                    <button type="reset" class="btn btn-default btn-reset mx-3">Batal</button>
                     <button type="submit" class="btn btn-primary mx-3" form="formPostOperasiIDO"><i
                             class="fas fa-save mr-2"></i>Simpan</button>
                 </div>

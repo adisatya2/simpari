@@ -71,7 +71,8 @@
                                 <h4 class="card-title w-100">
                                     <a class="d-block w-100" data-toggle="collapse"
                                         href="#collapse{{ $list->id }}">
-                                        Observasi Ke-{{ $list->observasi_ke }} - {{ $list->created_at }}
+                                        Observasi Ke-{{ $list->observasi_ke }} -
+                                        {{ tanggal_indonesia($list->tanggal_observasi) }}
                                     </a>
                                 </h4>
                             </div>

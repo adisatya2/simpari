@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('id_header', 100);
             $table->smallInteger('observasi_ke');
+            $table->date('tanggal_observasi')->nullable();
             $table->text('antibiotik')->nullable();
             $table->text('bundle')->nullable();
             $table->text('gejala')->nullable();
