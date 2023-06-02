@@ -1,238 +1,239 @@
 @extends('layouts.master')
 @section('title', 'Surveilans')
 @push('head')
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('/') }}plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="{{ asset('/') }}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
-    <style>
-    </style>
+<style>
+</style>
 @endpush
 
 @section('breadcrumbs')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Surveilans</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Surveilans</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Surveilans</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                    <li class="breadcrumb-item active">Surveilans</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
 @endsection
 
 @section('content')
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <section class="content">
-                {{-- Data Registrasi Pasien --}}
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Data Pasien</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <section class="content">
+            {{-- Data Registrasi Pasien --}}
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Data Pasien</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6 row">
-                                <div class="col-sm-4 text-bold d-flex justify-content-between">
-                                    <div>No Registrasi</div>
-                                    <div>:</div>
-                                </div>
-                                <div class="col-sm-7 d-flex justify-content-end">
-                                    {{ $data_registrasi->no_registrasi }}
-                                </div>
-                                <div class="col-sm-4 text-bold d-flex justify-content-between">
-                                    <div>MRN</div>
-                                    <div>:</div>
-                                </div>
-                                <div class="col-sm-7 d-flex justify-content-end">
-                                    {{ $data_registrasi->mrn }}
-                                </div>
-                                <div class="col-sm-4 text-bold d-flex justify-content-between">
-                                    <div>Nama Pasien</div>
-                                    <div>:</div>
-                                </div>
-                                <div class="col-sm-7 d-flex justify-content-end d-flex justify-content-end">
-                                    {{ $data_registrasi->data_pasien->nama_pasien }}
-                                </div>
-                                <div class="col-sm-4 text-bold d-flex justify-content-between">
-                                    <div>Jenis Kelamin</div>
-                                    <div>:</div>
-                                </div>
-                                <div class="col-sm-7 d-flex justify-content-end">
-                                    {{ $data_registrasi->data_pasien->jk }}
-                                </div>
-                                <div class="col-sm-4 text-bold d-flex justify-content-between">
-                                    <div>No Telepon</div>
-                                    <div>:</div>
-                                </div>
-                                <div class="col-sm-7 d-flex justify-content-end">
-                                    {{ $data_registrasi->data_pasien->no_telp }}
-                                </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6 row">
+                            <div class="col-sm-4 text-bold d-flex justify-content-between">
+                                <div>No Registrasi</div>
+                                <div>:</div>
                             </div>
-                            <div class="col-lg-6 row">
-                                <div class="col-sm-4 text-bold d-flex justify-content-between">
-                                    <div>Tanggal Lahir (Umur)</div>
-                                    <div>:</div>
-                                </div>
-                                <div class="col-sm-7 d-flex justify-content-end">
-                                    {{ tanggal_indonesia($data_registrasi->data_pasien->tanggal_lahir, false) }}
-                                    ({{ hitung_umur($data_registrasi->data_pasien->tanggal_lahir) }})
-                                </div>
-                                <div class="col-sm-4 text-bold d-flex justify-content-between">
-                                    <div>Diagnosa</div>
-                                    <div>:</div>
-                                </div>
-                                <div class="col-sm-7 d-flex justify-content-end">
-                                    {{ $data_registrasi->diagnosa }}
-                                </div>
-                                <div class="col-sm-4 text-bold d-flex justify-content-between">
-                                    <div>DPJP</div>
-                                    <div>:</div>
-                                </div>
-                                <div class="col-sm-7 d-flex justify-content-end d-flex justify-content-end">
-                                    {{ $data_registrasi->dpjp->nama_dokter }}
-                                </div>
-                                <div class="col-sm-4 text-bold d-flex justify-content-between">
-                                    <div>Tanggal Masuk RS</div>
-                                    <div>:</div>
-                                </div>
-                                <div class="col-sm-7 d-flex justify-content-end">
-                                    {{ tanggal_indonesia($data_registrasi->tanggal_registrasi) }}
-                                </div>
-                                <div class="col-sm-4 text-bold d-flex justify-content-between">
-                                    <div>Tanggal Pulang</div>
-                                    <div>:</div>
-                                </div>
-                                <div class="col-sm-7 d-flex justify-content-end">
-                                    {{ $data_registrasi->tanggal_pulang ? tanggal_indonesia($data_registrasi->tanggal_pulang) : 'Masih dirawat' }}
-                                </div>
+                            <div class="col-sm-7 d-flex justify-content-end">
+                                {{ $data_registrasi->no_registrasi }}
+                            </div>
+                            <div class="col-sm-4 text-bold d-flex justify-content-between">
+                                <div>MRN</div>
+                                <div>:</div>
+                            </div>
+                            <div class="col-sm-7 d-flex justify-content-end">
+                                {{ $data_registrasi->mrn }}
+                            </div>
+                            <div class="col-sm-4 text-bold d-flex justify-content-between">
+                                <div>Nama Pasien</div>
+                                <div>:</div>
+                            </div>
+                            <div class="col-sm-7 d-flex justify-content-end d-flex justify-content-end">
+                                {{ $data_registrasi->data_pasien->nama_pasien }}
+                            </div>
+                            <div class="col-sm-4 text-bold d-flex justify-content-between">
+                                <div>Jenis Kelamin</div>
+                                <div>:</div>
+                            </div>
+                            <div class="col-sm-7 d-flex justify-content-end">
+                                {{ $data_registrasi->data_pasien->jk }}
+                            </div>
+                            <div class="col-sm-4 text-bold d-flex justify-content-between">
+                                <div>No Telepon</div>
+                                <div>:</div>
+                            </div>
+                            <div class="col-sm-7 d-flex justify-content-end">
+                                {{ $data_registrasi->data_pasien->no_telp }}
+                            </div>
+                        </div>
+                        <div class="col-lg-6 row">
+                            <div class="col-sm-4 text-bold d-flex justify-content-between">
+                                <div>Tanggal Lahir (Umur)</div>
+                                <div>:</div>
+                            </div>
+                            <div class="col-sm-7 d-flex justify-content-end">
+                                {{ tanggal_indonesia($data_registrasi->data_pasien->tanggal_lahir, false) }}
+                                ({{ hitung_umur($data_registrasi->data_pasien->tanggal_lahir) }})
+                            </div>
+                            <div class="col-sm-4 text-bold d-flex justify-content-between">
+                                <div>Diagnosa</div>
+                                <div>:</div>
+                            </div>
+                            <div class="col-sm-7 d-flex justify-content-end">
+                                {{ $data_registrasi->diagnosa }}
+                            </div>
+                            <div class="col-sm-4 text-bold d-flex justify-content-between">
+                                <div>DPJP</div>
+                                <div>:</div>
+                            </div>
+                            <div class="col-sm-7 d-flex justify-content-end d-flex justify-content-end">
+                                {{ $data_registrasi->dpjp->nama_dokter }}
+                            </div>
+                            <div class="col-sm-4 text-bold d-flex justify-content-between">
+                                <div>Tanggal Masuk RS</div>
+                                <div>:</div>
+                            </div>
+                            <div class="col-sm-7 d-flex justify-content-end">
+                                {{ tanggal_indonesia($data_registrasi->tanggal_registrasi) }}
+                            </div>
+                            <div class="col-sm-4 text-bold d-flex justify-content-between">
+                                <div>Tanggal Pulang</div>
+                                <div>:</div>
+                            </div>
+                            <div class="col-sm-7 d-flex justify-content-end">
+                                {{ $data_registrasi->tanggal_pulang ?
+                                tanggal_indonesia($data_registrasi->tanggal_pulang) : 'Masih dirawat' }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card card-primary card-outline card-outline-tabs">
-                    <div class="card-header p-0 border-bottom-0">
-                        <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="custom-tabs-four-phlebitis-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-phlebitis" role="tab"
-                                    aria-controls="custom-tabs-four-phlebitis" aria-selected="true">Phlebitis</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-four-ISK-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-ISK" role="tab" aria-controls="custom-tabs-four-ISK"
-                                    aria-selected="false">ISK</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-four-IADP-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-IADP" role="tab" aria-controls="custom-tabs-four-IADP"
-                                    aria-selected="false">IADP</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-four-VAP-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-VAP" role="tab" aria-controls="custom-tabs-four-VAP"
-                                    aria-selected="false">VAP</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-four-IDO-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-IDO" role="tab" aria-controls="custom-tabs-four-IDO"
-                                    aria-selected="false">IDO</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="custom-tabs-four-tabContent">
-                            <div class="tab-pane fade show active" id="custom-tabs-four-phlebitis" role="tabpanel"
-                                aria-labelledby="custom-tabs-four-phlebitis-tab">
-                                {{-- Phlebitis --}}
-                                <button type="button" class="btn btn-success w-100"
-                                    onclick="tambah_header_phlebitis()"><i class="fa-fw fas fa-plus"></i> Tambah Data
-                                    Intra Venaous Catheter</button>
-                                <hr>
-                                {{-- History Phlebitis --}}
-                                <div class="row mt-3" id="log_phlebitis">
-                                    @include('surveilans.log_phlebitis')
-                                </div>
+            </div>
+            <div class="card card-primary card-outline card-outline-tabs">
+                <div class="card-header p-0 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="custom-tabs-four-phlebitis-tab" data-toggle="pill"
+                                href="#custom-tabs-four-phlebitis" role="tab" aria-controls="custom-tabs-four-phlebitis"
+                                aria-selected="true">Phlebitis</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-four-ISK-tab" data-toggle="pill"
+                                href="#custom-tabs-four-ISK" role="tab" aria-controls="custom-tabs-four-ISK"
+                                aria-selected="false">ISK</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-four-IADP-tab" data-toggle="pill"
+                                href="#custom-tabs-four-IADP" role="tab" aria-controls="custom-tabs-four-IADP"
+                                aria-selected="false">IADP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-four-VAP-tab" data-toggle="pill"
+                                href="#custom-tabs-four-VAP" role="tab" aria-controls="custom-tabs-four-VAP"
+                                aria-selected="false">VAP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-four-IDO-tab" data-toggle="pill"
+                                href="#custom-tabs-four-IDO" role="tab" aria-controls="custom-tabs-four-IDO"
+                                aria-selected="false">IDO</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="custom-tabs-four-tabContent">
+                        <div class="tab-pane fade show active" id="custom-tabs-four-phlebitis" role="tabpanel"
+                            aria-labelledby="custom-tabs-four-phlebitis-tab">
+                            {{-- Phlebitis --}}
+                            <button type="button" class="btn btn-success w-100" onclick="tambah_header_phlebitis()"><i
+                                    class="fa-fw fas fa-plus"></i> Tambah Data
+                                Intra Venaous Catheter</button>
+                            <hr>
+                            {{-- History Phlebitis --}}
+                            <div class="row mt-3" id="log_phlebitis">
+                                @include('surveilans.log_phlebitis')
                             </div>
-                            <div class="tab-pane fade" id="custom-tabs-four-ISK" role="tabpanel"
-                                aria-labelledby="custom-tabs-four-ISK-tab">
-                                {{-- ISK --}}
-                                <button type="button" class="btn btn-success w-100" onclick="tambah_header_isk()"><i
-                                        class="fa-fw fas fa-plus"></i> Tambah Data Urine Catheter</button>
-                                <hr>
-                                {{-- History ISK --}}
-                                <div class="row mt-3" id="log_isk">
-                                    @include('surveilans.log_isk')
-                                </div>
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-four-ISK" role="tabpanel"
+                            aria-labelledby="custom-tabs-four-ISK-tab">
+                            {{-- ISK --}}
+                            <button type="button" class="btn btn-success w-100" onclick="tambah_header_isk()"><i
+                                    class="fa-fw fas fa-plus"></i> Tambah Data Urine Catheter</button>
+                            <hr>
+                            {{-- History ISK --}}
+                            <div class="row mt-3" id="log_isk">
+                                @include('surveilans.log_isk')
                             </div>
-                            <div class="tab-pane fade" id="custom-tabs-four-IADP" role="tabpanel"
-                                aria-labelledby="custom-tabs-four-IADP-tab">
-                                {{-- IADP --}}
-                                <button type="button" class="btn btn-success w-100" onclick="tambah_header_iadp()"><i
-                                        class="fa-fw fas fa-plus"></i> Tambah Data Central Venous Catheter</button>
-                                <hr>
-                                {{-- History IADP --}}
-                                <div class="row mt-3" id="log_iadp">
-                                    @include('surveilans.log_iadp')
-                                </div>
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-four-IADP" role="tabpanel"
+                            aria-labelledby="custom-tabs-four-IADP-tab">
+                            {{-- IADP --}}
+                            <button type="button" class="btn btn-success w-100" onclick="tambah_header_iadp()"><i
+                                    class="fa-fw fas fa-plus"></i> Tambah Data Central Venous Catheter</button>
+                            <hr>
+                            {{-- History IADP --}}
+                            <div class="row mt-3" id="log_iadp">
+                                @include('surveilans.log_iadp')
                             </div>
-                            <div class="tab-pane fade" id="custom-tabs-four-VAP" role="tabpanel"
-                                aria-labelledby="custom-tabs-four-VAP-tab">
-                                {{-- VAP --}}
-                                <button type="button" class="btn btn-success w-100" onclick="tambah_header_vap()"><i
-                                        class="fa-fw fas fa-plus"></i> Tambah Data Endotracheal Tube/Ventilator</button>
-                                <hr>
-                                {{-- History VAP --}}
-                                <div class="row mt-3" id="log_vap">
-                                    @include('surveilans.log_vap')
-                                </div>
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-four-VAP" role="tabpanel"
+                            aria-labelledby="custom-tabs-four-VAP-tab">
+                            {{-- VAP --}}
+                            <button type="button" class="btn btn-success w-100" onclick="tambah_header_vap()"><i
+                                    class="fa-fw fas fa-plus"></i> Tambah Data Endotracheal Tube/Ventilator</button>
+                            <hr>
+                            {{-- History VAP --}}
+                            <div class="row mt-3" id="log_vap">
+                                @include('surveilans.log_vap')
                             </div>
-                            <div class="tab-pane fade" id="custom-tabs-four-IDO" role="tabpanel"
-                                aria-labelledby="custom-tabs-four-IDO-tab">
-                                {{-- IDO --}}
-                                <button type="button" class="btn btn-success w-100" onclick="tambah_data_operasi()"><i
-                                        class="fa-fw fas fa-plus"></i> Tambah Data
-                                    Operasi</button>
-                                <hr>
-                                {{-- History IDO --}}
-                                <div class="row mt-3" id="log_ido">
-                                    @include('surveilans.log_ido')
-                                </div>
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-four-IDO" role="tabpanel"
+                            aria-labelledby="custom-tabs-four-IDO-tab">
+                            {{-- IDO --}}
+                            <button type="button" class="btn btn-success w-100" onclick="tambah_data_operasi()"><i
+                                    class="fa-fw fas fa-plus"></i> Tambah Data
+                                Operasi</button>
+                            <hr>
+                            {{-- History IDO --}}
+                            <div class="row mt-3" id="log_ido">
+                                @include('surveilans.log_ido')
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
-    </section>
-    @includeIf('surveilans.form')
+            </div>
+        </section>
+    </div>
+</section>
+@includeIf('surveilans.form')
 @endsection
 @push('js')
-    <script src="{{ asset('/') }}plugins/select2/js/select2.full.min.js"></script>
+<script src="{{ asset('/') }}plugins/select2/js/select2.full.min.js"></script>
 
-    <script src="{{ asset('/') }}plugins/popper/umd/popper.min.js"></script>
-    <script src="{{ asset('/') }}plugins/popper/umd/popper-utils.min.js"></script>
+<script src="{{ asset('/') }}plugins/popper/umd/popper.min.js"></script>
+<script src="{{ asset('/') }}plugins/popper/umd/popper-utils.min.js"></script>
 
 
-    <script>
-        $(function() {
+<script>
+    $(function() {
             $('.ruang_perawatan').select2({
                 theme: 'bootstrap4',
                 placeholder: "Select a Ruang Perawatan",
@@ -795,7 +796,7 @@
         function tambah_detail_phlebitis(id_header, obs = null) {
             resetForm();
             $('#modal-detail-phlebitis').modal('show');
-            $('#modal-detail-phlebitis .modal-title').text('Tambah Bundle Phlebitis');
+            $('#modal-detail-phlebitis .modal-title').text('Tambah Bundles Phlebitis');
             $('#modal-detail-phlebitis form')[0].reset();
             $('#modal-detail-phlebitis form').attr('action', `{{ route('surveilans.phlebitis') }}`);
             $('#modal-detail-phlebitis [name=_method]').val('post');
@@ -843,7 +844,7 @@
         function edit_detail_phlebitis(id) {
             resetForm();
             $('#modal-detail-phlebitis').modal('show');
-            $('#modal-detail-phlebitis .modal-title').text('Edit Data Bundle Phlebitis');
+            $('#modal-detail-phlebitis .modal-title').text('Edit Data Bundles Phlebitis');
             $('#modal-detail-phlebitis form')[0].reset();
             $.get("{{ url('surveilans/phlebitisdetail') }}/" + id)
                 .done((response) => {
@@ -914,7 +915,7 @@
         function tambah_detail_isk(id_header, obs = null) {
             resetForm();
             $('#modal-detail-isk').modal('show');
-            $('#modal-detail-isk .modal-title').text('Tambah Bundle ISK');
+            $('#modal-detail-isk .modal-title').text('Tambah Bundles ISK');
             $('#modal-detail-isk form')[0].reset();
             $('#modal-detail-isk form').attr('action', `{{ route('surveilans.isk') }}`);
             $('#modal-detail-isk [name=_method]').val('post');
@@ -961,7 +962,7 @@
         function edit_detail_isk(id) {
             resetForm();
             $('#modal-detail-isk').modal('show');
-            $('#modal-detail-isk .modal-title').text('Edit Data Bundle ISK');
+            $('#modal-detail-isk .modal-title').text('Edit Data Bundles ISK');
             $('#modal-detail-isk form')[0].reset();
             $.get("{{ url('surveilans/iskdetail') }}/" + id)
                 .done((response) => {
@@ -1032,7 +1033,7 @@
         function tambah_detail_iadp(id_header, obs = null) {
             resetForm();
             $('#modal-detail-iadp').modal('show');
-            $('#modal-detail-iadp .modal-title').text('Tambah Bundle IADP');
+            $('#modal-detail-iadp .modal-title').text('Tambah Bundles IADP');
             $('#modal-detail-iadp form')[0].reset();
             $('#modal-detail-iadp form').attr('action', `{{ route('surveilans.iadp') }}`);
             $('#modal-detail-iadp [name=_method]').val('post');
@@ -1079,7 +1080,7 @@
         function edit_detail_iadp(id) {
             resetForm();
             $('#modal-detail-iadp').modal('show');
-            $('#modal-detail-iadp .modal-title').text('Edit Data Bundle IADP');
+            $('#modal-detail-iadp .modal-title').text('Edit Data Bundles IADP');
             $('#modal-detail-iadp form')[0].reset();
             $.get("{{ url('surveilans/iadpdetail') }}/" + id)
                 .done((response) => {
@@ -1150,7 +1151,7 @@
         function tambah_detail_vap(id_header, obs = null) {
             resetForm();
             $('#modal-detail-vap').modal('show');
-            $('#modal-detail-vap .modal-title').text('Tambah Bundle VAP');
+            $('#modal-detail-vap .modal-title').text('Tambah Bundles VAP');
             $('#modal-detail-vap form')[0].reset();
             $('#modal-detail-vap form').attr('action', `{{ route('surveilans.vap') }}`);
             $('#modal-detail-vap [name=_method]').val('post');
@@ -1195,7 +1196,7 @@
         function edit_detail_vap(id) {
             resetForm();
             $('#modal-detail-vap').modal('show');
-            $('#modal-detail-vap .modal-title').text('Edit Data Bundle VAP');
+            $('#modal-detail-vap .modal-title').text('Edit Data Bundles VAP');
             $('#modal-detail-vap form')[0].reset();
             $.get("{{ url('surveilans/vapdetail') }}/" + id)
                 .done((response) => {
@@ -1485,5 +1486,5 @@
             $(".ruang_perawatan").val(null).trigger("change");
             $(".lokasicatheter").val(null).trigger("change");
         }
-    </script>
+</script>
 @endpush

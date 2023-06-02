@@ -42,11 +42,11 @@ class PasienDirawatController extends Controller
                     $button = '';
 
                     if ($selisih > 3) {
-                        $button = '<button data-los="' . $selisih . '" class="btn btn-flat btn-danger">' . $selisih . '</button>';
+                        $button = '<button data-los="' . $selisih . '" class="btn btn-flat btn-danger w-100 p-2">' . $selisih . '</button>';
                     } elseif ($selisih == 1) {
-                        $button = '<button data-los="' . $selisih . '" class="btn btn-flat btn-info">' . $selisih . '</button>';
+                        $button = '<button data-los="' . $selisih . '" class="btn btn-flat btn-info w-100 p-2">' . $selisih . '</button>';
                     } else {
-                        $button = '<button data-los="' . $selisih . '" class="btn btn-flat btn-warning">' . $selisih . '</button>';
+                        $button = '<button data-los="' . $selisih . '" class="btn btn-flat btn-warning w-100 p-2">' . $selisih . '</button>';
                     }
                     return $button;
                 } else {

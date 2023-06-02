@@ -26,9 +26,9 @@
                                 <select name="ruang_perawatan" id="ruang_perawatan"
                                     class="form-control form-control-sm ruang_perawatan" required>
                                     @foreach ($ruangan as $key => $item)
-                                        <option value="{{ $key }}">
-                                            {{ $item }} ({{ $key }})
-                                        </option>
+                                    <option value="{{ $key }}">
+                                        {{ $item }} ({{ $key }})
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -47,9 +47,9 @@
                                     class="form-control form-control-sm ruanganpemasangan" required>
                                     <option value="" hidden>Pilih Ruangan</option>
                                     @foreach ($ruangan as $key => $item)
-                                        <option value="{{ $key }}">{{ $item }}
-                                            ({{ $key }})
-                                        </option>
+                                    <option value="{{ $key }}">{{ $item }}
+                                        ({{ $key }})
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -73,8 +73,8 @@
                                     class="form-control form-control-sm jeniscairan" required>
                                     <option value="" hidden>Pilih Jenis Cairan</option>
                                     @foreach ($jenis_cairan as $jenis)
-                                        <option value="{{ $jenis->nama_cairan }}">{{ $jenis->nama_cairan }}
-                                        </option>
+                                    <option value="{{ $jenis->nama_cairan }}">{{ $jenis->nama_cairan }}
+                                    </option>
                                     @endforeach
                                 </select> --}}
                             </div>
@@ -85,9 +85,9 @@
                                     class="form-control form-control-sm lokasicatheter" required>
                                     <option value="" hidden>Pilih Lokasi Pemasangan</option>
                                     @foreach ($lokasi_catheter as $lokasi)
-                                        <option value="{{ $lokasi->lokasi }}">{{ $lokasi->lokasi }}
-                                            ({{ $lokasi->lokasi2 }})
-                                        </option>
+                                    <option value="{{ $lokasi->lokasi }}">{{ $lokasi->lokasi }}
+                                        ({{ $lokasi->lokasi2 }})
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -133,8 +133,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="id_header">ID Header<small class="text-danger">*</small></label>
-                                <input type="text" class="form-control form-control-sm" name="id_header"
-                                    id="id_header" readonly required>
+                                <input type="text" class="form-control form-control-sm" name="id_header" id="id_header"
+                                    readonly required>
                                 <input type="hidden" class="form-control form-control-sm" name="no_registrasi"
                                     id="no_registrasi" required>
                             </div>
@@ -151,12 +151,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="antibiotik_phlebitis">Antibiotik</label>
-                                <textarea class="form-control form-control-sm" name="antibiotik_phlebitis" id="antibiotik_phlebitis" rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="antibiotik_phlebitis"
+                                    id="antibiotik_phlebitis" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="hasil_kultur_phlebitis">Hasil Kultur</label>
-                                <textarea class="form-control form-control-sm" name="hasil_kultur_phlebitis" id="hasil_kultur_phlebitis"
-                                    rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="hasil_kultur_phlebitis"
+                                    id="hasil_kultur_phlebitis" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_pemeriksaan_kultur_phlebitis">Tanggal Pemeriksaan
@@ -168,29 +169,29 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="">Bundle Phlebitis</label>
+                                <label for="">Bundles Phlebitis</label>
                                 @foreach ($phlebitis_bundle as $phlebitis)
-                                    <div class="form-check">
-                                        <input class="form-check-input phlebitis_bundle" type="checkbox"
-                                            value="{{ $phlebitis->bundle }}" name="phlebitis_bundle[]"
-                                            id="{{ $phlebitis->bundle }}">
-                                        <label class="form-check-label" for="{{ $phlebitis->bundle }}">
-                                            {{ $phlebitis->bundle }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input phlebitis_bundle" type="checkbox"
+                                        value="{{ $phlebitis->bundle }}" name="phlebitis_bundle[]"
+                                        id="{{ $phlebitis->bundle }}">
+                                    <label class="form-check-label" for="{{ $phlebitis->bundle }}">
+                                        {{ $phlebitis->bundle }}
+                                    </label>
+                                </div>
                                 @endforeach
                             </div>
                             <div class="form-group">
                                 <label for="">Tanda dan Gejala</label>
                                 @foreach ($phlebitis_gejala as $phlebitisgejala)
-                                    <div class="form-check">
-                                        <input class="form-check-input phlebitis_gejala" type="checkbox"
-                                            value="{{ $phlebitisgejala->gejala }}" name="phlebitis_gejala[]"
-                                            id="{{ $phlebitisgejala->gejala }}">
-                                        <label class="form-check-label" for="{{ $phlebitisgejala->gejala }}">
-                                            {{ $phlebitisgejala->gejala }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input phlebitis_gejala" type="checkbox"
+                                        value="{{ $phlebitisgejala->gejala }}" name="phlebitis_gejala[]"
+                                        id="{{ $phlebitisgejala->gejala }}">
+                                    <label class="form-check-label" for="{{ $phlebitisgejala->gejala }}">
+                                        {{ $phlebitisgejala->gejala }}
+                                    </label>
+                                </div>
                                 @endforeach
                             </div>
                             <div class="form-group">
@@ -244,14 +245,13 @@
                                     id="no_registrasi" value="" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="ruang_perawatan">Ruang Perawatan<small
-                                        class="text-danger">*</small></label>
+                                <label for="ruang_perawatan">Ruang Perawatan<small class="text-danger">*</small></label>
                                 <select name="ruang_perawatan" id="ruang_perawatan"
                                     class="form-control form-control-sm ruang_perawatan" required>
                                     @foreach ($ruangan as $key => $item)
-                                        <option value="{{ $key }}">
-                                            {{ $item }} ({{ $key }})
-                                        </option>
+                                    <option value="{{ $key }}">
+                                        {{ $item }} ({{ $key }})
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -269,9 +269,9 @@
                                     class="form-control form-control-sm ruanganpemasangan" required>
                                     <option value="" hidden>Pilih Ruangan</option>
                                     @foreach ($ruangan as $key => $item)
-                                        <option value="{{ $key }}">{{ $item }}
-                                            ({{ $key }})
-                                        </option>
+                                    <option value="{{ $key }}">{{ $item }}
+                                        ({{ $key }})
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -284,8 +284,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="nomor_uc">Nomor Urine Catheter<small class="text-danger">*</small></label>
-                                <input type="number" class="form-control form-control-sm" name="nomor_uc"
-                                    id="nomor_uc" min="1" max="99" required>
+                                <input type="number" class="form-control form-control-sm" name="nomor_uc" id="nomor_uc"
+                                    min="1" max="99" required>
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_pemasangan">Tanggal Pemasangan<small
@@ -329,8 +329,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="id_header">ID Header<small class="text-danger">*</small></label>
-                                <input type="text" class="form-control form-control-sm" name="id_header"
-                                    id="id_header" readonly required>
+                                <input type="text" class="form-control form-control-sm" name="id_header" id="id_header"
+                                    readonly required>
                                 <input type="hidden" class="form-control form-control-sm" name="no_registrasi"
                                     id="no_registrasi" required>
                             </div>
@@ -347,11 +347,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="antibiotik_isk">Antibiotik</label>
-                                <textarea class="form-control form-control-sm" name="antibiotik_isk" id="antibiotik_isk" rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="antibiotik_isk" id="antibiotik_isk"
+                                    rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="hasil_kultur_isk">Hasil Kultur</label>
-                                <textarea class="form-control form-control-sm" name="hasil_kultur_isk" id="hasil_kultur_isk" rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="hasil_kultur_isk"
+                                    id="hasil_kultur_isk" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_pemeriksaan_kultur_isk">Tanggal Pemeriksaan
@@ -362,29 +364,28 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="">Bundle ISK</label>
+                                <label for="">Bundles ISK</label>
                                 @foreach ($isk_bundle as $isk)
-                                    <div class="form-check">
-                                        <input class="form-check-input isk_bundle" type="checkbox"
-                                            value="{{ $isk->bundle }}" name="isk_bundle[]"
-                                            id="iskbundle{{ $isk->id }}">
-                                        <label class="form-check-label" for="iskbundle{{ $isk->id }}">
-                                            {{ $isk->bundle }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input isk_bundle" type="checkbox"
+                                        value="{{ $isk->bundle }}" name="isk_bundle[]" id="iskbundle{{ $isk->id }}">
+                                    <label class="form-check-label" for="iskbundle{{ $isk->id }}">
+                                        {{ $isk->bundle }}
+                                    </label>
+                                </div>
                                 @endforeach
                             </div>
                             <div class="form-group">
                                 <label for="">Tanda dan Gejala</label>
                                 @foreach ($isk_gejala as $iskgejala)
-                                    <div class="form-check">
-                                        <input class="form-check-input isk_gejala" type="checkbox"
-                                            value="{{ $iskgejala->gejala }}" name="isk_gejala[]"
-                                            id="iskgejala{{ $iskgejala->id }}">
-                                        <label class="form-check-label" for="iskgejala{{ $iskgejala->id }}">
-                                            {{ $iskgejala->gejala }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input isk_gejala" type="checkbox"
+                                        value="{{ $iskgejala->gejala }}" name="isk_gejala[]"
+                                        id="iskgejala{{ $iskgejala->id }}">
+                                    <label class="form-check-label" for="iskgejala{{ $iskgejala->id }}">
+                                        {{ $iskgejala->gejala }}
+                                    </label>
+                                </div>
                                 @endforeach
                             </div>
                             <div class="form-group">
@@ -437,20 +438,18 @@
                                     id="no_registrasi" value="" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="ruang_perawatan">Ruang Perawatan<small
-                                        class="text-danger">*</small></label>
+                                <label for="ruang_perawatan">Ruang Perawatan<small class="text-danger">*</small></label>
                                 <select name="ruang_perawatan" id="ruang_perawatan"
                                     class="form-control form-control-sm ruang_perawatan" required>
                                     @foreach ($ruangan as $key => $item)
-                                        <option value="{{ $key }}">
-                                            {{ $item }} ({{ $key }})
-                                        </option>
+                                    <option value="{{ $key }}">
+                                        {{ $item }} ({{ $key }})
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pemasangan_ke">Pemasangan CVC Ke<small
-                                        class="text-danger">*</small></label>
+                                <label for="pemasangan_ke">Pemasangan CVC Ke<small class="text-danger">*</small></label>
                                 <input type="number" class="form-control form-control-sm" name="pemasangan_ke"
                                     id="pemasangan_ke" min="1" max="99"
                                     value="{{ max_iadp_header($data_registrasi->no_registrasi) }}" autofocus required>
@@ -462,9 +461,9 @@
                                     class="form-control form-control-sm ruanganpemasangan" required>
                                     <option value="" hidden>Pilih Ruangan</option>
                                     @foreach ($ruangan as $key => $item)
-                                        <option value="{{ $key }}">{{ $item }}
-                                            ({{ $key }})
-                                        </option>
+                                    <option value="{{ $key }}">{{ $item }}
+                                        ({{ $key }})
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -522,8 +521,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="id_header">ID Header<small class="text-danger">*</small></label>
-                                <input type="text" class="form-control form-control-sm" name="id_header"
-                                    id="id_header" readonly required>
+                                <input type="text" class="form-control form-control-sm" name="id_header" id="id_header"
+                                    readonly required>
                                 <input type="hidden" class="form-control form-control-sm" name="no_registrasi"
                                     id="no_registrasi" required>
                             </div>
@@ -540,11 +539,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="antibiotik_iadp">Antibiotik</label>
-                                <textarea class="form-control form-control-sm" name="antibiotik_iadp" id="antibiotik_iadp" rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="antibiotik_iadp"
+                                    id="antibiotik_iadp" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="hasil_kultur_iadp">Hasil Kultur</label>
-                                <textarea class="form-control form-control-sm" name="hasil_kultur_iadp" id="hasil_kultur_iadp" rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="hasil_kultur_iadp"
+                                    id="hasil_kultur_iadp" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_pemeriksaan_kultur_iadp">Tanggal Pemeriksaan
@@ -555,29 +556,28 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="">Bundle IADP</label>
+                                <label for="">Bundles IADP</label>
                                 @foreach ($iadp_bundle as $iadp)
-                                    <div class="form-check">
-                                        <input class="form-check-input iadp_bundle" type="checkbox"
-                                            value="{{ $iadp->bundle }}" name="iadp_bundle[]"
-                                            id="iadpbundle{{ $iadp->id }}">
-                                        <label class="form-check-label" for="iadpbundle{{ $iadp->id }}">
-                                            {{ $iadp->bundle }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input iadp_bundle" type="checkbox"
+                                        value="{{ $iadp->bundle }}" name="iadp_bundle[]" id="iadpbundle{{ $iadp->id }}">
+                                    <label class="form-check-label" for="iadpbundle{{ $iadp->id }}">
+                                        {{ $iadp->bundle }}
+                                    </label>
+                                </div>
                                 @endforeach
                             </div>
                             <div class="form-group">
                                 <label for="">Tanda dan Gejala</label>
                                 @foreach ($iadp_gejala as $iadpgejala)
-                                    <div class="form-check">
-                                        <input class="form-check-input iadp_gejala" type="checkbox"
-                                            value="{{ $iadpgejala->gejala }}" name="iadp_gejala[]"
-                                            id="iadpgejala{{ $iadpgejala->id }}">
-                                        <label class="form-check-label" for="iadpgejala{{ $iadpgejala->id }}">
-                                            {{ $iadpgejala->gejala }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input iadp_gejala" type="checkbox"
+                                        value="{{ $iadpgejala->gejala }}" name="iadp_gejala[]"
+                                        id="iadpgejala{{ $iadpgejala->id }}">
+                                    <label class="form-check-label" for="iadpgejala{{ $iadpgejala->id }}">
+                                        {{ $iadpgejala->gejala }}
+                                    </label>
+                                </div>
                                 @endforeach
                             </div>
                             <div class="form-group">
@@ -589,8 +589,8 @@
                                     <label class="form-check-label" for="ya_iadp">Ya</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="status_iadp"
-                                        id="tidak_iadp" value="Tidak" required>
+                                    <input class="form-check-input" type="radio" name="status_iadp" id="tidak_iadp"
+                                        value="Tidak" required>
                                     <label class="form-check-label" for="tidak_iadp">Tidak</label>
                                 </div>
                             </div>
@@ -630,14 +630,13 @@
                                     id="no_registrasi" value="" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="ruang_perawatan">Ruang Perawatan<small
-                                        class="text-danger">*</small></label>
+                                <label for="ruang_perawatan">Ruang Perawatan<small class="text-danger">*</small></label>
                                 <select name="ruang_perawatan" id="ruang_perawatan"
                                     class="form-control form-control-sm ruang_perawatan" required>
                                     @foreach ($ruangan as $key => $item)
-                                        <option value="{{ $key }}">
-                                            {{ $item }} ({{ $key }})
-                                        </option>
+                                    <option value="{{ $key }}">
+                                        {{ $item }} ({{ $key }})
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -657,9 +656,9 @@
                                     class="form-control form-control-sm ruanganpemasangan" required>
                                     <option value="" hidden>Pilih Ruangan</option>
                                     @foreach ($ruangan as $key => $item)
-                                        <option value="{{ $key }}">{{ $item }}
-                                            ({{ $key }})
-                                        </option>
+                                    <option value="{{ $key }}">{{ $item }}
+                                        ({{ $key }})
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -705,8 +704,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="id_header">ID Header<small class="text-danger">*</small></label>
-                                <input type="text" class="form-control form-control-sm" name="id_header"
-                                    id="id_header" readonly required>
+                                <input type="text" class="form-control form-control-sm" name="id_header" id="id_header"
+                                    readonly required>
                                 <input type="hidden" class="form-control form-control-sm" name="no_registrasi"
                                     id="no_registrasi" required>
                             </div>
@@ -723,11 +722,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="antibiotik_vap">Antibiotik</label>
-                                <textarea class="form-control form-control-sm" name="antibiotik_vap" id="antibiotik_vap" rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="antibiotik_vap" id="antibiotik_vap"
+                                    rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="hasil_kultur_vap">Hasil Kultur</label>
-                                <textarea class="form-control form-control-sm" name="hasil_kultur_vap" id="hasil_kultur_vap" rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="hasil_kultur_vap"
+                                    id="hasil_kultur_vap" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_pemeriksaan_kultur_vap">Tanggal Pemeriksaan
@@ -738,29 +739,28 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="">Bundle VAP</label>
+                                <label for="">Bundles VAP</label>
                                 @foreach ($vap_bundle as $vap)
-                                    <div class="form-check">
-                                        <input class="form-check-input vap_bundle" type="checkbox"
-                                            value="{{ $vap->bundle }}" name="vap_bundle[]"
-                                            id="vapbundle{{ $vap->id }}">
-                                        <label class="form-check-label" for="vapbundle{{ $vap->id }}">
-                                            {{ $vap->bundle }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input vap_bundle" type="checkbox"
+                                        value="{{ $vap->bundle }}" name="vap_bundle[]" id="vapbundle{{ $vap->id }}">
+                                    <label class="form-check-label" for="vapbundle{{ $vap->id }}">
+                                        {{ $vap->bundle }}
+                                    </label>
+                                </div>
                                 @endforeach
                             </div>
                             <div class="form-group">
                                 <label for="">Tanda dan Gejala</label>
                                 @foreach ($vap_gejala as $vapgejala)
-                                    <div class="form-check">
-                                        <input class="form-check-input vap_gejala" type="checkbox"
-                                            value="{{ $vapgejala->gejala }}" name="vap_gejala[]"
-                                            id="vapgejala{{ $vapgejala->id }}">
-                                        <label class="form-check-label" for="vapgejala{{ $vapgejala->id }}">
-                                            {{ $vapgejala->gejala }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input vap_gejala" type="checkbox"
+                                        value="{{ $vapgejala->gejala }}" name="vap_gejala[]"
+                                        id="vapgejala{{ $vapgejala->id }}">
+                                    <label class="form-check-label" for="vapgejala{{ $vapgejala->id }}">
+                                        {{ $vapgejala->gejala }}
+                                    </label>
+                                </div>
                                 @endforeach
                             </div>
                             <div class="form-group">
@@ -821,8 +821,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="jadwal_operasi">Jadwal Operasi<small class="text-danger">*</small></label>
-                                <input type="datetime-local" class="form-control form-control-sm"
-                                    name="jadwal_operasi" id="jadwal_operasi" required>
+                                <input type="datetime-local" class="form-control form-control-sm" name="jadwal_operasi"
+                                    id="jadwal_operasi" required>
                             </div>
                             <div class="form-group">
                                 <label for="jenis_operasi">Jenis Operasi<small class="text-danger">*</small></label>
@@ -833,8 +833,8 @@
                                     <label class="form-check-label" for="elektif_operasi">Elektif</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="jenis_operasi"
-                                        id="cito_operasi" value="CITO" required>
+                                    <input class="form-check-input" type="radio" name="jenis_operasi" id="cito_operasi"
+                                        value="CITO" required>
                                     <label class="form-check-label" for="cito_operasi">CITO / Darurat</label>
                                 </div>
                             </div>
@@ -868,29 +868,28 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="ruang_perawatan">Ruang Perawatan<small
-                                        class="text-danger">*</small></label>
+                                <label for="ruang_perawatan">Ruang Perawatan<small class="text-danger">*</small></label>
                                 <select name="ruang_perawatan" id="ruang_perawatan"
                                     class="form-control form-control-sm ruang_perawatan" required>
                                     @foreach ($ruangan as $key => $item)
-                                        <option value="{{ $key }}">
-                                            {{ $item }} ({{ $key }})
-                                        </option>
+                                    <option value="{{ $key }}">
+                                        {{ $item }} ({{ $key }})
+                                    </option>
                                     @endforeach
                                 </select>
-                                <input type="hidden" class="form-control form-control-sm" name="ido_pre"
-                                    id="ido_pre" value=true>
+                                <input type="hidden" class="form-control form-control-sm" name="ido_pre" id="ido_pre"
+                                    value=true>
                             </div>
                             <div class="form-group">
                                 <label for="jadwal_operasi">Jadwal Operasi<small class="text-danger">*</small></label>
-                                <input type="datetime-local" class="form-control form-control-sm"
-                                    name="jadwal_operasi" id="jadwal_operasi" required>
+                                <input type="datetime-local" class="form-control form-control-sm" name="jadwal_operasi"
+                                    id="jadwal_operasi" required>
                             </div>
                             <div class="form-group">
                                 <label for="suhu">Suhu</label>
                                 <div class="input-group input-group-sm">
-                                    <input type="number" class="form-control form-control-sm" name="suhu"
-                                        id="suhu" min="1" max="99" />
+                                    <input type="number" class="form-control form-control-sm" name="suhu" id="suhu"
+                                        min="1" max="99" />
                                     <div class="input-group-append">
                                         <div class="input-group-text text-bold"> °C</div>
                                     </div>
@@ -898,8 +897,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="gds">GDS / Kadar Gula Darah</label>
-                                <input type="number" class="form-control form-control-sm" name="gds"
-                                    id="gds" min="1" />
+                                <input type="number" class="form-control form-control-sm" name="gds" id="gds" min="1" />
                             </div>
                             <div class="form-group" id="screening_mrsa">
                                 <label for="screening_mrsa">Screening MRSA<small class="text-danger">*</small></label>
@@ -910,13 +908,13 @@
                                     <label class="form-check-label" for="tidak_dilakukan_mrsa">Tidak Dilakukan</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="screening_mrsa"
-                                        id="positif_mrsa" value="Positif" required>
+                                    <input class="form-check-input" type="radio" name="screening_mrsa" id="positif_mrsa"
+                                        value="Positif" required>
                                     <label class="form-check-label" for="positif_mrsa">Positif MRSA</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="screening_mrsa"
-                                        id="negatif_mrsa" value="Negatif" required>
+                                    <input class="form-check-input" type="radio" name="screening_mrsa" id="negatif_mrsa"
+                                        value="Negatif" required>
                                     <label class="form-check-label" for="negatif_mrsa">Negatif MRSA</label>
                                 </div>
                             </div>
@@ -945,8 +943,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="antibiotik_profilaksis">Antibiotik Profilaksis</label>
-                                <textarea class="form-control form-control-sm" name="antibiotik_profilaksis" id="antibiotik_profilaksis"
-                                    rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="antibiotik_profilaksis"
+                                    id="antibiotik_profilaksis" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="waktu_pemberian_profilaksis">Waktu Pemberian AB Profilaksis</label>
@@ -955,21 +953,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="riwayat_penyakit">Riwayat Penyakit</label>
-                                <textarea class="form-control form-control-sm" name="riwayat_penyakit" id="riwayat_penyakit" rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="riwayat_penyakit"
+                                    id="riwayat_penyakit" rows="3"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="">Bundle Pre Operasi</label>
+                                <label for="">Bundles Pre Operasi</label>
                                 @foreach ($ido_bundle as $ido)
-                                    @if ($ido->waktu == 'Pre Operasi')
-                                        <div class="form-check">
-                                            <input class="form-check-input bundle_pre" type="checkbox"
-                                                value="{{ $ido->bundle }}" name="bundle_pre[]"
-                                                id="idobundle{{ $ido->id }}">
-                                            <label class="form-check-label" for="idobundle{{ $ido->id }}">
-                                                {{ $ido->bundle }}
-                                            </label>
-                                        </div>
-                                    @endif
+                                @if ($ido->waktu == 'Pre Operasi')
+                                <div class="form-check">
+                                    <input class="form-check-input bundle_pre" type="checkbox"
+                                        value="{{ $ido->bundle }}" name="bundle_pre[]" id="idobundle{{ $ido->id }}">
+                                    <label class="form-check-label" for="idobundle{{ $ido->id }}">
+                                        {{ $ido->bundle }}
+                                    </label>
+                                </div>
+                                @endif
                                 @endforeach
                             </div>
                         </div>
@@ -1011,8 +1009,8 @@
                                     <label class="form-check-label" for="elektif_operasi">Elektif</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="jenis_operasi"
-                                        id="cito_operasi" value="CITO" disabled>
+                                    <input class="form-check-input" type="radio" name="jenis_operasi" id="cito_operasi"
+                                        value="CITO" disabled>
                                     <label class="form-check-label" for="cito_operasi">CITO / Darurat</label>
                                 </div>
                                 <input type="hidden" class="form-control form-control-sm" name="ido_intra"
@@ -1026,8 +1024,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="nama_prosedur_operasi">Nama Prosedur Operasi</label>
-                                <input type="text" class="form-control form-control-sm"
-                                    name="nama_prosedur_operasi" id="nama_prosedur_operasi" />
+                                <input type="text" class="form-control form-control-sm" name="nama_prosedur_operasi"
+                                    id="nama_prosedur_operasi" />
                             </div>
                             <div class="form-group">
                                 <label for="kualifikasi_daerah_operasi">Kualifikasi Daerah Operasi</label>
@@ -1054,22 +1052,21 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="antibiotik_tambahan_intra">Antibiotik Tambahan Intra Operasi</label>
-                                <textarea class="form-control form-control-sm" name="antibiotik_tambahan_intra" id="antibiotik_tambahan_intra"
-                                    rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="antibiotik_tambahan_intra"
+                                    id="antibiotik_tambahan_intra" rows="3"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="">Bundle Intra Operasi</label>
+                                <label for="">Bundles Intra Operasi</label>
                                 @foreach ($ido_bundle as $ido)
-                                    @if ($ido->waktu == 'Intra Operasi')
-                                        <div class="form-check">
-                                            <input class="form-check-input bundle_intra" type="checkbox"
-                                                value="{{ $ido->bundle }}" name="bundle_intra[]"
-                                                id="idobundle{{ $ido->id }}">
-                                            <label class="form-check-label" for="idobundle{{ $ido->id }}">
-                                                {{ $ido->bundle }}
-                                            </label>
-                                        </div>
-                                    @endif
+                                @if ($ido->waktu == 'Intra Operasi')
+                                <div class="form-check">
+                                    <input class="form-check-input bundle_intra" type="checkbox"
+                                        value="{{ $ido->bundle }}" name="bundle_intra[]" id="idobundle{{ $ido->id }}">
+                                    <label class="form-check-label" for="idobundle{{ $ido->id }}">
+                                        {{ $ido->bundle }}
+                                    </label>
+                                </div>
+                                @endif
                                 @endforeach
                             </div>
                         </div>
@@ -1104,48 +1101,48 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="">Bundle Post Operasi</label>
+                                <label for="">Bundles Post Operasi</label>
                                 @foreach ($ido_bundle as $ido)
-                                    @if ($ido->waktu == 'Post Operasi')
-                                        <div class="form-check">
-                                            <input class="form-check-input bundle_post" type="checkbox"
-                                                value="{{ $ido->bundle }}" name="bundle_post[]"
-                                                id="idobundle{{ $ido->id }}">
-                                            <label class="form-check-label" for="idobundle{{ $ido->id }}">
-                                                {{ $ido->bundle }}
-                                            </label>
-                                        </div>
-                                    @endif
+                                @if ($ido->waktu == 'Post Operasi')
+                                <div class="form-check">
+                                    <input class="form-check-input bundle_post" type="checkbox"
+                                        value="{{ $ido->bundle }}" name="bundle_post[]" id="idobundle{{ $ido->id }}">
+                                    <label class="form-check-label" for="idobundle{{ $ido->id }}">
+                                        {{ $ido->bundle }}
+                                    </label>
+                                </div>
+                                @endif
                                 @endforeach
                             </div>
                             <div class="form-group">
                                 <label for="">Tanda dan Gejala</label>
                                 @foreach ($ido_gejala as $idogejala)
-                                    <div class="form-check">
-                                        <input class="form-check-input ido_gejala" type="checkbox"
-                                            value="{{ $idogejala->gejala }}" name="ido_gejala[]"
-                                            id="idogejala{{ $idogejala->id }}">
-                                        <label class="form-check-label" for="idogejala{{ $idogejala->id }}">
-                                            {{ $idogejala->gejala }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input ido_gejala" type="checkbox"
+                                        value="{{ $idogejala->gejala }}" name="ido_gejala[]"
+                                        id="idogejala{{ $idogejala->id }}">
+                                    <label class="form-check-label" for="idogejala{{ $idogejala->id }}">
+                                        {{ $idogejala->gejala }}
+                                    </label>
+                                </div>
                                 @endforeach
                             </div>
                             <div class="form-group">
                                 <label for="keterangan">Keterangan</label>
-                                <textarea class="form-control form-control-sm" name="keterangan" id="keterangan" rows="3"></textarea>
+                                <textarea class="form-control form-control-sm" name="keterangan" id="keterangan"
+                                    rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="status_ido">Status IDO<small class="text-danger">*</small></label>
                                 <br>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="status_ido"
-                                        id="ya_ido" value="Ya" required>
+                                    <input class="form-check-input" type="radio" name="status_ido" id="ya_ido"
+                                        value="Ya" required>
                                     <label class="form-check-label" for="ya_ido">Ya</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="status_ido"
-                                        id="tidak_ido" value="Tidak" required>
+                                    <input class="form-check-input" type="radio" name="status_ido" id="tidak_ido"
+                                        value="Tidak" required>
                                     <label class="form-check-label" for="tidak_ido">Tidak</label>
                                 </div>
                             </div>

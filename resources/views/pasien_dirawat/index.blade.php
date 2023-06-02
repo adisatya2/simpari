@@ -100,7 +100,7 @@
                         <div class="card">
                             <div class="card-body table-responsive">
 
-                                <table id="table" class="table table-bordered table-hover">
+                                <table id="table" class="table table-sm table-bordered table-hover">
                                     <thead>
                                         <th width="1%">Aksi</th>
                                         <th>No</th>
@@ -382,55 +382,63 @@
                 },
                 columns: [{
                         data: 'aksi',
-                        className: "text-center notexport",
+                        className: "text-center align-middle notexport",
                         searchable: false,
                         sortable: false
                     },
                     {
                         data: 'no_kamar2',
-                        className: "text-center text-nowrap notexport"
+                        className: "text-center text-nowrap align-middle notexport"
                     },
                     {
                         data: 'no_kamar',
-                        className: "text-center text-bold text-nowrap",
+                        className: "text-center text-bold align-middle text-nowrap",
                         visible: false
                     },
                     {
                         data: 'kelas_bed.nama_kelas',
-                        className: "text-nowrap"
+                        className: "align-middle"
                     },
                     {
                         data: 'los',
-                        className: "text-center"
+                        className: "text-center align-middle p-0"
                     },
                     {
-                        data: 'mrn'
+                        data: 'mrn',
+                        className: "align-middle"
                     },
                     {
-                        data: 'nama_pasien'
+                        data: 'nama_pasien',
+                        className: "text-nowrap align-middle"
                     },
                     {
-                        data: 'diagnosa'
+                        data: 'diagnosa',
+                        className: "align-middle"
                     },
                     {
                         data: 'dokter',
-                        className: "notexport"
+                        className: "align-middle notexport",
                     },
                     {
                         data: 'nama_dokter',
+                        className: "align-middle",
                         visible: false
                     },
                     {
-                        data: 'nama_jaminan'
+                        data: 'nama_jaminan',
+                        className: "align-middle"
                     },
                     {
-                        data: 'hak_pasien'
+                        data: 'hak_pasien',
+                        className: "align-middle"
                     },
                     {
-                        data: 'bed_hinai'
+                        data: 'bed_hinai',
+                        className: "align-middle"
                     },
                     {
-                        data: 'tanggal_masuk'
+                        data: 'tanggal_masuk',
+                        className: "align-middle"
                     },
                     {
                         data: 'keterangan_fo'

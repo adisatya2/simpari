@@ -1,372 +1,371 @@
 @extends('layouts.master')
 @section('title', 'Laporan HAIs')
 @push('head')
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="{{ asset('/') }}plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('/') }}plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="{{ asset('/') }}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
 
-    <style>
-        .dataTables_length,
-        .dataTables_filter {
-            margin-left: 30px;
-            float: right;
-        }
+<style>
+    .dataTables_length,
+    .dataTables_filter {
+        margin-left: 30px;
+        float: right;
+    }
 
-        .select2-dropdown {
-            font-size: 12px;
-        }
+    .select2-dropdown {
+        font-size: 12px;
+    }
 
-        tfoot {
-            display: table-row-group;
-        }
-    </style>
+    tfoot {
+        display: table-row-group;
+    }
+</style>
 @endpush
 @section('breadcrumbs')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Laporan HAIs</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Laporan HAIs</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Laporan HAIs</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                    <li class="breadcrumb-item active">Laporan HAIs</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
 @endsection
 
 @section('content')
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <section class="content">
-                <div class="card">
-                    <div class="card-body row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label for="ruangan">Ruangan</label>
-                                <div class="input-group">
-                                    <select name="ruangan" id="ruangan" class="form-control select2bs4">
-                                        <option value="">Semua Ruangan</option>
-                                        @foreach ($ruangan as $key => $item)
-                                            <option value="{{ $key }}">{{ $item }}
-                                                ({{ $key }})
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    {{-- <div class="input-group-prepend">
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <section class="content">
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="ruangan">Ruangan</label>
+                            <div class="input-group">
+                                <select name="ruangan" id="ruangan" class="form-control select2bs4">
+                                    <option value="">Semua Ruangan</option>
+                                    @foreach ($ruangan as $key => $item)
+                                    <option value="{{ $key }}">{{ $item }}
+                                        ({{ $key }})
+                                    </option>
+                                    @endforeach
+                                </select>
+                                {{-- <div class="input-group-prepend">
                                     <button type="button" onclick="search()" class="btn btn-info"><i
                                             class="fa-fw fas fa-search"></i></button>
                                 </div> --}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-8">
-                            <div class="form-group">
-                                <label for="tanggal_awal">Tanggal</label>
-                                <div class="input-group">
-                                    <input type="date" name="tanggal_awal" id="tanggal_awal"
-                                        value="{{ date('Y-m-d', strtotime('-30 day', strtotime(date('Y-m-d')))) }}"
-                                        class="form-control">
-                                    <div class="input-group-prepend">
-                                        <span class="m-2"><i class="fa-fw fas fa-minus"></i></span>
-                                    </div>
-                                    <input type="date" name="tanggal_akhir" id="tanggal_akhir"
-                                        value="{{ date('Y-m-d') }}" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <button type="button" onclick="search()" class="btn btn-info w-100"><i
-                                    class="fa-fw fas fa-search"></i> Search</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-primary card-outline card-outline-tabs">
-                    <div class="card-header p-0 border-bottom-0">
-                        <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="custom-tabs-four-phlebitis-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-phlebitis" role="tab"
-                                    aria-controls="custom-tabs-four-phlebitis" aria-selected="true"
-                                    onclick="data_phlebitis()" value="phlebitis">Phlebitis</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-four-isk-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-isk" role="tab" aria-controls="custom-tabs-four-isk"
-                                    aria-selected="false" onclick="data_isk()" value="isk">ISK</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-four-iadp-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-iadp" role="tab" aria-controls="custom-tabs-four-iadp"
-                                    aria-selected="false" onclick="data_iadp()" value="iadp">IADP</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-four-vap-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-vap" role="tab" aria-controls="custom-tabs-four-vap"
-                                    aria-selected="false" onclick="data_vap()" value="vap">VAP</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-four-ido-tab" data-toggle="pill"
-                                    href="#custom-tabs-four-ido" role="tab" aria-controls="custom-tabs-four-ido"
-                                    aria-selected="false" onclick="data_ido()" value="ido">IDO</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="custom-tabs-four-tabContent">
-                            <div class="tab-pane fade table-responsive show active" id="custom-tabs-four-phlebitis"
-                                role="tabpanel" aria-labelledby="custom-tabs-four-phlebitis-tab">
-                                <table class="table table-sm table-bordered table-hover" id="table-phlebitis">
-                                    <thead>
-                                        <th>Aksi</th>
-                                        <th>Tanggal</th>
-                                        <th>MRN</th>
-                                        <th>Nama Pasien</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Tanggal MRS</th>
-                                        <th>Ruang</th>
-                                        <th>Pmsng Ke</th>
-                                        <th>Ruang Pmsngn</th>
-                                        <th>Jenis Cairan</th>
-                                        <th>No IVC</th>
-                                        <th>Lokasi Pasang</th>
-                                        <th>Tanggal Pemasangan</th>
-                                        <th>Tanggal Dilepas</th>
-                                        <th>Obs Ke</th>
-                                        <th>Bundle</th>
-                                        <th>Gejala</th>
-                                        <th>Status</th>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade table-responsive" id="custom-tabs-four-isk" role="tabpanel"
-                                aria-labelledby="custom-tabs-four-isk-tab">
-                                <table class="table table-sm table-bordered table-hover" id="table-isk">
-                                    <thead>
-                                        <th>Aksi</th>
-                                        <th>Tanggal</th>
-                                        <th>MRN</th>
-                                        <th>Nama Pasien</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Tanggal MRS</th>
-                                        <th>Ruang</th>
-                                        <th>Pmsng Ke</th>
-                                        <th>Ruang Pmsngn</th>
-                                        <th>No UC</th>
-                                        <th>Tanggal Pemasangan</th>
-                                        <th>Tanggal Dilepas</th>
-                                        <th>Obs Ke</th>
-                                        <th>Bundle</th>
-                                        <th>Gejala</th>
-                                        <th>Status</th>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade" id="custom-tabs-four-iadp" role="tabpanel"
-                                aria-labelledby="custom-tabs-four-iadp-tab">
-                                <table class="table table-sm table-bordered table-hover" id="table-iadp">
-                                    <thead>
-                                        <th>Aksi</th>
-                                        <th>Tanggal</th>
-                                        <th>MRN</th>
-                                        <th>Nama Pasien</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Tanggal MRS</th>
-                                        <th>Ruang</th>
-                                        <th>Pmsng Ke</th>
-                                        <th>Ruang Pmsngn</th>
-                                        <th>No CVC</th>
-                                        <th>Tanggal Pemasangan</th>
-                                        <th>Tanggal Dilepas</th>
-                                        <th>Obs Ke</th>
-                                        <th>Bundle</th>
-                                        <th>Gejala</th>
-                                        <th>Status</th>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade" id="custom-tabs-four-vap" role="tabpanel"
-                                aria-labelledby="custom-tabs-four-vap-tab">
-                                <table class="table table-sm table-bordered table-hover" id="table-vap">
-                                    <thead>
-                                        <th>Aksi</th>
-                                        <th>Tanggal</th>
-                                        <th>MRN</th>
-                                        <th>Nama Pasien</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Tanggal MRS</th>
-                                        <th>Ruang</th>
-                                        <th>Pmsng Ke</th>
-                                        <th>Ruang Pmsngn</th>
-                                        <th>Tanggal Pemasangan</th>
-                                        <th>Tanggal Dilepas</th>
-                                        <th>Obs Ke</th>
-                                        <th>Bundle</th>
-                                        <th>Gejala</th>
-                                        <th>Status</th>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade" id="custom-tabs-four-ido" role="tabpanel"
-                                aria-labelledby="custom-tabs-four-ido-tab">
-                                <table class="table table-sm table-bordered table-hover" id="table-ido">
-                                    <thead>
-                                        <th>Aksi</th>
-                                        <th>Tanggal</th>
-                                        <th>MRN</th>
-                                        <th>Nama Pasien</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Tanggal MRS</th>
-                                        <th>Ruang</th>
-                                        <th>OP Ke</th>
-                                        <th>Jadwal OP</th>
-                                        <th>Jenis OP</th>
-                                        <th>Suhu °C</th>
-                                        <th>GDS</th>
-                                        <th>MRSA</th>
-                                        <th>Pencukuran</th>
-                                        <th>Antibiotik Profilaksis</th>
-                                        <th>Waktu Pemberian AB</th>
-                                        <th>Riwayat Penyakit</th>
-                                        <th>Bundle Pre OP</th>
-                                        <th>Ruang OP</th>
-                                        <th>Nama Prosedur OP</th>
-                                        <th>Kualifikasi Daerah OP</th>
-                                        <th>Lama OP</th>
-                                        <th>Bundle Intra OP</th>
-                                        <th>Bundle Post OP</th>
-                                        <th>Gejala</th>
-                                        <th>Keterangan</th>
-                                        <th>Status</th>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Count Data HAIs</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <label for="tanggal_awal">Tanggal</label>
+                            <div class="input-group">
+                                <input type="date" name="tanggal_awal" id="tanggal_awal"
+                                    value="{{ date('Y-m-d', strtotime('-30 day', strtotime(date('Y-m-d')))) }}"
+                                    class="form-control">
+                                <div class="input-group-prepend">
+                                    <span class="m-2"><i class="fa-fw fas fa-minus"></i></span>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-bordered table-hover" id="table-count">
-                                    <thead>
-                                        <th>HAIs</th>
-                                        <th>Ya</th>
-                                        <th>Tidak</th>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                                <input type="date" name="tanggal_akhir" id="tanggal_akhir" value="{{ date('Y-m-d') }}"
+                                    class="form-control">
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <!-- BAR CHART -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Bar Chart</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart">
-                                    <canvas id="barChart"
-                                        style="min-height: 300px; height: 350px; max-height: 500px; max-width: 100%;"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
                     <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Count Data Bundle</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                </div>
+                        <button type="button" onclick="search()" class="btn btn-info w-100"><i
+                                class="fa-fw fas fa-search"></i> Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary card-outline card-outline-tabs">
+                <div class="card-header p-0 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="custom-tabs-four-phlebitis-tab" data-toggle="pill"
+                                href="#custom-tabs-four-phlebitis" role="tab" aria-controls="custom-tabs-four-phlebitis"
+                                aria-selected="true" onclick="data_phlebitis()" value="phlebitis">Phlebitis</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-four-isk-tab" data-toggle="pill"
+                                href="#custom-tabs-four-isk" role="tab" aria-controls="custom-tabs-four-isk"
+                                aria-selected="false" onclick="data_isk()" value="isk">ISK</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-four-iadp-tab" data-toggle="pill"
+                                href="#custom-tabs-four-iadp" role="tab" aria-controls="custom-tabs-four-iadp"
+                                aria-selected="false" onclick="data_iadp()" value="iadp">IADP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-four-vap-tab" data-toggle="pill"
+                                href="#custom-tabs-four-vap" role="tab" aria-controls="custom-tabs-four-vap"
+                                aria-selected="false" onclick="data_vap()" value="vap">VAP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-four-ido-tab" data-toggle="pill"
+                                href="#custom-tabs-four-ido" role="tab" aria-controls="custom-tabs-four-ido"
+                                aria-selected="false" onclick="data_ido()" value="ido">IDO</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="custom-tabs-four-tabContent">
+                        <div class="tab-pane fade table-responsive show active" id="custom-tabs-four-phlebitis"
+                            role="tabpanel" aria-labelledby="custom-tabs-four-phlebitis-tab">
+                            <table class="table table-sm table-bordered table-hover" id="table-phlebitis">
+                                <thead>
+                                    <th>Aksi</th>
+                                    <th>Tanggal</th>
+                                    <th>MRN</th>
+                                    <th>Nama Pasien</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Tanggal MRS</th>
+                                    <th>Ruang</th>
+                                    <th>Pmsng Ke</th>
+                                    <th>Ruang Pmsngn</th>
+                                    <th>Jenis Cairan</th>
+                                    <th>No IVC</th>
+                                    <th>Lokasi Pasang</th>
+                                    <th>Tanggal Pemasangan</th>
+                                    <th>Tanggal Dilepas</th>
+                                    <th>Obs Ke</th>
+                                    <th>Bundles</th>
+                                    <th>Gejala</th>
+                                    <th>Status</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade table-responsive" id="custom-tabs-four-isk" role="tabpanel"
+                            aria-labelledby="custom-tabs-four-isk-tab">
+                            <table class="table table-sm table-bordered table-hover" id="table-isk">
+                                <thead>
+                                    <th>Aksi</th>
+                                    <th>Tanggal</th>
+                                    <th>MRN</th>
+                                    <th>Nama Pasien</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Tanggal MRS</th>
+                                    <th>Ruang</th>
+                                    <th>Pmsng Ke</th>
+                                    <th>Ruang Pmsngn</th>
+                                    <th>No UC</th>
+                                    <th>Tanggal Pemasangan</th>
+                                    <th>Tanggal Dilepas</th>
+                                    <th>Obs Ke</th>
+                                    <th>Bundles</th>
+                                    <th>Gejala</th>
+                                    <th>Status</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-four-iadp" role="tabpanel"
+                            aria-labelledby="custom-tabs-four-iadp-tab">
+                            <table class="table table-sm table-bordered table-hover" id="table-iadp">
+                                <thead>
+                                    <th>Aksi</th>
+                                    <th>Tanggal</th>
+                                    <th>MRN</th>
+                                    <th>Nama Pasien</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Tanggal MRS</th>
+                                    <th>Ruang</th>
+                                    <th>Pmsng Ke</th>
+                                    <th>Ruang Pmsngn</th>
+                                    <th>No CVC</th>
+                                    <th>Tanggal Pemasangan</th>
+                                    <th>Tanggal Dilepas</th>
+                                    <th>Obs Ke</th>
+                                    <th>Bundles</th>
+                                    <th>Gejala</th>
+                                    <th>Status</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-four-vap" role="tabpanel"
+                            aria-labelledby="custom-tabs-four-vap-tab">
+                            <table class="table table-sm table-bordered table-hover" id="table-vap">
+                                <thead>
+                                    <th>Aksi</th>
+                                    <th>Tanggal</th>
+                                    <th>MRN</th>
+                                    <th>Nama Pasien</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Tanggal MRS</th>
+                                    <th>Ruang</th>
+                                    <th>Pmsng Ke</th>
+                                    <th>Ruang Pmsngn</th>
+                                    <th>Tanggal Pemasangan</th>
+                                    <th>Tanggal Dilepas</th>
+                                    <th>Obs Ke</th>
+                                    <th>Bundles</th>
+                                    <th>Gejala</th>
+                                    <th>Status</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-four-ido" role="tabpanel"
+                            aria-labelledby="custom-tabs-four-ido-tab">
+                            <table class="table table-sm table-bordered table-hover" id="table-ido">
+                                <thead>
+                                    <th>Aksi</th>
+                                    <th>Tanggal</th>
+                                    <th>MRN</th>
+                                    <th>Nama Pasien</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Tanggal MRS</th>
+                                    <th>Ruang</th>
+                                    <th>OP Ke</th>
+                                    <th>Jadwal OP</th>
+                                    <th>Jenis OP</th>
+                                    <th>Suhu °C</th>
+                                    <th>GDS</th>
+                                    <th>MRSA</th>
+                                    <th>Pencukuran</th>
+                                    <th>Antibiotik Profilaksis</th>
+                                    <th>Waktu Pemberian AB</th>
+                                    <th>Riwayat Penyakit</th>
+                                    <th>Bundles Pre OP</th>
+                                    <th>Ruang OP</th>
+                                    <th>Nama Prosedur OP</th>
+                                    <th>Kualifikasi Daerah OP</th>
+                                    <th>Lama OP</th>
+                                    <th>Bundles Intra OP</th>
+                                    <th>Bundles Post OP</th>
+                                    <th>Gejala</th>
+                                    <th>Keterangan</th>
+                                    <th>Status</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Count Data HAIs</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
                             </div>
-                            <div class="card-body">
-                                <div id="table-bundle"></div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover" id="table-count">
+                                <thead>
+                                    <th>HAIs</th>
+                                    <th>Ya</th>
+                                    <th>Tidak</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Bar Chart</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="barChart"
+                                    style="min-height: 300px; height: 350px; max-height: 500px; max-width: 100%;"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Count Data Bundles</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="table-bundle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 @endsection
 
 @push('js')
-    <!-- DataTables  & Plugins -->
-    <script src="{{ asset('/') }}plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="{{ asset('/') }}plugins/jszip/jszip.min.js"></script>
-    <script src="{{ asset('/') }}plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="{{ asset('/') }}plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('/') }}plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="{{ asset('/') }}plugins/jszip/jszip.min.js"></script>
+<script src="{{ asset('/') }}plugins/pdfmake/pdfmake.min.js"></script>
+<script src="{{ asset('/') }}plugins/pdfmake/vfs_fonts.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
-    <!-- Select2 -->
-    <script src="{{ asset('/') }}plugins/select2/js/select2.full.min.js"></script>
+<!-- Select2 -->
+<script src="{{ asset('/') }}plugins/select2/js/select2.full.min.js"></script>
 
-    <script src="{{ asset('/') }}plugins/popper/umd/popper.min.js"></script>
-    <script src="{{ asset('/') }}plugins/popper/umd/popper-utils.min.js"></script>
+<script src="{{ asset('/') }}plugins/popper/umd/popper.min.js"></script>
+<script src="{{ asset('/') }}plugins/popper/umd/popper-utils.min.js"></script>
 
-    <!-- ChartJS -->
-    <script src="{{ asset('/') }}plugins/chart.js/Chart.min.js"></script>
+<!-- ChartJS -->
+<script src="{{ asset('/') }}plugins/chart.js/Chart.min.js"></script>
 
 
-    <script>
-        // let table;
+<script>
+    // let table;
         count();
 
         $(function() {
@@ -589,7 +588,7 @@
                     html = `
                     <table class="table table-sm table-bordered table-hover" id="table-bundle-phlebitis">
                         <thead>
-                            <th class="text-center">Bundle Phlebitis</th>
+                            <th class="text-center">Bundles Phlebitis</th>
                             <th class="text-center">Jumlah</th>
                             <th class="text-center">Persentase</th>
                         </thead>
@@ -619,7 +618,7 @@
                         "dom": 'Blfrtip',
                         "buttons": [{
                                 extend: 'excelHtml5',
-                                title: 'Laporan Bundle Phlebitis',
+                                title: 'Laporan Bundles Phlebitis',
                                 text: `<i class="fa-fw fas fa-file-excel"></i>`,
                                 className: 'btn-xs',
                                 exportOptions: {
@@ -628,7 +627,7 @@
                             },
                             {
                                 extend: 'print',
-                                title: 'Laporan Bundle Phlebitis',
+                                title: 'Laporan Bundles Phlebitis',
                                 text: `<i class="fa-fw fas fa-print"></i>`,
                                 className: 'btn-xs',
                                 exportOptions: {
@@ -790,7 +789,7 @@
                     html = `
                     <table class="table table-sm table-bordered table-hover" id="table-bundle-isk">
                         <thead>
-                            <th class="text-center">Bundle ISK</th>
+                            <th class="text-center">Bundles ISK</th>
                             <th class="text-center">Jumlah</th>
                             <th class="text-center">Persentase</th>
                         </thead>
@@ -821,7 +820,7 @@
                         "dom": 'Blfrtip',
                         "buttons": [{
                                 extend: 'excelHtml5',
-                                title: 'Laporan Bundle ISK',
+                                title: 'Laporan Bundles ISK',
                                 text: `<i class="fa-fw fas fa-file-excel"></i>`,
                                 className: 'btn-xs',
                                 exportOptions: {
@@ -830,7 +829,7 @@
                             },
                             {
                                 extend: 'print',
-                                title: 'Laporan Bundle ISK',
+                                title: 'Laporan Bundles ISK',
                                 text: `<i class="fa-fw fas fa-print"></i>`,
                                 className: 'btn-xs',
                                 exportOptions: {
@@ -991,7 +990,7 @@
                     html = `
                     <table class="table table-sm table-bordered table-hover" id="table-bundle-iadp">
                         <thead>
-                            <th class="text-center">Bundle IADP</th>
+                            <th class="text-center">Bundles IADP</th>
                             <th class="text-center">Jumlah</th>
                             <th class="text-center">Persentase</th>
                         </thead>
@@ -1021,7 +1020,7 @@
                         "dom": 'Blfrtip',
                         "buttons": [{
                                 extend: 'excelHtml5',
-                                title: 'Laporan Bundle IADP',
+                                title: 'Laporan Bundles IADP',
                                 text: `<i class="fa-fw fas fa-file-excel"></i>`,
                                 className: 'btn-xs',
                                 exportOptions: {
@@ -1030,7 +1029,7 @@
                             },
                             {
                                 extend: 'print',
-                                title: 'Laporan Bundle IADP',
+                                title: 'Laporan Bundles IADP',
                                 text: `<i class="fa-fw fas fa-print"></i>`,
                                 className: 'btn-xs',
                                 exportOptions: {
@@ -1186,7 +1185,7 @@
                     html = `
                     <table class="table table-sm table-bordered table-hover" id="table-bundle-vap">
                         <thead>
-                            <th class="text-center">Bundle VAP</th>
+                            <th class="text-center">Bundles VAP</th>
                             <th class="text-center">Jumlah</th>
                             <th class="text-center">Persentase</th>
                         </thead>
@@ -1216,7 +1215,7 @@
                         "dom": 'Blfrtip',
                         "buttons": [{
                                 extend: 'excelHtml5',
-                                title: 'Laporan Bundle VAP',
+                                title: 'Laporan Bundles VAP',
                                 text: `<i class="fa-fw fas fa-file-excel"></i>`,
                                 className: 'btn-xs',
                                 exportOptions: {
@@ -1225,7 +1224,7 @@
                             },
                             {
                                 extend: 'print',
-                                title: 'Laporan Bundle VAP',
+                                title: 'Laporan Bundles VAP',
                                 text: `<i class="fa-fw fas fa-print"></i>`,
                                 className: 'btn-xs',
                                 exportOptions: {
@@ -1427,7 +1426,7 @@
                     html = `
                     <table class="table table-sm table-bordered table-hover" id="table-bundle-ido">
                         <thead>
-                            <th class="text-center">Bundle IDO</th>
+                            <th class="text-center">Bundles IDO</th>
                             <th class="text-center">Jumlah</th>
                         </thead>
                         <tbody>`;
@@ -1466,7 +1465,7 @@
                         "dom": 'Blfrtip',
                         "buttons": [{
                                 extend: 'excelHtml5',
-                                title: 'Laporan Bundle IDO',
+                                title: 'Laporan Bundles IDO',
                                 text: `<i class="fa-fw fas fa-file-excel"></i>`,
                                 className: 'btn-xs',
                                 exportOptions: {
@@ -1475,7 +1474,7 @@
                             },
                             {
                                 extend: 'print',
-                                title: 'Laporan Bundle IDO',
+                                title: 'Laporan Bundles IDO',
                                 text: `<i class="fa-fw fas fa-print"></i>`,
                                 className: 'btn-xs',
                                 exportOptions: {
@@ -1602,5 +1601,5 @@
                 }
             });
         }
-    </script>
+</script>
 @endpush

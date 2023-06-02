@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\AlatInvasif;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,7 +15,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(AgamaSeeder::class);
         $this->call(KelasSeeder::class);
+        $this->call(CabangHerminaSeeder::class);
         $this->call(RolesSeeder::class);
+        $this->call(UserSeeder::class);
         $this->call(ProfilaksisSeeder::class);
         $this->call(AlatInvasifSeeder::class);
         $this->call(IadpBundleSeeder::class);

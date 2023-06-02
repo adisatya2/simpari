@@ -1,16 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BedController;
 use App\Http\Controllers\DokterController;
+use App\Http\Controllers\LaporanPPIController;
+use App\Http\Controllers\MasterPasienController;
+use App\Http\Controllers\PasienDirawatController;
+use App\Http\Controllers\PasienPulangController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\LaporanPPIController;
 use App\Http\Controllers\SurveilansController;
-use App\Http\Controllers\MasterPasienController;
-use App\Http\Controllers\PasienPulangController;
-use App\Http\Controllers\PasienDirawatController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ use App\Http\Controllers\PasienDirawatController;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('dashboard');
@@ -42,6 +43,10 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('admin/user/data', [UserController::class, 'data'])->name('user.data');
+    Route::put('admin/user/changepassword/{id}', [UserController::class, 'change_password'])->name('user.changepass');
+    Route::resource('admin/user', UserController::class);
 
     Route::get('master/pasien/data', [MasterPasienController::class, 'data'])->name('pasien.data');
     Route::get('master/pasien/cetak-barcode/{mrn}', [MasterPasienController::class, 'cetakBarcode'])->name('pasien.cetak_barcode');
