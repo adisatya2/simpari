@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('kode_rs')->default(config('app.kode_rs'));
-            $table->tinyInteger('aktif', 1);
+            $table->tinyInteger('aktif')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
