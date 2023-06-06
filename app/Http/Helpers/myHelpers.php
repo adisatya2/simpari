@@ -1,13 +1,14 @@
 <?php
 
-use App\Models\IskDetail;
-use App\Models\IskHeader;
-use App\Models\VapDetail;
-use App\Models\VapHeader;
 use App\Models\IadpDetail;
 use App\Models\IadpHeader;
+use App\Models\IdoPostOperasi;
+use App\Models\IskDetail;
+use App\Models\IskHeader;
 use App\Models\PhlebitisDetail;
 use App\Models\PhlebitisHeader;
+use App\Models\VapDetail;
+use App\Models\VapHeader;
 
 function format_uang_rp($angka)
 {
@@ -60,25 +61,25 @@ function terbilang($nilai)
 
 function tanggal_indonesia($tgl, $tampil_hari = true)
 {
-    $nama_hari  = array(
-        'Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum\'at', 'Sabtu'
+    $nama_hari = array(
+        'Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum\'at', 'Sabtu',
     );
     $nama_bulan = array(
         1 =>
-        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
     );
 
-    $tahun   = substr($tgl, 0, 4);
-    $bulan   = $nama_bulan[(int) substr($tgl, 5, 2)];
+    $tahun = substr($tgl, 0, 4);
+    $bulan = $nama_bulan[(int) substr($tgl, 5, 2)];
     $tanggal = substr($tgl, 8, 2);
-    $text    = '';
+    $text = '';
 
     if ($tampil_hari) {
         $urutan_hari = date('w', mktime(0, 0, 0, substr($tgl, 5, 2), $tanggal, $tahun));
-        $hari        = $nama_hari[$urutan_hari];
-        $text       .= "$hari, $tanggal $bulan $tahun";
+        $hari = $nama_hari[$urutan_hari];
+        $text .= "$hari, $tanggal $bulan $tahun";
     } else {
-        $text       .= "$tanggal $bulan $tahun";
+        $text .= "$tanggal $bulan $tahun";
     }
 
     return $text;
@@ -198,6 +199,13 @@ function max_vap_header($noreg)
 function max_vap_detail($id)
 {
     $max = VapDetail::where('id_header', '=', $id)->max('observasi_ke');
+
+    return $max + 1;
+}
+
+function max_ido_detail($id)
+{
+    $max = IdoPostOperasi::where('id_header', '=', $id)->max('observasi_ke');
 
     return $max + 1;
 }

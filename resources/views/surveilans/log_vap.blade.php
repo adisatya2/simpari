@@ -120,7 +120,7 @@
                                                                 }
                                                                 ?>
                                                 @endforeach
-                                                <div class="form-check">
+                                                <div class="form-check p-0">
                                                     {!! $checked !!}
                                                     {{ $vap->bundle }}
                                                 </div>
@@ -140,11 +140,17 @@
                                                                 }
                                                                 ?>
                                                 @endforeach
-                                                <div class="form-check">
+                                                <div class="form-check p-0">
                                                     {!! $checked !!}
                                                     {{ $vapgejala->gejala }}
                                                 </div>
                                                 @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-top text-nowrap text-bold">User</td>
+                                            <td>:</td>
+                                            <td>{{ isset($list->user_create)?$list->user_create:'' }}
                                             </td>
                                         </tr>
                                     </table>

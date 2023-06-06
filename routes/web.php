@@ -96,7 +96,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('surveilans/ido', [SurveilansController::class, 'store_ido'])->name('surveilans.ido');
     Route::put('surveilans/ido/{id}', [SurveilansController::class, 'update_ido'])->name('surveilans.updateido');
-    Route::get('surveilans/ido/{id}', [SurveilansController::class, 'show_ido'])->name('surveilans.showido');
+    Route::get('surveilans/idoheader/{id}', [SurveilansController::class, 'show_ido_header'])->name('surveilans.showidoheader');
+    Route::get('surveilans/idodetail/{id}', [SurveilansController::class, 'show_ido_detail'])->name('surveilans.showidodetail');
 
     Route::resource('laporanhais', LaporanPPIController::class);
     Route::post('laporanhais/dataphlebitis', [LaporanPPIController::class, 'data_phlebitis'])->name('laporanhais.dataphlebitis');
@@ -104,6 +105,7 @@ Route::middleware('auth')->group(function () {
     Route::post('laporanhais/dataiadp', [LaporanPPIController::class, 'data_iadp'])->name('laporanhais.dataiadp');
     Route::post('laporanhais/datavap', [LaporanPPIController::class, 'data_vap'])->name('laporanhais.datavap');
     Route::post('laporanhais/dataido', [LaporanPPIController::class, 'data_ido'])->name('laporanhais.dataido');
+    Route::post('laporanhais/dataidopost', [LaporanPPIController::class, 'data_ido_post'])->name('laporanhais.dataidopost');
     Route::post('laporanhais/count', [LaporanPPIController::class, 'count'])->name('laporanhais.count');
     Route::post('laporanhais/countbundle', [LaporanPPIController::class, 'count_bundle'])->name('laporanhais.countbundle');
 });

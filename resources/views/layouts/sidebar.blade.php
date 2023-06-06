@@ -114,6 +114,7 @@
                         </li>
                     </ul>
                 </li>
+                @if (auth()->user()->hasRole(['IT SUPPORT','IPCN/PPI','PERAWAT','MUTU DAN AKREDITASI','DIREKSI']))
                 <li
                     class="nav-item {{ request()->segment(1) == 'surveilans' || request()->segment(1) == 'laporanhais' ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#" class="nav-link">
@@ -140,8 +141,9 @@
                         </li>
                     </ul>
                 </li>
-                @if (auth()->user()->hasRole('IT SUPPORT'))
-                {{-- <li class="nav-item">
+                @endif
+                @if (auth()->user()->hasRole(['IT SUPPORT','PERAWAT','PANTRY/GIZI','MUTU DAN AKREDITASI','DIREKSI']))
+                <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="fa-fw fas fa-utensils nav-icon"></i>
                         <p>
@@ -156,14 +158,14 @@
                                 <p>Pasien Sedang Dirawat</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fa-fw fas fa-folder-open nav-icon"></i>
                                 <p>Log Data</p>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
-                </li> --}}
+                </li>
                 @endif
             </ul>
         </nav>

@@ -90,7 +90,7 @@
                     <div class="card-header">
                         <h4 class="card-title w-100">
                             <a class="d-block w-100" data-toggle="collapse" href="#collapse{{ $list->id }}">
-                                Observasi Ke-{{ $list->observasi_ke }} -
+                                Observasi Ke-{{ $list->observasi_ke }} |
                                 {{ tanggal_indonesia($list->tanggal_observasi) }}
                             </a>
                         </h4>
@@ -140,7 +140,7 @@
                                                                 }
                                                                 ?>
                                                 @endforeach
-                                                <div class="form-check">
+                                                <div class="form-check p-0">
                                                     {!! $checked !!}
                                                     {{ $phlebitis->bundle }}
                                                 </div>
@@ -160,12 +160,18 @@
                                                                 }
                                                                 ?>
                                                 @endforeach
-                                                <div class="form-check">
+                                                <div class="form-check p-0">
 
                                                     {!! $checked !!}
                                                     {{ $phlebitisgejala->gejala }}
                                                 </div>
                                                 @endforeach
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-top text-nowrap text-bold">User</td>
+                                            <td>:</td>
+                                            <td>{{ isset($list->user_create)?$list->user_create:'' }}
                                             </td>
                                         </tr>
                                     </table>

@@ -23,7 +23,9 @@ class RolesSeeder extends Seeder
             ["name" => "IPCN/PPI", "guard_name" => "web"],
             ["name" => "PERAWAT", "guard_name" => "web"],
             ["name" => "FRONT OFFICE", "guard_name" => "web"],
-            ["name" => "BACK OFFICE", "guard_name" => "web"],
+            ["name" => "ADM RAWAT INAP", "guard_name" => "web"],
+            ["name" => "MUTU DAN AKREDITASI", "guard_name" => "web"],
+            ["name" => "PANTRY/GIZI", "guard_name" => "web"],
         ]);
 
         // Role::insert([

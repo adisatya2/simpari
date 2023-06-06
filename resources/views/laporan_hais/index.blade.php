@@ -232,6 +232,7 @@
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-four-ido" role="tabpanel"
                             aria-labelledby="custom-tabs-four-ido-tab">
+                            <h5>Table data Pre dan Intra Operasi</h5>
                             <table class="table table-sm table-bordered table-hover" id="table-ido">
                                 <thead>
                                     <th>Aksi</th>
@@ -257,6 +258,24 @@
                                     <th>Kualifikasi Daerah OP</th>
                                     <th>Lama OP</th>
                                     <th>Bundles Intra OP</th>
+                                    {{-- <th>Bundles Post OP</th>
+                                    <th>Gejala</th>
+                                    <th>Keterangan</th>
+                                    <th>Status</th> --}}
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <hr>
+                            <h5>Table Data Post Operasi</h5>
+                            <table class="table table-sm table-bordered table-hover" id="table-ido-post">
+                                <thead>
+                                    <th>Aksi</th>
+                                    <th>Tanggal</th>
+                                    <th>MRN</th>
+                                    <th>Nama Pasien</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Ruang</th>
                                     <th>Bundles Post OP</th>
                                     <th>Gejala</th>
                                     <th>Keterangan</th>
@@ -1073,7 +1092,7 @@
                 "dom": 'Blfrtip',
                 "buttons": [{
                         extend: 'excelHtml5',
-                        title: 'Laporan HAIs IDO',
+                        title: 'Laporan HAIs VAP',
                         text: `<i class="fa-fw fas fa-file-excel"></i>`,
                         className: 'btn-xs',
                         exportOptions: {
@@ -1082,7 +1101,7 @@
                     },
                     {
                         extend: 'print',
-                        title: 'Laporan HAIs IDO',
+                        title: 'Laporan HAIs VAP',
                         text: `<i class="fa-fw fas fa-print"></i>`,
                         className: 'btn-xs',
                         exportOptions: {
@@ -1251,7 +1270,7 @@
         }
 
         function data_ido() {
-            let table_ido;
+            let table_ido, table_ido_post;
             var ruangan = $("#ruangan option:selected").val();
             var tanggal_awal = $("#tanggal_awal").val();
             var tanggal_akhir = $("#tanggal_akhir").val();
@@ -1391,21 +1410,21 @@
                         data: 'bundle_intra',
                         visible: false,
                     },
-                    {
-                        data: 'bundle_post',
-                        visible: false,
-                    },
-                    {
-                        data: 'gejala',
-                        visible: false,
-                    },
-                    {
-                        data: 'keterangan',
-                        visible: false,
-                    },
-                    {
-                        data: 'status'
-                    },
+                    // {
+                    //     data: 'bundle_post',
+                    //     visible: false,
+                    // },
+                    // {
+                    //     data: 'gejala',
+                    //     visible: false,
+                    // },
+                    // {
+                    //     data: 'keterangan',
+                    //     visible: false,
+                    // },
+                    // {
+                    //     data: 'status'
+                    // },
                 ],
             });
 
@@ -1496,6 +1515,96 @@
                         ],
                     });
                 }
+            });
+
+            table_ido_post = $("#table-ido-post").DataTable({
+                "processing": true,
+                "serverSide": true,
+                "autoWidth": false,
+                "stateSave": true,
+                "bDestroy": true,
+                "order": [
+                    [1, 'desc'],
+                ],
+                "dom": 'Blfrtip',
+                "buttons": [{
+                        extend: 'excelHtml5',
+                        title: 'Laporan HAIs IDO Post Operasi',
+                        text: `<i class="fa-fw fas fa-file-excel"></i>`,
+                        className: 'btn-xs',
+                        exportOptions: {
+                            columns: ':not(.notexport)'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Laporan HAIs IDO Post Operasi',
+                        text: `<i class="fa-fw fas fa-print"></i>`,
+                        className: 'btn-xs',
+                        exportOptions: {
+                            columns: ':not(.notexport)'
+                        }
+                    },
+                    {
+                        text: `<i class="fa-fw fas fa-sync-alt"></i>`,
+                        action: function(e, dt, node, config) {
+                            dt.ajax.reload(null, false);
+                        },
+                        className: 'btn-xs'
+                    },
+                    {
+                        extend: 'colvis',
+                        text: `<i class="fa-fw fas fa-eye"></i>`,
+                        className: 'btn-xs'
+                    },
+                ],
+                "ajax": {
+                    url: '{{ route('laporanhais.dataidopost') }}',
+                    type: 'post',
+                    data: {
+                        _token: $('[name=csrf-token]').attr('content'),
+                        ruangan: ruangan,
+                        tanggal_awal: tanggal_awal,
+                        tanggal_akhir: tanggal_akhir,
+                    }
+                },
+                columns: [{
+                        data: 'aksi',
+                        searchable: false,
+                        sortable: false,
+                        className: "text-center notexport",
+                    }, {
+                        data: 'tanggal_observasi',
+                        className: "text-nowrap"
+                    },
+                    {
+                        data: 'data_registrasi.mrn',
+                        className: "text-nowrap",
+                    },
+                    {
+                        data: 'data_registrasi.data_pasien.nama_pasien',
+                    },
+                    {
+                        data: 'data_registrasi.data_pasien.jk',
+                    },
+                    {
+                        data: 'ruang_perawatan',
+                    },
+                    {
+                        data: 'bundle_post',
+                    },
+                    {
+                        data: 'gejala',
+                        visible: false,
+                    },
+                    {
+                        data: 'keterangan',
+                        visible: false,
+                    },
+                    {
+                        data: 'status'
+                    },
+                ],
             });
         }
 

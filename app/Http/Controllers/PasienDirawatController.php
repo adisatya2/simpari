@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bed;
 use App\Models\Agama;
-use App\Models\Kelas;
+use App\Models\Bed;
 use App\Models\Dokter;
-use App\Models\Ruangan;
-use Illuminate\Support\Str;
+use App\Models\Kelas;
 use App\Models\MasterPasien;
 use App\Models\PasienPulang;
-use Illuminate\Http\Request;
 use App\Models\Registrasirwi;
+use App\Models\Ruangan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Traits\HasRoles;
 
 class PasienDirawatController extends Controller
 {
+    use HasRoles;
     /**
      * Display a listing of the resource.
      */
@@ -151,16 +153,15 @@ class PasienDirawatController extends Controller
                     <a class="dropdown-item" onclick="detailPasien(`' . route('pasien.show', $bed_ruangan->mrn) . '`)">Detail Pasien</a>
                     <a class="dropdown-item" onclick="pulangForm(`' . route('pasiendirawat.edit', $bed_ruangan->no_kamar) . '`)">Pulangkan Pasien</a>
                     <a class="dropdown-item" onclick="pindahForm(`' . route('pasiendirawat.edit', $bed_ruangan->no_kamar) . '`)">Pindah Kamar</a>
+                    <a class="dropdown-item" href="' . url('master/pasien/cetak-barcode/' . $bed_ruangan->mrn) . '" target="_blank">Cetak Barcode</a>
                     <a class="dropdown-item" href="' . route('surveilans.edit', $bed_ruangan->no_registrasi) . '">Surveilans</a>
                     <a class="dropdown-item">Gizi</a>
-                    <a class="dropdown-item" href="' . url('master/pasien/cetak-barcode/' . $bed_ruangan->mrn)  . '" target="_blank">Cetak Barcode</a>
                     ';
                 } else {
                     $button .= '
                     <a class="dropdown-item" onclick="registrasiForm(`' . route('pasiendirawat.registrasi', $bed_ruangan->no_kamar) . '`,\'' . $bed_ruangan->no_kamar . '\')">Registrasi Pasien</a>
                     ';
                 }
-
 
                 $button .= '
                     <a class="dropdown-item" onclick="editForm(`' . route('pasiendirawat.show', $bed_ruangan->no_kamar) . '`)">Edit</a>
@@ -236,7 +237,7 @@ class PasienDirawatController extends Controller
         if ($request['mrn']) {
             $pasien = MasterPasien::updateOrCreate(
                 [
-                    'mrn' => $request['mrn']
+                    'mrn' => $request['mrn'],
                 ],
                 [
                     'nik' => $request['nik'],
@@ -290,7 +291,7 @@ class PasienDirawatController extends Controller
 
             $pasien = MasterPasien::updateOrCreate(
                 [
-                    'mrn' => $request['mrn']
+                    'mrn' => $request['mrn'],
                 ],
                 [
                     'nik' => $request['nik'],

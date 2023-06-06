@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use DateTime;
-use App\Models\Ruangan;
-use App\Models\IdoBundle;
-use App\Models\IdoHeader;
-use App\Models\IskBundle;
-use App\Models\IskDetail;
-use App\Models\VapBundle;
-use App\Models\VapDetail;
 use App\Models\IadpBundle;
 use App\Models\IadpDetail;
-use Illuminate\Http\Request;
+use App\Models\IdoBundle;
+use App\Models\IdoHeader;
+use App\Models\IdoPostOperasi;
+use App\Models\IskBundle;
+use App\Models\IskDetail;
 use App\Models\PhlebitisBundle;
 use App\Models\PhlebitisDetail;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use App\Models\Ruangan;
+use App\Models\VapBundle;
+use App\Models\VapDetail;
+use DateTime;
+use Illuminate\Http\Request;
 
 class LaporanPPIController extends Controller
 {
@@ -37,7 +37,7 @@ class LaporanPPIController extends Controller
         $phlebitis = PhlebitisDetail::with([
             'header',
             'header.data_registrasi',
-            'header.data_registrasi.data_pasien'
+            'header.data_registrasi.data_pasien',
         ])
             ->whereBetween('tanggal_observasi', [$from, $to])
             ->whereRelation(
@@ -83,7 +83,7 @@ class LaporanPPIController extends Controller
         $isk = IskDetail::with([
             'header',
             'header.data_registrasi',
-            'header.data_registrasi.data_pasien'
+            'header.data_registrasi.data_pasien',
         ])
             ->whereBetween('tanggal_observasi', [$from, $to])
             ->whereRelation(
@@ -129,7 +129,7 @@ class LaporanPPIController extends Controller
         $iadp = IadpDetail::with([
             'header',
             'header.data_registrasi',
-            'header.data_registrasi.data_pasien'
+            'header.data_registrasi.data_pasien',
         ])
             ->whereBetween('tanggal_observasi', [$from, $to])
             ->whereRelation(
@@ -175,7 +175,7 @@ class LaporanPPIController extends Controller
         $vap = VapDetail::with([
             'header',
             'header.data_registrasi',
-            'header.data_registrasi.data_pasien'
+            'header.data_registrasi.data_pasien',
         ])
             ->whereBetween('tanggal_observasi', [$from, $to])
             ->whereRelation(
@@ -220,7 +220,7 @@ class LaporanPPIController extends Controller
 
         $ido = IdoHeader::with([
             'data_registrasi',
-            'data_registrasi.data_pasien'
+            'data_registrasi.data_pasien',
         ])
             ->whereNotNull('ruang_perawatan')
             ->where('ruang_perawatan', 'like', '%' . $ruangan . '%')
@@ -243,6 +243,48 @@ class LaporanPPIController extends Controller
                     </button>
                     <div class="dropdown-menu" role="menu">
                         <a class="dropdown-item" href="' . route('surveilans.edit', $ido->no_registrasi) . '" target="_blank">Lihat Data Surveilans</a>
+                    </div>
+                </div>
+                ';
+
+                return $button;
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
+    }
+
+    public function data_ido_post(Request $request)
+    {
+        $ruangan = $request['ruangan'] ? $request['ruangan'] : '';
+        $from = $request['tanggal_awal'] ? $request['tanggal_awal'] . ' 00:00:00' : '';
+        $to = $request['tanggal_akhir'] ? $request['tanggal_akhir'] . ' 23:59:59' : '';
+
+        $idopost = IdoPostOperasi::with([
+            'data_registrasi',
+            'data_registrasi.data_pasien',
+            'header',
+        ])
+            ->whereNotNull('ruang_perawatan')
+            ->where('ruang_perawatan', 'like', '%' . $ruangan . '%')
+            ->whereBetween('tanggal_observasi', [$from, $to])
+            ->get();
+
+        return datatables()
+            ->of($idopost)
+            ->editColumn('created_at', function ($idopost) {
+                return date_format($idopost->created_at, 'Y-m-d H:i');
+            })
+            // ->addColumn('tanggal_registrasi', function ($idopost) {
+            //     return date_format(new DateTime($idopost->data_registrasi->tanggal_registrasi), 'Y-m-d');
+            // })
+            ->addColumn('aksi', function ($idopost) {
+                $button = '
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary btn-xs  dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                        Select&nbsp;
+                    </button>
+                    <div class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" href="' . route('surveilans.edit', $idopost->no_registrasi) . '" target="_blank">Lihat Data Surveilans</a>
                     </div>
                 </div>
                 ';
@@ -286,10 +328,10 @@ class LaporanPPIController extends Controller
                 ->whereRelation('header', 'ruang_perawatan', 'like', '%' . $ruangan . '%')
                 ->groupBy('status')
                 ->pluck('total', 'status'),
-            'IDO' => IdoHeader::selectRaw('status, count(*) as total')
+            'IDO' => IdoPostOperasi::selectRaw('status, count(*) as total')
                 ->whereNotNull('ruang_perawatan')
                 ->where('ruang_perawatan', 'like', '%' . $ruangan . '%')
-                ->whereBetween('created_at', [$from2, $to2])
+                ->whereBetween('tanggal_observasi', [$from2, $to2])
                 ->groupBy('status')
                 ->pluck('total', 'status'),
         ];
@@ -410,7 +452,7 @@ class LaporanPPIController extends Controller
                 }
 
                 if ($item->waktu == 'Post Operasi') {
-                    $count = IdoHeader::where('bundle_post', 'like', '%' . $item->bundle . '%')
+                    $count = IdoPostOperasi::where('bundle_post', 'like', '%' . $item->bundle . '%')
                         ->whereNotNull('ruang_perawatan')
                         ->where('ruang_perawatan', 'like', '%' . $ruangan . '%')
                         ->whereBetween('created_at', [$from2, $to2])
@@ -482,7 +524,7 @@ class LaporanPPIController extends Controller
             }
 
             if ($item->waktu == 'Post Operasi') {
-                $count = IdoHeader::where('bundle_post', 'like', '%' . $item->bundle . '%')->count();
+                $count = IdoPostOperasi::where('bundle_post', 'like', '%' . $item->bundle . '%')->count();
                 $post += [$item->bundle => $count];
             }
         }
@@ -490,7 +532,6 @@ class LaporanPPIController extends Controller
         $ido += ['Intra Operasi' => $intra];
         $ido += ['Post Operasi' => $post];
         $data += ['ido' => $ido];
-
 
         return $data;
     }

@@ -1267,7 +1267,7 @@
             $('#modal-header-ido').modal('show');
             $('#modal-header-ido .modal-title').text('Input Data Pre Operasi');
             $('#modal-header-ido form')[0].reset();
-            $.get("{{ url('surveilans/ido') }}/" + id)
+            $.get("{{ url('surveilans/idoheader') }}/" + id)
                 .done((response) => {
                     $('#modal-header-ido [name=_method]').val('put');
                     $('#modal-header-ido form').attr("action", "{{ url('surveilans/ido') }}/" + response
@@ -1294,7 +1294,7 @@
             $('#modal-preoperasi-ido').modal('show');
             $('#modal-preoperasi-ido .modal-title').text('Input Data Pre Operasi');
             $('#modal-preoperasi-ido form')[0].reset();
-            $.get("{{ url('surveilans/ido') }}/" + id)
+            $.get("{{ url('surveilans/idoheader') }}/" + id)
                 .done((response) => {
                     $('#modal-preoperasi-ido [name=_method]').val('put');
                     $('#modal-preoperasi-ido form').attr("action", "{{ url('surveilans/ido') }}/" + response
@@ -1315,7 +1315,7 @@
             $('#modal-preoperasi-ido').modal('show');
             $('#modal-preoperasi-ido .modal-title').text('Edit Data Pre Operasi');
             $('#modal-preoperasi-ido form')[0].reset();
-            $.get("{{ url('surveilans/ido') }}/" + id)
+            $.get("{{ url('surveilans/idoheader') }}/" + id)
                 .done((response) => {
                     $('#modal-preoperasi-ido [name=_method]').val('put');
                     $('#modal-preoperasi-ido form').attr("action", "{{ url('surveilans/ido') }}/" + response
@@ -1362,7 +1362,7 @@
             $('#modal-intraoperasi-ido').modal('show');
             $('#modal-intraoperasi-ido .modal-title').text('Input Data Intra Operasi');
             $('#modal-intraoperasi-ido form')[0].reset();
-            $.get("{{ url('surveilans/ido') }}/" + id)
+            $.get("{{ url('surveilans/idoheader') }}/" + id)
                 .done((response) => {
                     $('#modal-intraoperasi-ido [name=_method]').val('put');
                     $('#modal-intraoperasi-ido form').attr("action", "{{ url('surveilans/ido') }}/" + response
@@ -1384,7 +1384,7 @@
             $('#modal-intraoperasi-ido').modal('show');
             $('#modal-intraoperasi-ido .modal-title').text('Edit Data Intra Operasi');
             $('#modal-intraoperasi-ido form')[0].reset();
-            $.get("{{ url('surveilans/ido') }}/" + id)
+            $.get("{{ url('surveilans/idoheader') }}/" + id)
                 .done((response) => {
                     $('#modal-intraoperasi-ido [name=_method]').val('put');
                     $('#modal-intraoperasi-ido form').attr("action", "{{ url('surveilans/ido') }}/" + response
@@ -1418,33 +1418,107 @@
                 })
         }
 
-        function tambah_postoperasi_ido(id) {
+        // function tambah_postoperasi_ido(id_header) {
+        //     resetForm();
+        //     $('#modal-postoperasi-ido').modal('show');
+        //     $('#modal-postoperasi-ido .modal-title').text('Input Data Post Operasi');
+        //     $('#modal-postoperasi-ido form')[0].reset();
+        //     $.get("{{ url('surveilans/ido') }}/" + id_header)
+        //         .done((response) => {
+        //             $('#modal-postoperasi-ido [name=_method]').val('put');
+        //             $('#modal-postoperasi-ido form').attr("action", "{{ url('surveilans/ido') }}/" + response
+        //                 .id_header);
+        //         })
+        //         .fail((errors) => {
+        //             alert('Tidak dapat menampilkan data');
+        //             return;
+        //         })
+        // }
+        function tambah_postoperasi_ido(id_header, obs = null) {
             resetForm();
             $('#modal-postoperasi-ido').modal('show');
-            $('#modal-postoperasi-ido .modal-title').text('Input Data Post Operasi');
+            $('#modal-postoperasi-ido .modal-title').text('Tambah Bundles Post Operasi');
             $('#modal-postoperasi-ido form')[0].reset();
-            $.get("{{ url('surveilans/ido') }}/" + id)
-                .done((response) => {
-                    $('#modal-postoperasi-ido [name=_method]').val('put');
-                    $('#modal-postoperasi-ido form').attr("action", "{{ url('surveilans/ido') }}/" + response
-                        .id);
-                })
-                .fail((errors) => {
-                    alert('Tidak dapat menampilkan data');
-                    return;
-                })
+            $('#modal-postoperasi-ido form').attr('action', `{{ route('surveilans.ido') }}`);
+            $('#modal-postoperasi-ido [name=_method]').val('post');
+            $('#modal-postoperasi-ido .ruang_perawatan').val(
+                '{{ $data_registrasi ? $data_registrasi->kode_ruangan : null }}').trigger(
+                "change")
+            $('#modal-postoperasi-ido #no_registrasi').val('{{ $data_registrasi->no_registrasi }}')
+            $('#modal-postoperasi-ido #id_header').val(id_header).prop('readonly', true)
+            $('#modal-postoperasi-ido #observasi_ke').val(obs).prop('readonly', false)
+            $('#modal-postoperasi-ido').on('shown.bs.modal', function() {
+                $(this).find('[autofocus]').focus();
+            })
         }
+
+        // function edit_postoperasi_ido(id) {
+        //     resetForm();
+        //     $('#modal-postoperasi-ido').modal('show');
+        //     $('#modal-postoperasi-ido .modal-title').text('Edit Data Post Operasi');
+        //     $('#modal-postoperasi-ido form')[0].reset();
+        //     $.get("{{ url('surveilans/ido') }}/" + id)
+        //         .done((response) => {
+        //             $('#modal-postoperasi-ido [name=_method]').val('put');
+        //             $('#modal-postoperasi-ido form').attr("action", "{{ url('surveilans/ido') }}/" + response
+        //                 .id);
+
+        //             if (response.bundle_post) {
+        //                 var bundle = response.bundle_post.split('; ');
+        //                 $.each(bundle, function(key, value) {
+        //                     $('#modal-postoperasi-ido input[type=checkbox]').each(function() {
+        //                         if ($(this).val() == value) {
+        //                             $(this).prop('checked', true);
+        //                         }
+        //                     })
+        //                 })
+        //             }
+        //             if (response.gejala) {
+        //                 var gejala = response.gejala.split(', ');
+        //                 $.each(gejala, function(key, value) {
+        //                     $('#modal-postoperasi-ido input[type=checkbox]').each(function() {
+        //                         if ($(this).val() == value) {
+        //                             $(this).prop('checked', true);
+        //                         }
+        //                     })
+        //                 })
+        //             }
+
+        //             $('#modal-postoperasi-ido #keterangan').val(response.keterangan)
+        //             $('#modal-postoperasi-ido input[type=radio]').each(function() {
+        //                 if ($(this).val() == response.status) {
+        //                     $(this).prop('checked', true);
+        //                 }
+        //             })
+        //         })
+        //         .fail((errors) => {
+        //             alert('Tidak dapat menampilkan data');
+        //             return;
+        //         })
+        // }
 
         function edit_postoperasi_ido(id) {
             resetForm();
             $('#modal-postoperasi-ido').modal('show');
-            $('#modal-postoperasi-ido .modal-title').text('Edit Data Post Operasi');
+            $('#modal-postoperasi-ido .modal-title').text('Edit Bundles Post Operasi');
             $('#modal-postoperasi-ido form')[0].reset();
-            $.get("{{ url('surveilans/ido') }}/" + id)
+            $.get("{{ url('surveilans/idodetail') }}/" + id)
                 .done((response) => {
                     $('#modal-postoperasi-ido [name=_method]').val('put');
                     $('#modal-postoperasi-ido form').attr("action", "{{ url('surveilans/ido') }}/" + response
                         .id);
+                    $('#modal-postoperasi-ido #no_registrasi').val(response.header.no_registrasi).prop('readonly',
+                        true)
+                    $('#modal-postoperasi-ido #id_header').val(response.id_header).prop('readonly', true)
+                    $('#modal-postoperasi-ido #observasi_ke').val(response.observasi_ke).prop('readonly', true)
+                    $('#modal-postoperasi-ido #tanggal_observasi').val(response.tanggal_observasi)
+                    $('#modal-postoperasi-ido #ruang_perawatan').val(response.ruang_perawatan).trigger("change")
+                    $('#modal-postoperasi-ido #keterangan').val(response.keterangan)
+                    $('#modal-postoperasi-ido input[type=radio]').each(function() {
+                        if ($(this).val() == response.status) {
+                            $(this).prop('checked', true);
+                        }
+                    })
 
                     if (response.bundle_post) {
                         var bundle = response.bundle_post.split('; ');
@@ -1456,6 +1530,7 @@
                             })
                         })
                     }
+
                     if (response.gejala) {
                         var gejala = response.gejala.split(', ');
                         $.each(gejala, function(key, value) {
@@ -1467,12 +1542,6 @@
                         })
                     }
 
-                    $('#modal-postoperasi-ido #keterangan').val(response.keterangan)
-                    $('#modal-postoperasi-ido input[type=radio]').each(function() {
-                        if ($(this).val() == response.status) {
-                            $(this).prop('checked', true);
-                        }
-                    })
                 })
                 .fail((errors) => {
                     alert('Tidak dapat menampilkan data');
@@ -1485,6 +1554,7 @@
             $(".ruanganpemasangan").val(null).trigger("change");
             $(".ruang_perawatan").val(null).trigger("change");
             $(".lokasicatheter").val(null).trigger("change");
+            $('#modal-postoperasi-ido #notifikasi').html(null)
         }
 </script>
 @endpush

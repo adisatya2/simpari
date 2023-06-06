@@ -2,39 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bed;
 use App\Models\Agama;
-use App\Models\Kelas;
+use App\Models\AlatInvasif;
+use App\Models\Bed;
 use App\Models\Dokter;
-use App\Models\Ruangan;
-use App\Models\IdoBundle;
-use App\Models\IdoGejala;
-use App\Models\IdoHeader;
-use App\Models\IskBundle;
-use App\Models\IskDetail;
-use App\Models\IskGejala;
-use App\Models\IskHeader;
-use App\Models\VapBundle;
-use App\Models\VapDetail;
-use App\Models\VapGejala;
-use App\Models\VapHeader;
 use App\Models\IadpBundle;
 use App\Models\IadpDetail;
 use App\Models\IadpGejala;
 use App\Models\IadpHeader;
-use App\Models\AlatInvasif;
+use App\Models\IdoBundle;
+use App\Models\IdoGejala;
+use App\Models\IdoHeader;
+use App\Models\IdoPostOperasi;
+use App\Models\IskBundle;
+use App\Models\IskDetail;
+use App\Models\IskGejala;
+use App\Models\IskHeader;
 use App\Models\JenisCairan;
-use App\Models\Profilaksis;
-use Illuminate\Http\Request;
-use App\Models\Registrasirwi;
+use App\Models\Kelas;
 use App\Models\LokasiCatheter;
 use App\Models\PhlebitisBundle;
 use App\Models\PhlebitisDetail;
 use App\Models\PhlebitisGejala;
 use App\Models\PhlebitisHeader;
+use App\Models\Profilaksis;
+use App\Models\Registrasirwi;
+use App\Models\Ruangan;
+use App\Models\VapBundle;
+use App\Models\VapDetail;
+use App\Models\VapGejala;
+use App\Models\VapHeader;
+use Illuminate\Http\Request;
 
 class SurveilansController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:IT SUPPORT|PERAWAT|IPCN/PPI|MUTU DAN AKREDITASI|DIREKSI']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -121,7 +126,7 @@ class SurveilansController extends Controller
                     <a class="dropdown-item" href="' . route('surveilans.edit', $bed_ruangan->no_registrasi) . '">Surveilans</a>
                     <a class="dropdown-item" onclick="detailForm(`' . route('pasiendirawat.show', $bed_ruangan->no_kamar) . '`)">Detail Data Registrasi</a>
                     <a class="dropdown-item" onclick="detailPasien(`' . route('pasien.show', $bed_ruangan->mrn) . '`)">Detail Pasien</a>
-                    <a class="dropdown-item" href="' . url('master/pasien/cetak-barcode/' . $bed_ruangan->mrn)  . '" target="_blank">Cetak Barcode</a>
+                    <a class="dropdown-item" href="' . url('master/pasien/cetak-barcode/' . $bed_ruangan->mrn) . '" target="_blank">Cetak Barcode</a>
                     </div>
                 </div>
                 ';
@@ -167,6 +172,7 @@ class SurveilansController extends Controller
         $logvap = VapHeader::where('no_registrasi', '=', $data_registrasi->no_registrasi)->orderBy('created_at', 'desc')->get();
         $logido = IdoHeader::where('no_registrasi', '=', $data_registrasi->no_registrasi)->orderBy('created_at', 'desc')->get();
 
+        // echo json_encode($logido);die;
         return view('surveilans/surveilans', compact(['ruangan', 'data_registrasi', 'profilaksis', 'alat_invasif', 'lokasi_catheter', 'jenis_cairan', 'isk_bundle', 'isk_gejala', 'vap_bundle', 'vap_gejala', 'iadp_bundle', 'iadp_gejala', 'phlebitis_bundle', 'phlebitis_gejala', 'ido_bundle', 'ido_gejala', 'logphlebitis', 'logisk', 'logiadp', 'logvap', 'logido']));
     }
 
@@ -237,14 +243,14 @@ class SurveilansController extends Controller
     {
         $phlebitis = PhlebitisHeader::with(['detail_list', 'data_ruang_pemasangan', 'data_ruang_perawatan'])->where('id', '=', $id)->first();
 
-        return  $phlebitis;
+        return $phlebitis;
     }
 
     public function show_phlebitis_detail(string $id)
     {
         $phlebitis = PhlebitisDetail::with(['header'])->where('id', '=', $id)->first();
 
-        return  $phlebitis;
+        return $phlebitis;
     }
 
     public function update_phlebitis(Request $request, string $id)
@@ -263,7 +269,7 @@ class SurveilansController extends Controller
             $phlebitis->save();
         }
         if ($request['id_header']) {
-            $cek = PhlebitisDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
+            $cek = PhlebitisDetail::where('id', '!=', $id)->where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
             if ($cek->count() > 0) {
                 return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
             }
@@ -342,7 +348,6 @@ class SurveilansController extends Controller
             );
         }
 
-
         $isk_bundle = IskBundle::all();
         $isk_gejala = IskGejala::all();
 
@@ -358,14 +363,14 @@ class SurveilansController extends Controller
     {
         $isk = IskHeader::with(['detail_list', 'data_ruang_pemasangan', 'data_ruang_perawatan'])->where('id', '=', $id)->first();
 
-        return  $isk;
+        return $isk;
     }
 
     public function show_isk_detail(string $id)
     {
         $isk = IskDetail::with(['header'])->where('id', '=', $id)->first();
 
-        return  $isk;
+        return $isk;
     }
 
     public function update_isk(Request $request, string $id)
@@ -382,7 +387,7 @@ class SurveilansController extends Controller
             $isk->save();
         }
         if ($request['id_header']) {
-            $cek = IskDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
+            $cek = IskDetail::where('id', '!=', $id)->where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
             if ($cek->count() > 0) {
                 return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
             }
@@ -460,7 +465,6 @@ class SurveilansController extends Controller
             );
         }
 
-
         $iadp_bundle = IadpBundle::all();
         $iadp_gejala = IadpGejala::all();
 
@@ -476,14 +480,14 @@ class SurveilansController extends Controller
     {
         $isk = IadpHeader::with(['detail_list', 'data_ruang_pemasangan', 'data_ruang_perawatan'])->where('id', '=', $id)->first();
 
-        return  $isk;
+        return $isk;
     }
 
     public function show_iadp_detail(string $id)
     {
         $isk = IadpDetail::with(['header'])->where('id', '=', $id)->first();
 
-        return  $isk;
+        return $isk;
     }
 
     public function update_iadp(Request $request, string $id)
@@ -500,7 +504,7 @@ class SurveilansController extends Controller
             $isk->save();
         }
         if ($request['id_header']) {
-            $cek = IadpDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
+            $cek = IadpDetail::where('id', '!=', $id)->where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
             if ($cek->count() > 0) {
                 return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
             }
@@ -540,7 +544,7 @@ class SurveilansController extends Controller
             }
             VapHeader::create(
                 [
-                    'id' => 'IAD-' . $request['pemasangan_ke'] . '-' . date("ymd") . '-' . $request['no_registrasi'],
+                    'id' => 'VAP-' . $request['pemasangan_ke'] . '-' . date("ymd") . '-' . $request['no_registrasi'],
                     'no_registrasi' => $request['no_registrasi'],
                     'ruang_perawatan' => $request['ruang_perawatan'],
                     'pemasangan_ke' => $request['pemasangan_ke'],
@@ -576,7 +580,6 @@ class SurveilansController extends Controller
             );
         }
 
-
         $vap_bundle = VapBundle::all();
         $vap_gejala = VapGejala::all();
 
@@ -592,29 +595,29 @@ class SurveilansController extends Controller
     {
         $isk = VapHeader::with(['detail_list', 'data_ruang_pemasangan', 'data_ruang_perawatan'])->where('id', '=', $id)->first();
 
-        return  $isk;
+        return $isk;
     }
 
     public function show_vap_detail(string $id)
     {
         $isk = VapDetail::with(['header'])->where('id', '=', $id)->first();
 
-        return  $isk;
+        return $isk;
     }
 
     public function update_vap(Request $request, string $id)
     {
         if (!$request['id_header']) {
-            $isk = VapHeader::findOrFail($id);
+            $vap = VapHeader::findOrFail($id);
 
-            $isk->ruang_perawatan = $request['ruang_perawatan'];
-            $isk->ruang_pemasangan = $request['ruang_pemasangan'];
-            $isk->tanggal_pemasangan = $request['tanggal_pemasangan'];
-            $isk->tanggal_dilepas = $request['tanggal_dilepas'] ? $request['tanggal_dilepas'] : null;
-            $isk->save();
+            $vap->ruang_perawatan = $request['ruang_perawatan'];
+            $vap->ruang_pemasangan = $request['ruang_pemasangan'];
+            $vap->tanggal_pemasangan = $request['tanggal_pemasangan'];
+            $vap->tanggal_dilepas = $request['tanggal_dilepas'] ? $request['tanggal_dilepas'] : null;
+            $vap->save();
         }
         if ($request['id_header']) {
-            $cek = VapDetail::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
+            $cek = VapDetail::where('id', '!=', $id)->where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
             if ($cek->count() > 0) {
                 return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
             }
@@ -622,16 +625,16 @@ class SurveilansController extends Controller
             $detail['bundle'] = $request['vap_bundle'] ? implode(", ", $request['vap_bundle']) : null;
             $detail['gejala'] = $request['vap_gejala'] ? implode(", ", $request['vap_gejala']) : null;
 
-            $isk = VapDetail::findOrFail($id);
+            $vap = VapDetail::findOrFail($id);
 
-            $isk->tanggal_observasi = $request['tanggal_observasi'];
-            $isk->antibiotik = $request['antibiotik_vap'];
-            $isk->bundle = $detail['bundle'];
-            $isk->gejala = $detail['gejala'];
-            $isk->tanggal_pemeriksaan_kultur = $request['tanggal_pemeriksaan_kultur_vap'];
-            $isk->hasil_kultur = $request['hasil_kultur_vap'];
-            $isk->status = $request['status_vap'];
-            $isk->save();
+            $vap->tanggal_observasi = $request['tanggal_observasi'];
+            $vap->antibiotik = $request['antibiotik_vap'];
+            $vap->bundle = $detail['bundle'];
+            $vap->gejala = $detail['gejala'];
+            $vap->tanggal_pemeriksaan_kultur = $request['tanggal_pemeriksaan_kultur_vap'];
+            $vap->hasil_kultur = $request['hasil_kultur_vap'];
+            $vap->status = $request['status_vap'];
+            $vap->save();
         }
 
         $vap_bundle = VapBundle::all();
@@ -664,10 +667,35 @@ class SurveilansController extends Controller
             $IdoHeader->save();
         }
 
+        if ($request['id_header']) {
+            $cek = IdoPostOperasi::where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
+            if ($cek->count() > 0) {
+                return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
+            }
+
+            $detail['bundle'] = $request['bundle_post'] ? implode("; ", $request['bundle_post']) : null;
+            $detail['gejala'] = $request['ido_gejala'] ? implode(", ", $request['ido_gejala']) : null;
+
+            IdoPostOperasi::create(
+                [
+                    'id_header' => $request['id_header'],
+                    'observasi_ke' => $request['observasi_ke'],
+                    'tanggal_observasi' => $request['tanggal_observasi'],
+                    'no_registrasi' => $request['no_registrasi'],
+                    'ruang_perawatan' => $request['ruang_perawatan'],
+                    'bundle_post' => $detail['bundle'],
+                    'gejala' => $detail['gejala'],
+                    'keterangan' => $request['keterangan'],
+                    'status' => $request['status_ido'],
+                    'user_create' => auth()->user()->username,
+                ]
+            );
+        }
+
         $ido_bundle = IdoBundle::all();
         $ido_gejala = IdoGejala::all();
 
-        $logido = IdoHeader::with(['data_ruang_perawatan'])->where('no_registrasi', '=', $request['no_registrasi'])->orderBy('created_at', 'desc')->get();
+        $logido = IdoHeader::with(['detail_list', 'data_ruang_perawatan'])->where('no_registrasi', '=', $request['no_registrasi'])->orderBy('created_at', 'desc')->get();
 
         $view = view('surveilans/log_ido', compact(['logido', 'ido_bundle', 'ido_gejala']));
         $view = $view->render();
@@ -675,20 +703,27 @@ class SurveilansController extends Controller
         return response()->json(['view' => $view, 'pesan' => 'Data berhasil disimpan.'], 200);
     }
 
-    public function show_ido(string $id)
+    public function show_ido_header(string $id)
     {
-        $ido = IdoHeader::with(['data_ruang_perawatan'])->where('id', '=', $id)->first();
+        $ido = IdoHeader::with(['detail_list', 'data_ruang_perawatan'])->where('id', '=', $id)->first();
 
-        return  $ido;
+        return $ido;
+    }
+
+    public function show_ido_detail(string $id)
+    {
+        $ido = IdoPostOperasi::with(['header', 'data_ruang_perawatan'])->where('id', '=', $id)->first();
+
+        return $ido;
     }
 
     public function update_ido(Request $request, string $id)
     {
-        $IdoHeader = IdoHeader::findOrFail($id);
 
         $berhasil = false;
 
         if ($request['ido_header']) {
+            $IdoHeader = IdoHeader::findOrFail($id);
             $IdoHeader->no_registrasi = $request['no_registrasi'];
             $IdoHeader->operasi_ke = $request['operasi_ke'];
             $IdoHeader->jadwal_operasi = $request['jadwal_operasi'];
@@ -698,12 +733,14 @@ class SurveilansController extends Controller
             if ($IdoHeader->save()) {
                 $berhasil = true;
             }
+            $logido = IdoHeader::with(['detail_list', 'data_ruang_perawatan'])->where('no_registrasi', '=', $IdoHeader['no_registrasi'])->orderBy('created_at', 'desc')->get();
         }
 
         if ($request['ido_pre']) {
 
             $bundle_pre = $request['bundle_pre'] ? implode(", ", $request['bundle_pre']) : null;
 
+            $IdoHeader = IdoHeader::findOrFail($id);
             $IdoHeader->ruang_perawatan = $request['ruang_perawatan'];
             $IdoHeader->suhu = $request['suhu'];
             $IdoHeader->gds = $request['gds'];
@@ -718,12 +755,14 @@ class SurveilansController extends Controller
             if ($IdoHeader->save()) {
                 $berhasil = true;
             }
+            $logido = IdoHeader::with(['detail_list', 'data_ruang_perawatan'])->where('no_registrasi', '=', $IdoHeader['no_registrasi'])->orderBy('created_at', 'desc')->get();
         }
 
         if ($request['ido_intra']) {
 
             $bundle_intra = $request['bundle_intra'] ? implode(", ", $request['bundle_intra']) : null;
 
+            $IdoHeader = IdoHeader::findOrFail($id);
             $IdoHeader->ruang_operasi = $request['ruang_operasi'];
             $IdoHeader->nama_prosedur_operasi = $request['nama_prosedur_operasi'];
             $IdoHeader->kualifikasi_daerah_operasi = $request['kualifikasi_daerah_operasi'];
@@ -735,28 +774,47 @@ class SurveilansController extends Controller
             if ($IdoHeader->save()) {
                 $berhasil = true;
             }
+            $logido = IdoHeader::with(['detail_list', 'data_ruang_perawatan'])->where('no_registrasi', '=', $IdoHeader['no_registrasi'])->orderBy('created_at', 'desc')->get();
         }
 
         if ($request['ido_post']) {
 
+            // $bundle_post = $request['bundle_post'] ? implode("; ", $request['bundle_post']) : null;
+            // $ido_gejala = $request['ido_gejala'] ? implode(", ", $request['ido_gejala']) : null;
+
+            // $IdoHeader->bundle_post = $bundle_post;
+            // $IdoHeader->gejala = $ido_gejala;
+            // $IdoHeader->keterangan = $request['keterangan'];
+            // $IdoHeader->status = $request['status_ido'];
+            // $IdoHeader->user_update_post = auth()->user()->username;
+            $cek = IdoPostOperasi::where('id', '!=', $id)->where('id_header', '=', $request['id_header'])->where('tanggal_observasi', '=', $request['tanggal_observasi'])->get();
+            if ($cek->count() > 0) {
+                return response()->json(['pesan' => 'Data dengan tanggal yang sama sudah di-input'], 409);
+            }
+
             $bundle_post = $request['bundle_post'] ? implode("; ", $request['bundle_post']) : null;
             $ido_gejala = $request['ido_gejala'] ? implode(", ", $request['ido_gejala']) : null;
 
-            $IdoHeader->bundle_post = $bundle_post;
-            $IdoHeader->gejala = $ido_gejala;
-            $IdoHeader->keterangan = $request['keterangan'];
-            $IdoHeader->status = $request['status_ido'];
-            $IdoHeader->user_update_post = auth()->user()->username;
+            $ido_postoperasi = IdoPostOperasi::findOrFail($id);
 
-            if ($IdoHeader->save()) {
+            $ido_postoperasi->tanggal_observasi = $request['tanggal_observasi'];
+            $ido_postoperasi->ruang_perawatan = $request['ruang_perawatan'];
+            $ido_postoperasi->bundle_post = $bundle_post;
+            $ido_postoperasi->gejala = $ido_gejala;
+            $ido_postoperasi->keterangan = $request['keterangan'];
+            $ido_postoperasi->status = $request['status_ido'];
+            $ido_postoperasi->user_update = auth()->user()->username;
+
+            if ($ido_postoperasi->save()) {
                 $berhasil = true;
             }
+            $logido = IdoHeader::with(['detail_list', 'data_ruang_perawatan'])->where('no_registrasi', '=', $request['no_registrasi'])->orderBy('created_at', 'desc')->get();
         }
 
         $ido_bundle = IdoBundle::all();
         $ido_gejala = IdoGejala::all();
 
-        $logido = IdoHeader::with(['data_ruang_perawatan'])->where('no_registrasi', '=',  $IdoHeader['no_registrasi'])->orderBy('created_at', 'desc')->get();
+        // $logido = IdoHeader::with(['detail_list', 'data_ruang_perawatan'])->where('no_registrasi', '=', $IdoHeader['no_registrasi'])->orderBy('created_at', 'desc')->get();
 
         $view = view('surveilans/log_ido', compact(['logido', 'ido_bundle', 'ido_gejala']));
         $view = $view->render();

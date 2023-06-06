@@ -41,7 +41,7 @@
             <hr>
             <div id="accordion">
                 {{-- Bundle Pre Operasi IDO --}}
-                <div class="card card-gray">
+                <div class="card card-danger">
                     <div class="card-header">
                         <h4 class="card-title w-100">
                             <a class="d-block w-100" data-toggle="collapse" href="#collapsePreOperasi">
@@ -119,7 +119,7 @@
                                                                     }
                                                                     ?>
                                                 @endforeach
-                                                <div class="form-check">
+                                                <div class="form-check p-0">
                                                     {!! $checked !!}
 
                                                     {{ $ido->bundle }}
@@ -127,6 +127,11 @@
                                                 @endif
                                                 @endforeach
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-top text-nowrap text-bold">User</td>
+                                            <td>:</td>
+                                            <td>{{ isset($log->user_update_pre)?$log->user_update_pre:'' }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -215,7 +220,7 @@
                                                                     }
                                                                     ?>
                                                 @endforeach
-                                                <div class="form-check">
+                                                <div class="form-check p-0">
                                                     {!! $checked !!}
 
                                                     {{ $ido->bundle }}
@@ -223,6 +228,11 @@
                                                 @endif
                                                 @endforeach
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-top text-nowrap text-bold">User</td>
+                                            <td>:</td>
+                                            <td>{{ isset($log->user_update_pre)?$log->user_update_intra:'' }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -250,94 +260,138 @@
                 {{-- Bundle Post Operasi IDO --}}
                 <div class="card card-info">
                     <div class="card-header">
-                        <h4 class="card-title w-100">
-                            <a class="d-block w-100" data-toggle="collapse" href="#collapsePostOperasi">
-                                Bundles Post Operasi
-                            </a>
-                        </h4>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <h4 class="card-title w-100">
+                                    <a class="d-block w-100" data-toggle="collapse" href="#collapsePostOperasi">
+                                        Bundles Post Operasi
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="col-sm-3 text-right">
+                                <button type="button" class="btn btn-xs m-0"
+                                    onclick="tambah_postoperasi_ido('{{ $log->id }}',{{ max_ido_detail($log->id) }})"><i
+                                        class="fas fa-plus-square"></i>
+                                    Tambah Data
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div id="collapsePostOperasi" class="collapse show" data-parent="#accordion" aria-expanded="true">
                         <div class="card-body">
-                            <div class="row">
-                                @if (isset($log->status))
-                                <div class="col-lg-6 table-responsive">
-                                    <table class="table table-sm">
-                                        <tr>
-                                            <td class="align-top text-nowrap text-bold">Status IDO</td>
-                                            <td>:</td>
-                                            <td>{{ $log->status }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-top text-nowrap text-bold">Keterangan</td>
-                                            <td>:</td>
-                                            <td>{{ nl2br($log->keterangan) }}</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="col-lg-6 table-responsive">
-                                    <table class="table table-sm">
-                                        <tr>
-                                            <td class="align-top text-nowrap text-bold">Bundles Post Operasi
-                                            </td>
-                                            <td class="align-top">:</td>
-                                            <td>
-                                                @foreach ($ido_bundle as $ido)
-                                                <?php $checked = '<i class="fa-fw far fa-square"></i>'; ?>
-                                                @if ($ido->waktu == 'Post Operasi')
-                                                @foreach (explode('; ', $log->bundle_post) as $bundle)
-                                                <?php
-                                                                    
-                                                                    if ($bundle == $ido->bundle) {
-                                                                        $checked = '<i class="fa-fw fas fa-check-square"></i>';
+                            <div id="accordion">
+                                @if (count($log->detail_list)>0)
+                                @foreach ($log->detail_list as $list)
+                                <div class="card card-gray w-100">
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <h4 class="card-title w-100">
+                                                <a class="d-block w-100" data-toggle="collapse"
+                                                    href="#collapse{{ $list->id }}">
+                                                    Observasi ke-{{$list->observasi_ke}} |
+                                                    {{tanggal_indonesia($list->tanggal_observasi)}}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div id="collapse{{ $list->id }}" class="collapse" data-parent="#accordion"
+                                        aria-expanded="true">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-6 table-responsive">
+                                                    <table class="table table-sm">
+                                                        <tr>
+                                                            <td class="align-top text-nowrap text-bold">Status IDO
+                                                            </td>
+                                                            <td>:</td>
+                                                            <td>{{ $list->status }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-top text-nowrap text-bold">Ruang
+                                                                Perawatan</td>
+                                                            <td class="align-top">:</td>
+                                                            <td>{{ nl2br($list->data_ruang_perawatan->nama_ruangan)
+                                                                }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-top text-nowrap text-bold">Keterangan
+                                                            </td>
+                                                            <td class="align-top">:</td>
+                                                            <td>{{ nl2br($list->keterangan) }}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-6 table-responsive">
+                                                    <table class="table table-sm">
+                                                        <tr>
+                                                            <td class="align-top text-nowrap text-bold">Bundles IDO
+                                                            </td>
+                                                            <td class="align-top">:</td>
+                                                            <td>
+                                                                @foreach ($ido_bundle as $ido)
+                                                                <?php $checked = '<i class="fa-fw far fa-square"></i>'; ?>
+                                                                @if ($ido->waktu == 'Post Operasi')
+                                                                <?php foreach(explode('; ', $list->bundle_post) as
+                                                                    $bundle){
+                                                                        if ($bundle == $ido->bundle) {
+                                                                            $checked = '<i class="fa-fw fas fa-check-square"></i>';
+                                                                        }
                                                                     }
                                                                     ?>
-                                                @endforeach
-                                                <div class="form-check">
-                                                    {!! $checked !!}
 
-                                                    {{ $ido->bundle }}
+                                                                <div class="form-check p-0">
+                                                                    {!! $checked !!}
+
+                                                                    {{ $ido->bundle }}
+                                                                </div>
+                                                                @endif
+                                                                @endforeach
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-top text-nowrap text-bold">Tanda dan
+                                                                Gejala</td>
+                                                            <td class="align-top">:</td>
+                                                            <td>
+                                                                @foreach ($ido_gejala as $idogejala)
+                                                                <?php $checked = '<i class="fa-fw far fa-square"></i>'; ?>
+                                                                @foreach (explode(', ', $list->gejala) as $gejala)
+                                                                <?php
+                                                                                    if ($gejala == $idogejala->gejala) {
+                                                                                        $checked = '<i class="fa-fw fas fa-check-square"></i>';
+                                                                                    }
+                                                                                    ?>
+                                                                @endforeach
+                                                                <div class="form-check p-0">
+                                                                    {!! $checked !!}
+                                                                    {{ $idogejala->gejala }}
+                                                                </div>
+                                                                @endforeach
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="align-top text-nowrap text-bold">User</td>
+                                                            <td>:</td>
+                                                            <td>{{ isset($list->user_create)?$list->user_create:'' }}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
-                                                @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-top text-nowrap text-bold">Tanda dan Gejala</td>
-                                            <td class="align-top">:</td>
-                                            <td>
-                                                @foreach ($ido_gejala as $idogejala)
-                                                <?php $checked = '<i class="fa-fw far fa-square"></i>'; ?>
-                                                @foreach (explode(', ', $log->gejala) as $gejala)
-                                                <?php
-                                                                if ($gejala == $idogejala->gejala) {
-                                                                    $checked = '<i class="fa-fw fas fa-check-square"></i>';
-                                                                }
-                                                                ?>
-                                                @endforeach
-                                                <div class="form-check">
-                                                    {!! $checked !!}
-                                                    {{ $idogejala->gejala }}
+                                                <div class="col-sm-12 text-center">
+                                                    <button type="button" class="btn btn-default btn-sm m-0"
+                                                        onclick="edit_postoperasi_ido('{{ $list->id }}')"><i
+                                                            class="fas fa-pen-square"></i>
+                                                        Edit
+                                                    </button>
                                                 </div>
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                    </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="col-sm-12 text-center">
-                                    <button type="button" class="btn btn-default btn-sm w-100 m-0"
-                                        onclick="edit_postoperasi_ido('{{ $log->id }}')"><i
-                                            class="fas fa-pen-square"></i>
-                                        Edit Data Post Operasi
-                                    </button>
-                                </div>
+                                @endforeach
                                 @else
-                                <div class="col-sm-12 text-center">
-                                    <button type="button" class="btn btn-default btn-sm w-100 m-0"
-                                        onclick="tambah_postoperasi_ido('{{ $log->id }}')"><i
-                                            class="fas fa-plus-square"></i>
-                                        Input Data Post Operasi
-                                    </button>
-                                </div>
+                                <div class="col-sm-12 text-center">Data tidak ditemukan.</div>
                                 @endif
                             </div>
                         </div>

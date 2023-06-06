@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agama;
-use PDF;
 use App\Models\MasterPasien;
 use Illuminate\Http\Request;
+use PDF;
 
 class MasterPasienController extends Controller
 {
@@ -39,7 +39,7 @@ class MasterPasienController extends Controller
                     <div class="dropdown-menu" role="menu">
                         <a class="dropdown-item" onclick="editForm(`' . route('pasien.update', $master_pasien->mrn) . '`)">Edit</a>
                         <a class="dropdown-item" onclick="detailPasien(`' . route('pasien.show', $master_pasien->mrn) . '`)">Detail Pasien</a>
-                        <a class="dropdown-item" href="' . url('master/pasien/cetak-barcode/' . $master_pasien->mrn)  . '" target="_blank">Cetak Barcode</a>
+                        <a class="dropdown-item" href="' . url('master/pasien/cetak-barcode/' . $master_pasien->mrn) . '" target="_blank">Cetak Barcode</a>
                         <a class="dropdown-item" onclick="editForm(`' . route('pasien.show', $master_pasien->mrn) . '`)">Registrasi Rawat Inap</a>
                     </div>
                 </div>
@@ -111,7 +111,7 @@ class MasterPasienController extends Controller
 
     public function cetakBarcode(string $mrn)
     {
-        $pasien = MasterPasien::find($mrn);
+        $pasien = MasterPasien::findOrFail($mrn);
 
         $customPaper = array(0, 0, 85.0394, 283.465);
 

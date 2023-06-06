@@ -23,6 +23,8 @@ return new class extends Migration
             $table->text('hasil_kultur')->nullable();
             $table->enum('status', ['Ya', 'Tidak']);
             $table->string('user_create', 15);
+            $table->string('user_update', 15)->nullable();
+            $table->string('kode_rs')->default(config('app.kode_rs'));
             $table->timestamps();
         });
     }

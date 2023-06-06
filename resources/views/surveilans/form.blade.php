@@ -1088,7 +1088,7 @@
         @csrf
         @method('post')
         <input type="hidden" class="form-control form-control-sm" name="ido_post" id="ido_post" value=true>
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Post Operasi IDO</h4>
@@ -1099,7 +1099,40 @@
                 <div class="modal-body">
                     <div id="notifikasi"></div>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="id_header">ID Header<small class="text-danger">*</small></label>
+                                <input type="text" class="form-control form-control-sm" name="id_header" id="id_header"
+                                    readonly required>
+                                <input type="hidden" class="form-control form-control-sm" name="no_registrasi"
+                                    id="no_registrasi" required>
+                                <input type="hidden" class="form-control form-control-sm" name="ido_post" id="ido_post"
+                                    value=true>
+                            </div>
+                            <div class="form-group">
+                                <label for="observasi_ke">Observasi Ke<small class="text-danger">*</small></label>
+                                <input type="number" class="form-control form-control-sm" name="observasi_ke"
+                                    id="observasi_ke" min="1" max="99" autofocus required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_observasi">Tanggal Observasi<small
+                                        class="text-danger">*</small></label>
+                                <input type="date" class="form-control form-control-sm" name="tanggal_observasi"
+                                    id="tanggal_observasi" value="{{ date('Y-m-d') }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ruang_perawatan">Ruang Perawatan<small class="text-danger">*</small></label>
+                                <select name="ruang_perawatan" id="ruang_perawatan"
+                                    class="form-control form-control-sm ruang_perawatan" required>
+                                    @foreach ($ruangan as $key => $item)
+                                    <option value="{{ $key }}">
+                                        {{ $item }} ({{ $key }})
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="">Bundles Post Operasi</label>
                                 @foreach ($ido_bundle as $ido)

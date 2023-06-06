@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class IdoHeader extends Model
 {
@@ -15,6 +16,11 @@ class IdoHeader extends Model
     protected $primaryKey = 'id';
     protected $guarded = '';
     public $timestamps = true;
+
+    public function detail_list(): HasMany
+    {
+        return $this->hasMany(IdoPostOperasi::class, 'id_header', 'id');
+    }
 
     public function data_registrasi(): BelongsTo
     {
