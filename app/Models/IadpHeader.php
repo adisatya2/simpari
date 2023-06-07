@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Ruangan;
 use App\Models\IadpDetail;
 use App\Models\Registrasirwi;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Ruangan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class IadpHeader extends Model
 {
@@ -22,7 +22,7 @@ class IadpHeader extends Model
 
     public function detail_list(): HasMany
     {
-        return $this->hasMany(IadpDetail::class, 'id_header', 'id');
+        return $this->hasMany(IadpDetail::class, 'id_header', 'id')->orderBy('observasi_ke');
     }
 
     public function data_registrasi(): BelongsTo

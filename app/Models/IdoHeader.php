@@ -19,7 +19,7 @@ class IdoHeader extends Model
 
     public function detail_list(): HasMany
     {
-        return $this->hasMany(IdoPostOperasi::class, 'id_header', 'id');
+        return $this->hasMany(IdoPostOperasi::class, 'id_header', 'id')->orderBy('observasi_ke');
     }
 
     public function data_registrasi(): BelongsTo

@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class IskHeader extends Model
 {
@@ -19,7 +19,7 @@ class IskHeader extends Model
 
     public function detail_list(): HasMany
     {
-        return $this->hasMany(IskDetail::class, 'id_header', 'id');
+        return $this->hasMany(IskDetail::class, 'id_header', 'id')->orderBy('observasi_ke');
     }
 
     public function data_registrasi(): BelongsTo
