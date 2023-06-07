@@ -118,7 +118,6 @@ class MasterPasienController extends Controller
         $pdf = PDF::loadView('master_pasien.barcode', compact('pasien'));
         $pdf->set_option('isHtml5ParserEnabled', true);
         $pdf->set_option('isRemoteEnabled', true);
-        $pdf->loadHtml(ob_get_clean());
         $pdf->setPaper($customPaper, 'landscape');
         return $pdf->stream('master_pasien.pdf');
     }
