@@ -1,138 +1,138 @@
 @extends('layouts.master')
 @section('title', 'Surveilans')
 @push('head')
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('/') }}plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="{{ asset('/') }}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
-    <style>
-        .dataTables_length,
-        .dataTables_filter {
-            margin-left: 30px;
-            float: right;
-        }
+<style>
+    .dataTables_length,
+    .dataTables_filter {
+        margin-left: 30px;
+        float: right;
+    }
 
-        table.dataTable td {
-            padding: 5px;
-        }
+    table.dataTable td {
+        padding: 5px;
+    }
 
-        table.dataTable thead tr th {
-            padding: 5px;
-            text-align: center;
-        }
-    </style>
+    table.dataTable thead tr th {
+        padding: 5px;
+        text-align: center;
+    }
+</style>
 @endpush
 
 @section('breadcrumbs')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Surveilans</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Surveilans</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Surveilans</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                    <li class="breadcrumb-item active">Surveilans</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
 @endsection
 
 @section('content')
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <section class="content">
-                <div class="card">
-                    <div class="card-header row">
-                        <div class="col-sm-6">
-                            <form action="{{ route('pasiendirawat.data') }}" id="search-ruangan">
-                                <div class="input-group">
-                                    <select name="ruangan" id="ruangan" class="form-control form-control-sm select2bs4">
-                                        <option value="">Pilih Ruangan</option>
-                                        @foreach ($ruangan as $key => $item)
-                                            <option value="{{ $key }}">{{ $item }}
-                                                ({{ $key }})
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <div class="input-group-prepend">
-                                        <button type="button" onclick="datapasiendirawat()" class="btn btn-info"><i
-                                                class="fas fa-search"></i></button>
-                                    </div>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <section class="content">
+            <div class="card">
+                <div class="card-header row">
+                    <div class="col-sm-6">
+                        <form action="{{ route('pasiendirawat.data') }}" id="search-ruangan">
+                            <div class="input-group">
+                                <select name="ruangan" id="ruangan" class="form-control form-control-sm select2bs4">
+                                    <option value="">Pilih Ruangan</option>
+                                    @foreach ($ruangan as $key => $item)
+                                    <option value="{{ $key }}">{{ $item }}
+                                        ({{ $key }})
+                                    </option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-prepend">
+                                    <button type="button" onclick="datapasiendirawat()" class="btn btn-info"><i
+                                            class="fas fa-search"></i></button>
                                 </div>
-                            </form>
-                        </div>
-
-                        <div class="card-tools col-sm-6 d-flex justify-content-end">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="card-body">
 
-                        <table id="table" class="table table-bordered table-hover">
-                            <thead>
-                                <th width="1%">Aksi</th>
-                                <th>No</th>
-                                <th>LOS</th>
-                                <th>MRN</th>
-                                <th>Nama Pasien</th>
-                                <th>Diagnosa</th>
-                                <th>DPJP</th>
-                                <th>Hinai</th>
-                                <th>Tanggal Masuk</th>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-
+                    <div class="card-tools col-sm-6 d-flex justify-content-end">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 </div>
-            </section>
-        </div>
-    </section>
+                <div class="card-body">
 
-    @includeIf('master_pasien.detail_pasien')
-    @includeIf('pasien_dirawat.form')
+                    <table id="table" class="table table-bordered table-hover">
+                        <thead>
+                            <th width="1%">Aksi</th>
+                            <th>No</th>
+                            <th>LOS</th>
+                            <th>MRN</th>
+                            <th>Nama Pasien</th>
+                            <th>Diagnosa</th>
+                            <th>DPJP</th>
+                            <th>Hinai</th>
+                            <th>Tanggal Masuk</th>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+@includeIf('master_pasien.detail_pasien')
+@includeIf('pasien_dirawat.form')
 @endsection
 @push('js')
-    <!-- DataTables  & Plugins -->
-    <script src="{{ asset('/') }}plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="{{ asset('/') }}plugins/jszip/jszip.min.js"></script>
-    <script src="{{ asset('/') }}plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="{{ asset('/') }}plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <!-- Select2 -->
-    <script src="{{ asset('/') }}plugins/select2/js/select2.full.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('/') }}plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="{{ asset('/') }}plugins/jszip/jszip.min.js"></script>
+<script src="{{ asset('/') }}plugins/pdfmake/pdfmake.min.js"></script>
+<script src="{{ asset('/') }}plugins/pdfmake/vfs_fonts.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- Select2 -->
+<script src="{{ asset('/') }}plugins/select2/js/select2.full.min.js"></script>
 
-    <script src="{{ asset('/') }}plugins/popper/umd/popper.min.js"></script>
-    <script src="{{ asset('/') }}plugins/popper/umd/popper-utils.min.js"></script>
+<script src="{{ asset('/') }}plugins/popper/umd/popper.min.js"></script>
+<script src="{{ asset('/') }}plugins/popper/umd/popper-utils.min.js"></script>
 
 
-    <script>
-        // let table;
+<script>
+    // let table;
 
         $(function() {
 
@@ -266,12 +266,13 @@
                         }
                         $('#modal-form #no_telp').val(response.data_pasien.no_telp).prop("readonly", true);
                         $('#modal-form #alamat').val(response.data_pasien.alamat).prop("readonly", true);
-                        $('#modal-form #agama').val(response.data_pasien.agama).prop("readonly", true);
+                        $('#modal-form #agama').val(response.data_pasien.agama).prop("disabled", true);
 
                         $('#modal-form #no_registrasi').val(response.no_registrasi).prop("readonly", true);
                         $('#modal-form #diagnosa').val(response.diagnosa).prop("readonly", true);
-                        $('#modal-form #id_dokter').val(response.dpjp.nama_dokter).prop("readonly", true);
+                        $('#modal-form #id_dokter').val(response.dpjp.id_dokter).prop("disabled", true);
                         $('#modal-form [name=jenis_jaminan]').prop("disabled", true);
+                        $('#modal-form [type=submit]').prop("disabled", true);
                         if (response.jenis_jaminan == 'JKN') {
                             $('#modal-form #JKN').prop("checked", true);
                         }
@@ -294,6 +295,8 @@
                         $('#modal-form #hak_pasien').val(response.hak_pasien).prop("readonly", true);
                         $('#modal-form #bed_hinai').val(response.bed_hinai).prop("readonly", true);
                         $('#modal-form #tanggal_masuk').val(response.tanggal_masuk).prop("readonly", true);
+                        $('#modal-form #keterangan_fo').val(response.keterangan_fo).prop("readonly", true);
+                        $('#modal-form #keterangan_perawat').val(response.keterangan_perawat).prop("readonly", true);
                     }
                 })
                 .fail((errors) => {
@@ -368,5 +371,5 @@
                     return;
                 })
         }
-    </script>
+</script>
 @endpush

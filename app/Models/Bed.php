@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Models\Kelas;
 use App\Models\Ruangan;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Bed extends Model
@@ -52,8 +52,14 @@ class Bed extends Model
     {
         return $this->hasOne(MasterPasien::class, 'mrn', 'mrn');
     }
+
     public function data_registrasi(): HasOne
     {
         return $this->hasOne(Registrasirwi::class, 'no_registrasi', 'no_registrasi');
+    }
+
+    public function data_gizi(): HasOne
+    {
+        return $this->hasOne(Gizi::class, 'no_registrasi', 'no_registrasi');
     }
 }

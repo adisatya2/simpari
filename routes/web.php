@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BedController;
 use App\Http\Controllers\DokterController;
+use App\Http\Controllers\GiziController;
 use App\Http\Controllers\LaporanPPIController;
 use App\Http\Controllers\MasterPasienController;
 use App\Http\Controllers\PasienDirawatController;
@@ -108,4 +109,7 @@ Route::middleware('auth')->group(function () {
     Route::post('laporanhais/dataidopost', [LaporanPPIController::class, 'data_ido_post'])->name('laporanhais.dataidopost');
     Route::post('laporanhais/count', [LaporanPPIController::class, 'count'])->name('laporanhais.count');
     Route::post('laporanhais/countbundle', [LaporanPPIController::class, 'count_bundle'])->name('laporanhais.countbundle');
+
+    Route::post('gizi/data', [GiziController::class, 'data'])->name('gizi.data');
+    Route::resource('gizi', GiziController::class);
 });
