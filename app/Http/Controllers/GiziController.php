@@ -118,8 +118,7 @@ class GiziController extends Controller
                     <a class="dropdown-item" onclick="formDiet(`' . route('gizi.update', $bed_ruangan->no_registrasi) . '`)">Diet</a>
                     <a class="dropdown-item" onclick="detailForm(`' . route('pasiendirawat.show', $bed_ruangan->no_kamar) . '`)">Detail Data Registrasi</a>
                     <a class="dropdown-item" onclick="detailPasien(`' . route('pasien.show', $bed_ruangan->mrn) . '`)">Detail Pasien</a>
-                    </div>
-                </div>
+
                 ';
                 if ($bed_ruangan->data_gizi) {
                     $button .= '
@@ -127,6 +126,7 @@ class GiziController extends Controller
                 ';
                 }
                 $button .= '
+                    </div>
                 </div>
                 ';
 

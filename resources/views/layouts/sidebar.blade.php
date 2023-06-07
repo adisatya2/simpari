@@ -143,7 +143,7 @@
                 </li>
                 @endif
                 @if (auth()->user()->hasRole(['IT SUPPORT','PERAWAT','PANTRY/GIZI','MUTU DAN AKREDITASI','DIREKSI']))
-                <li class="nav-item">
+                <li class="nav-item {{ request()->segment(1) == 'gizi' ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="fa-fw fas fa-utensils nav-icon"></i>
                         <p>
@@ -153,7 +153,8 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('gizi.index') }}" class="nav-link">
+                            <a href="{{ route('gizi.index') }}"
+                                class="nav-link {{ request()->segment(1) == 'gizi' ? 'active' : '' }}">
                                 <i class="fa-fw fas fa-procedures nav-icon"></i>
                                 <p>Pasien Sedang Dirawat</p>
                             </a>

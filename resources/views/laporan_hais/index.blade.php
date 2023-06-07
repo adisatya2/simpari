@@ -232,7 +232,7 @@
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-four-ido" role="tabpanel"
                             aria-labelledby="custom-tabs-four-ido-tab">
-                            <h5>Table data Pre dan Intra Operasi</h5>
+                            <h5>Table Header - Data Pre dan Intra Operasi</h5>
                             <table class="table table-sm table-bordered table-hover" id="table-ido">
                                 <thead>
                                     <th>Aksi</th>
