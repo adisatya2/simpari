@@ -153,7 +153,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('gizi.index') }}" class="nav-link">
                                 <i class="fa-fw fas fa-procedures nav-icon"></i>
                                 <p>Pasien Sedang Dirawat</p>
                             </a>
