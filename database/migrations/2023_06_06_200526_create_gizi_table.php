@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('gizi', function (Blueprint $table) {
             $table->id();
             $table->string('no_registrasi', 20)->nullable();
+            $table->string('diet', 50);
             $table->text('keterangan')->nullable();
             $table->string('user_create', 15);
             $table->string('user_update', 15)->nullable();

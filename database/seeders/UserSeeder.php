@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'email_verified_at' => null,
             'password' => bcrypt('admin'),
+            'aktif' => 1,
         ]);
 
         $user->roles()->detach();
