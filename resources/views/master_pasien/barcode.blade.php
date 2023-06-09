@@ -11,7 +11,7 @@
 <style>
     @page {
         size: 3cm 10cm landscape;
-        margin: 5px 20px 5px 20px;
+        margin: 5px 10px 5px 10px;
         font-size: 0.7em;
     }
 
@@ -79,11 +79,14 @@
         </tr>
         <tr>
             <td class="text-center" colspan="2">
-                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($pasien->mrn, 'C39E') }}"
-                    alt="{{ $pasien->mrn }}" width="90%" height="40">
+                {{-- <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($pasien->mrn, 'C39') }}"
+                    alt="{{ $pasien->mrn }}" width="95%" height="40"> --}}
+                <div class="text-center" style="margin-top: 10px">{!! DNS1D::getBarcodeHTML($pasien->mrn, 'C39') !!}
+                </div>
             </td>
         </tr>
     </table>
+
 </body>
 
 </html>
