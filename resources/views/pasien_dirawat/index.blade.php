@@ -495,6 +495,19 @@
             $('#modal-form [name=nama_jaminan]').prop("required", true);
             $('#modal-form [name=hak_pasien]').prop("required", true);
             $('#modal-form [name=tanggal_masuk]').prop("required", true);
+
+            $.ajax({
+                url: `{{ url('bedmanagement/pasiendirawat') }}/` + no_kamar,
+                type: 'get',
+                success: function(response) {
+                    $('#modal-form #keterangan_fo').val(response.keterangan_fo);
+                    $('#modal-form #keterangan_perawat').val(response.keterangan_perawat);
+                },
+                error: function() {
+                    alert('Tidak dapat menampilkan data');
+                    return;
+                }
+            });
         }
 
         function editForm(url) {
