@@ -181,7 +181,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-iadp" role="tabpanel"
+                        <div class="tab-pane fade table-responsive" id="custom-tabs-four-iadp" role="tabpanel"
                             aria-labelledby="custom-tabs-four-iadp-tab">
                             <table class="table table-sm table-bordered table-hover" id="table-iadp">
                                 <thead>
@@ -206,7 +206,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-vap" role="tabpanel"
+                        <div class="tab-pane fade table-responsive" id="custom-tabs-four-vap" role="tabpanel"
                             aria-labelledby="custom-tabs-four-vap-tab">
                             <table class="table table-sm table-bordered table-hover" id="table-vap">
                                 <thead>
@@ -230,7 +230,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-four-ido" role="tabpanel"
+                        <div class="tab-pane fade table-responsive" id="custom-tabs-four-ido" role="tabpanel"
                             aria-labelledby="custom-tabs-four-ido-tab">
                             <h5>Table Header - Data Pre dan Intra Operasi</h5>
                             <table class="table table-sm table-bordered table-hover" id="table-ido">
@@ -300,7 +300,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <table class="table table-bordered table-hover" id="table-count">
                                 <thead>
                                     <th>HAIs</th>
@@ -346,7 +346,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <div id="table-bundle"></div>
                         </div>
                     </div>

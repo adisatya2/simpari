@@ -1,166 +1,167 @@
 @extends('layouts.master')
 @section('title', 'Pasien Sedang Dirawat')
 @push('head')
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="{{ asset('/') }}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('/') }}plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="{{ asset('/') }}plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
-    <style>
-        .dataTables_length,
-        .dataTables_filter {
-            margin-left: 30px;
-            float: right;
-        }
+<style>
+    .dataTables_length,
+    .dataTables_filter {
+        margin-left: 30px;
+        float: right;
+    }
 
-        table.dataTable td {
-            padding: 5px;
-        }
+    table.dataTable td {
+        padding: 5px;
+    }
 
-        table.dataTable thead tr th {
-            padding: 5px;
-            text-align: center;
-        }
-    </style>
+    table.dataTable thead tr th {
+        padding: 5px;
+        text-align: center;
+    }
+</style>
 @endpush
 
 @section('breadcrumbs')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4 row d-flex align-items-center">
-                    <div class="col-md-12 mb-1 mt-1">
-                        <form action="{{ route('pasiendirawat.data') }}" id="search-ruangan">
-                            <div class="input-group">
-                                <select name="ruangan" id="ruangan" class="form-control select2bs4">
-                                    <option value="">Semua Ruangan</option>
-                                    @foreach ($ruangan as $key => $item)
-                                        <option value="{{ $key }}">{{ $item }}
-                                            ({{ $key }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div class="input-group-prepend">
-                                    <button type="button" onclick="datapasiendirawat()" class="btn btn-info"><i
-                                            class="fa-fw fas fa-search"></i></button>
-                                </div>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 row d-flex align-items-center">
+                <div class="col-md-12 mb-1 mt-1">
+                    <form action="{{ route('pasiendirawat.data') }}" id="search-ruangan">
+                        <div class="input-group">
+                            <select name="ruangan" id="ruangan" class="form-control select2bs4">
+                                <option value="">Semua Ruangan</option>
+                                @foreach ($ruangan as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}
+                                    ({{ $key }})
+                                </option>
+                                @endforeach
+                            </select>
+                            <div class="input-group-prepend">
+                                <button type="button" onclick="datapasiendirawat()" class="btn btn-info"><i
+                                        class="fa-fw fas fa-search"></i></button>
                             </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="card mb-0">
-                        <div class="card-body d-flex justify-content-beetwen p-0">
-                            <table class="table table-bordered table-striped text-center">
-                                <thead>
-                                    <th class="p-0">BOR</th>
-                                    <th class="p-0">Bed Kosong</th>
-                                    <th class="p-0">Total Bed</th>
-                                    <th class="p-0">Total Pasien</th>
-                                    <th class="p-0">LOS >3 Hari</th>
-                                    <th class="p-0">LOS 3 Hari</th>
-                                </thead>
-                                <tbody style="font-size: 2em;font-weight:bold;">
-                                    <td class="p-1" id="bor"></td>
-                                    <td class="p-1" id="bed_kosong"></td>
-                                    <td class="p-1" id="total_bed"></td>
-                                    <td class="p-1" id="total_pasien"></td>
-                                    <td class="p-1" id="lebih3h"></td>
-                                    <td class="p-1" id="kurang3h"></td>
-                                </tbody>
-                            </table>
                         </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-0">
+                    <div class="card-body d-flex justify-content-beetwen p-0">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <th class="p-0">BOR</th>
+                                <th class="p-0">Bed Kosong</th>
+                                <th class="p-0">Total Bed</th>
+                                <th class="p-0">Total Pasien</th>
+                                <th class="p-0">LOS >3 Hari</th>
+                                <th class="p-0">LOS 3 Hari</th>
+                            </thead>
+                            <tbody style="font-size: 2em;font-weight:bold;">
+                                <td class="p-1" id="bor"></td>
+                                <td class="p-1" id="bed_kosong"></td>
+                                <td class="p-1" id="total_bed"></td>
+                                <td class="p-1" id="total_pasien"></td>
+                                <td class="p-1" id="lebih3h"></td>
+                                <td class="p-1" id="kurang3h"></td>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /.content-header -->
+</div>
+<!-- /.content-header -->
 @endsection
 
 @section('content')
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <section class="content">
-                <div class="row">
-                    <div class="col-lg-12 sticky-top">
-                        <div class="card">
-                            <div class="card-header bg-info text-center h3 text-bold" id="nama_ruangan">
-                                Nama Ruangan
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body table-responsive">
-
-                                <table id="table" class="table table-sm table-bordered table-hover">
-                                    <thead>
-                                        <th width="1%">Aksi</th>
-                                        <th>No</th>
-                                        <th>No Kamar</th>
-                                        <th>Kelas</th>
-                                        <th>LOS</th>
-                                        <th>MRN</th>
-                                        <th>Nama Pasien</th>
-                                        <th>Diagnosa</th>
-                                        <th>DPJP</th>
-                                        <th>Dokter</th>
-                                        <th>Jaminan</th>
-                                        <th>Hak Pasien</th>
-                                        <th>Hinai</th>
-                                        <th>Tanggal Masuk</th>
-                                        <th>Beset Pasien/DPJP</th>
-                                        <th>Catatan Perawat</th>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-
-                            </div>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <section class="content">
+            <div class="row">
+                <div class="col-lg-12 sticky-top">
+                    <div class="card">
+                        <div class="card-header bg-info text-center h3 text-bold" id="nama_ruangan">
+                            Nama Ruangan
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
-    </section>
-    <!-- /.content -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body table-responsive">
 
-    @includeIf('pasien_dirawat.form')
-    @includeIf('pasien_dirawat.pulang')
-    @includeIf('master_pasien.detail_pasien')
+                            <table id="table" class="table table-sm table-bordered table-hover">
+                                <thead>
+                                    <th width="1%">Aksi</th>
+                                    <th>No</th>
+                                    <th>No Kamar</th>
+                                    <th>Kelas</th>
+                                    <th>LOS</th>
+                                    <th>MRN</th>
+                                    <th>Nama Pasien</th>
+                                    <th>Diagnosa</th>
+                                    <th>DPJP</th>
+                                    <th>Dokter</th>
+                                    <th>Jaminan</th>
+                                    <th>Hak Pasien</th>
+                                    <th>Hinai</th>
+                                    <th>Tanggal Masuk</th>
+                                    <th>Beset Pasien/DPJP</th>
+                                    <th>Catatan Perawat</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<!-- /.content -->
+
+@includeIf('pasien_dirawat.form')
+@includeIf('pasien_dirawat.pulang')
+@includeIf('master_pasien.detail_pasien')
+@includeIf('gizi.form')
 @endsection
 
 
 @push('js')
-    <!-- DataTables  & Plugins -->
-    <script src="{{ asset('/') }}plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="{{ asset('/') }}plugins/jszip/jszip.min.js"></script>
-    <script src="{{ asset('/') }}plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="{{ asset('/') }}plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <!-- Select2 -->
-    <script src="{{ asset('/') }}plugins/select2/js/select2.full.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('/') }}plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="{{ asset('/') }}plugins/jszip/jszip.min.js"></script>
+<script src="{{ asset('/') }}plugins/pdfmake/pdfmake.min.js"></script>
+<script src="{{ asset('/') }}plugins/pdfmake/vfs_fonts.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="{{ asset('/') }}plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- Select2 -->
+<script src="{{ asset('/') }}plugins/select2/js/select2.full.min.js"></script>
 
-    <script src="{{ asset('/') }}plugins/popper/umd/popper.min.js"></script>
-    <script src="{{ asset('/') }}plugins/popper/umd/popper-utils.min.js"></script>
+<script src="{{ asset('/') }}plugins/popper/umd/popper.min.js"></script>
+<script src="{{ asset('/') }}plugins/popper/umd/popper-utils.min.js"></script>
 
 
-    <script>
-        // let table;
+<script>
+    // let table;
 
         $(function() {
             $("body").addClass("sidebar-collapse");
@@ -320,6 +321,22 @@
                 }
             });
 
+            $('#modal-form-gizi').validator().on('submit', function(e) {
+                if (!e.preventDefault()) {
+                    $.post($('#modal-form-gizi form').attr('action'), $('#modal-form-gizi form')
+                            .serialize())
+                        .done((response) => {
+                            $('#modal-form-gizi').modal('hide');
+                            alert(response);
+                            datapasiendirawat();
+                        })
+                        .fail((errors) => {
+                            alert(errors[0].message);
+                            return;
+                        })
+                }
+            });
+
         });
 
         function datapasiendirawat() {
@@ -333,7 +350,7 @@
                 "processing": true,
                 "serverSide": true,
                 "paging": false,
-                "autoWidth": false,
+                "autoWidth": true,
                 "bDestroy": true,
                 "stateSave": true,
                 "order": [
@@ -566,6 +583,7 @@
 
                     $('#modal-form #keterangan_fo').val(response.keterangan_fo);
                     $('#modal-form #keterangan_perawat').val(response.keterangan_perawat);
+
                 })
                 .fail((errors) => {
                     alert('Tidak dapat menampilkan data');
@@ -778,7 +796,7 @@
             $('#modal-form #bed_hinai').val(null).prop("disabled", false).prop("readonly", false);
             $('#modal-form #tanggal_masuk').val(null).prop("disabled", false).prop("readonly", false);
             $('#modal-form #keterangan_fo').val(null).prop("disabled", false).prop("readonly", false);
-            $('#modal-form #keterangan_perawat').val(null).prop("disabled", false).prop("readonly", false);
+            // $('#modal-form #keterangan_perawat').val(null).prop("disabled", false).prop("readonly", false);
 
             $('#modal-form form')[0].reset();
         }
@@ -828,5 +846,31 @@
                     return;
                 })
         }
-    </script>
+        
+        function giziForm(url) {
+            $('#modal-form-gizi').modal('show');
+            $('#modal-form-gizi .modal-title').text('Data Gizi/Diet Pasien');
+            $('#modal-form-gizi form')[0].reset();
+            $('#modal-form-gizi form').attr('action', url);
+            $('#modal-form-gizi [name=_method]').val('put');
+            $('#modal-form-gizi [name=roles]').val('').trigger('change');
+            $('#modal-form-gizi').on('shown.bs.modal', function() {
+                $(this).find('[autofocus]').focus();
+            })
+
+            $.get(url)
+                .done((response) => {
+                    $('#modal-form-gizi [name=no_registrasi]').val(response.no_registrasi);
+                    $('#modal-form-gizi [name=nama_pasien]').val(response.nama_pasien);
+                    if (response.data_gizi != null) {
+                        $('#modal-form-gizi [name=diet]').val(response.data_gizi.diet);
+                        $('#modal-form-gizi [name=keterangan]').val(response.data_gizi.keterangan);
+                    }
+                })
+                .fail((errors) => {
+                    alert('Tidak dapat menampilkan data');
+                    return;
+                })
+        }
+</script>
 @endpush

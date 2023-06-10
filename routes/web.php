@@ -111,5 +111,6 @@ Route::middleware('auth')->group(function () {
     Route::post('laporanhais/countbundle', [LaporanPPIController::class, 'count_bundle'])->name('laporanhais.countbundle');
 
     Route::post('gizi/data', [GiziController::class, 'data'])->name('gizi.data');
+    Route::post('gizi/cetaklabel', [GiziController::class, 'cetak_label'])->name('gizi.cetak_label');
     Route::resource('gizi', GiziController::class);
 });

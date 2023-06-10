@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" sizes="50x50" href="{{ asset('dist/img/Logo Hermina.ico') }}">
-    <title>Cetak Barcode</title>
+    <title>Cetak Label</title>
 </head>
 <style>
     @page {
@@ -26,14 +26,6 @@
         align-content: right;
     }
 
-    .b-1 {
-        border: 1px solid black;
-    }
-
-    .pt-1 {
-        padding-top: 10px;
-    }
-
     .table {
         padding: 0;
         margin: 0;
@@ -49,43 +41,57 @@
         margin: 0;
     }
 </style>
+@foreach ($data_gizi as $item)
 
 <body>
-    {{-- <div class="text-center p-1" width="100%">
-        <p style="padding: 0;margin:0;">{{ $pasien->nama_pasien }}</p>
-        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($pasien->mrn, 'C39') }}" alt="{{ $pasien->mrn }}"
-            width="90%" height="40">
-        <br>
-        <p style="padding: 0;margin:0;">{{ $pasien->tanggal_lahir }}</p>
-    </div> --}}
     <table width="100%">
         <tr>
             <td colspan="2">
-                {{ $pasien->nama_pasien }} ({{ $pasien->jk }})
+                {{ $item->data_pasien->nama_pasien }} ({{ $item->data_pasien->jk }})
             </td>
         </tr>
         <tr>
             <td>
-                {{ $pasien->mrn }}
+                {{ $item->mrn }}
             </td>
             <td class="text-right">
-                {{ $pasien->nik }}
+                {{ $item->no_kamar }}
             </td>
         </tr>
         <tr>
-            <td>{{ tanggal_indonesia($pasien->tanggal_lahir, false) }}</td>
+            <td>{{ tanggal_indonesia($item->data_pasien->tanggal_lahir, false) }}</td>
             <td class="text-right">
-                {{ hitung_umur($pasien->tanggal_lahir, true, true, false) }}
-            </td>
-        </tr>
-        <tr>
-            <td class="text-center" colspan="2">
-                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($pasien->mrn, 'C39') }}"
-                    alt="{{ $pasien->mrn }}" width="95%" height="40">
+                {{ hitung_umur($item->data_pasien->tanggal_lahir, true, true, false) }}
             </td>
         </tr>
     </table>
 
+    <table style="font-style: bold;border-collapse: collapse;font-size:15px" width="100%">
+        <tr>
+            <td>
+                Diet
+            </td>
+            <td style="text-align: center">
+                :
+            </td>
+            <td width="85%">
+                {{ $item->data_gizi ? $item->data_gizi->diet:''}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Ket
+            </td>
+            <td style="text-align: center">
+                :
+            </td>
+            <td>
+                {{ $item->data_gizi ? $item->data_gizi->keterangan:''}}
+            </td>
+        </tr>
+    </table>
 </body>
+@endforeach
+
 
 </html>

@@ -70,7 +70,7 @@
                                 <select name="agama" id="agama" class="form-control form-control-sm">
                                     <option value="">Pilih Agama</option>
                                     @foreach ($agama as $key => $item)
-                                        <option value="{{ $item }}">{{ $item }}</option>
+                                    <option value="{{ $item }}">{{ $item }}</option>
                                     @endforeach
                                 </select>
                                 <span class="help-block with-errors" style="color:red"></span>
@@ -84,24 +84,23 @@
                             </div>
                             <div class="form-group">
                                 <label for="no_kamar">No Kamar <span id="lama"></span>*</label>
-                                <input type="text" class="form-control form-control-sm" name="no_kamar"
-                                    id="no_kamar" placeholder="Enter No Kamar" required>
+                                <input type="text" class="form-control form-control-sm" name="no_kamar" id="no_kamar"
+                                    placeholder="Enter No Kamar" required>
                                 <span class="help-block with-errors" style="color:red"></span>
                             </div>
                             <div id="kamar_baru"></div>
                             <div class="form-group">
                                 <label for="diagnosa">Diagnosa*</label>
-                                <input type="text" class="form-control form-control-sm" name="diagnosa"
-                                    id="diagnosa" placeholder="Enter No Diagnosa">
+                                <input type="text" class="form-control form-control-sm" name="diagnosa" id="diagnosa"
+                                    placeholder="Enter No Diagnosa">
                                 <span class="help-block with-errors" style="color:red"></span>
                             </div>
                             <div class="form-group">
                                 <label for="id_dokter">DPJP*</label>
-                                <select name="id_dokter" id="id_dokter"
-                                    class="form-control form-control-sm select2bs4">
+                                <select name="id_dokter" id="id_dokter" class="form-control form-control-sm select2bs4">
                                     <option value="">Pilih DPJP</option>
                                     @foreach ($dokter as $key => $item)
-                                        <option value="{{ $key }}">{{ $item }}</option>
+                                    <option value="{{ $key }}">{{ $item }}</option>
                                     @endforeach
                                 </select>
                                 <span class="help-block with-errors" style="color:red"></span>
@@ -110,43 +109,43 @@
                                 <label for="jenis_jaminan">Jenis Jaminan*</label>
                                 <br>
                                 <div class="icheck-primary d-inline">
-                                    <input type="radio" onclick="namaJaminan()" id="JKN"
-                                        name="jenis_jaminan" value="JKN">
+                                    <input type="radio" onclick="namaJaminan()" id="JKN" name="jenis_jaminan"
+                                        value="JKN">
                                     <label for="JKN" class="mr-3">
                                         JKN
                                     </label>
                                 </div>
                                 <div class="icheck-primary d-inline">
-                                    <input type="radio" onclick="namaJaminan()" id="Pribadi"
-                                        name="jenis_jaminan" value="Pribadi">
+                                    <input type="radio" onclick="namaJaminan()" id="Pribadi" name="jenis_jaminan"
+                                        value="Pribadi">
                                     <label for="Pribadi" class="mr-3">
                                         Pribadi
                                     </label>
                                 </div>
                                 <div class="icheck-primary d-inline">
-                                    <input type="radio" onclick="namaJaminan()" id="Asuransi"
-                                        name="jenis_jaminan" value="Asuransi">
+                                    <input type="radio" onclick="namaJaminan()" id="Asuransi" name="jenis_jaminan"
+                                        value="Asuransi">
                                     <label for="Asuransi" class="mr-3">
                                         Asuransi
                                     </label>
                                 </div>
                                 <div class="icheck-primary d-inline">
-                                    <input type="radio" onclick="namaJaminan()" id="Perusahaan"
-                                        name="jenis_jaminan" value="Perusahaan">
+                                    <input type="radio" onclick="namaJaminan()" id="Perusahaan" name="jenis_jaminan"
+                                        value="Perusahaan">
                                     <label for="Perusahaan" class="mr-3">
                                         Perusahaan
                                     </label>
                                 </div>
                                 <div class="icheck-primary d-inline">
-                                    <input type="radio" onclick="namaJaminan()" id="COB"
-                                        name="jenis_jaminan" value="COB">
+                                    <input type="radio" onclick="namaJaminan()" id="COB" name="jenis_jaminan"
+                                        value="COB">
                                     <label for="COB" class="mr-3">
                                         COB
                                     </label>
                                 </div>
                                 <div class="icheck-primary d-inline">
-                                    <input type="radio" onclick="namaJaminan()" id="KMK"
-                                        name="jenis_jaminan" value="KMK">
+                                    <input type="radio" onclick="namaJaminan()" id="KMK" name="jenis_jaminan"
+                                        value="KMK">
                                     <label for="KMK" class="mr-3">
                                         KMK
                                     </label>
@@ -165,15 +164,15 @@
                                     class="form-control form-control-sm select2bs4">
                                     <option value="">Pilih Hak Kelas Pasien</option>
                                     @foreach ($kelas as $key => $item)
-                                        <option value="{{ $item }}">{{ $item }}</option>
+                                    <option value="{{ $item }}">{{ $item }}</option>
                                     @endforeach
                                 </select>
                                 <span class="help-block with-errors" style="color:red"></span>
                             </div>
                             <div class="form-group">
                                 <label for="bed_hinai">Bed di Hinai</label>
-                                <input type="text" class="form-control form-control-sm" name="bed_hinai"
-                                    id="bed_hinai" placeholder="Enter No Kamar di Hinai">
+                                <input type="text" class="form-control form-control-sm" name="bed_hinai" id="bed_hinai"
+                                    placeholder="Enter No Kamar di Hinai">
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_masuk">Tanggal Masuk RS*</label>
@@ -185,14 +184,17 @@
                             <hr>
                             <div class="form-group">
                                 <label for="keterangan_fo">Beset Pasien/DPJP</label>
-                                <textarea name="keterangan_fo" id="keterangan_fo" class="form-control form-control-sm"></textarea>
+                                <textarea name="keterangan_fo" id="keterangan_fo"
+                                    class="form-control form-control-sm"></textarea>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <hr>
                             <div class="form-group">
                                 <label for="keterangan_perawat">Keterangan Perawat</label>
-                                <textarea name="keterangan_perawat" id="keterangan_perawat" class="form-control form-control-sm"></textarea>
+                                <textarea name="keterangan_perawat" id="keterangan_perawat"
+                                    class="form-control form-control-sm" {{
+                                    auth()->user()->hasRole(['IT SUPPORT','PERAWAT']) == true ? '' : 'readonly' }}></textarea>
                             </div>
                         </div>
                     </div>

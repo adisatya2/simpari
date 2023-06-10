@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Agama;
 use App\Models\Bed;
 use App\Models\Dokter;
+use App\Models\Gizi;
 use App\Models\Kelas;
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
+use PDF;
 
 class GiziController extends Controller
 {
@@ -107,6 +109,11 @@ class GiziController extends Controller
                     return '';
                 }
             })
+            ->addColumn('select_all', function ($bed_ruangan) {
+                return '
+                <input type="checkbox" name="id_diet[]" value="' . $bed_ruangan->no_registrasi . '" >
+                ';
+            })
             ->addColumn('aksi', function ($bed_ruangan) {
                 $button = '
                 <div class="btn-group">
@@ -115,14 +122,14 @@ class GiziController extends Controller
                     </button>
                     <div class="dropdown-menu" role="menu">';
                 $button .= '
-                    <a class="dropdown-item" onclick="formDiet(`' . route('gizi.update', $bed_ruangan->no_registrasi) . '`)">Diet</a>
+                    <a class="dropdown-item" onclick="giziForm(`' . route('gizi.update', $bed_ruangan->no_registrasi) . '`)">Diet</a>
                     <a class="dropdown-item" onclick="detailForm(`' . route('pasiendirawat.show', $bed_ruangan->no_kamar) . '`)">Detail Data Registrasi</a>
                     <a class="dropdown-item" onclick="detailPasien(`' . route('pasien.show', $bed_ruangan->mrn) . '`)">Detail Pasien</a>
 
                 ';
                 if ($bed_ruangan->data_gizi) {
                     $button .= '
-                    <a class="dropdown-item" href="' . url('gizi/cetaklabel/' . $bed_ruangan->mrn) . '" target="_blank">Cetak Label Gizi</a>
+                    <a class="dropdown-item" onclick="cetak_label2(`' . route('gizi.cetak_label') . '`,`' . $bed_ruangan->no_registrasi . '`)" target="_blank">Cetak Label Gizi</a>
                 ';
                 }
                 $button .= '
@@ -132,7 +139,7 @@ class GiziController extends Controller
 
                 return $button;
             })
-            ->rawColumns(['aksi', 'no_kamar', 'dokter', 'los'])
+            ->rawColumns(['aksi', 'no_kamar', 'dokter', 'los', 'select_all'])
             ->make(true);
     }
 
@@ -157,7 +164,9 @@ class GiziController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $diet = Bed::with(['ruangan_bed', 'kelas_bed', 'dpjp', 'data_pasien', 'data_gizi'])->where('no_registrasi', $id)->first();
+
+        return $diet;
     }
 
     /**
@@ -173,7 +182,27 @@ class GiziController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $diet = Gizi::where('no_registrasi', $id)->first();
+
+        if ($diet) {
+            $diet->diet = $request['diet'];
+            $diet->keterangan = $request['keterangan'];
+            $diet->user_update = auth()->user()->username;
+            $diet->save();
+
+            return response()->json('Data berhasil diedit', 200);
+        } else {
+            $diet = Gizi::create(
+                [
+                    'no_registrasi' => $request['no_registrasi'],
+                    'diet' => $request['diet'],
+                    'keterangan' => $request['keterangan'],
+                    'user_create' => auth()->user()->username,
+                ]
+            );
+            return response()->json('Data berhasil disimpan', 200);
+        }
+
     }
 
     /**
@@ -182,5 +211,20 @@ class GiziController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function cetak_label(Request $request)
+    {
+        $data_gizi = array();
+        foreach ($request->id_diet as $no_registrasi) {
+            $diet = Bed::with(['ruangan_bed', 'kelas_bed', 'dpjp', 'data_pasien', 'data_gizi'])->whereNotNull('no_registrasi')->where('no_registrasi', $no_registrasi)->first();
+            if ($diet) {
+                $data_gizi[] = $diet;
+            }
+        }
+        // echo json_encode($data_gizi);die;
+        $pdf = PDF::loadView('gizi.label', compact('data_gizi'));
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('label.pdf');
     }
 }

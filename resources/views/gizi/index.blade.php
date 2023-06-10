@@ -75,33 +75,37 @@
                     </div>
 
                     <div class="card-tools col-sm-6 d-flex justify-content-end">
+                        <button onclick="cetak_label('{{ route('gizi.cetak_label') }}')"
+                            class="btn btn-sm btn-flat btn-info"><i class="fa fa-barcode"></i>&nbsp;Cetak Label</button>
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                            <i class="fas fa-times"></i>
-                        </button>
                     </div>
                 </div>
-                <div class="card-body">
-
-                    <table id="table" class="table table-bordered table-hover">
-                        <thead>
-                            <th width="1%">Aksi</th>
-                            <th>No</th>
-                            <th>LOS</th>
-                            <th>MRN</th>
-                            <th>Nama Pasien</th>
-                            <th>Diagnosa</th>
-                            <th>DPJP</th>
-                            <th>Tanggal Masuk</th>
-                            <th>Diet</th>
-                            <th>Ket</th>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-
+                <div class="card-body table-responsive">
+                    <form action="" method="post" class="form-gizi">
+                        @csrf
+                        <table id="table" class="table table-bordered table-hover">
+                            <thead>
+                                <th>
+                                    <input type="checkbox" name="selectAll" id="selectAll">
+                                </th>
+                                <th>No</th>
+                                <th>LOS</th>
+                                <th>MRN</th>
+                                <th>Nama Pasien</th>
+                                <th>Diagnosa</th>
+                                <th>DPJP</th>
+                                <th>Tanggal Masuk</th>
+                                <th>Diet</th>
+                                <th>Ket</th>
+                                <th width="1%">Aksi</th>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <input type="hidden" name="id_diet[]" id="id_diet" value="">
+                    </form>
                 </div>
             </div>
         </section>
@@ -110,6 +114,7 @@
 
 @includeIf('master_pasien.detail_pasien')
 @includeIf('pasien_dirawat.form')
+@includeIf('gizi.form')
 @endsection
 @push('js')
 <!-- DataTables  & Plugins -->
@@ -154,6 +159,26 @@
                 datapasiendirawat();
             });
 
+            $('[name=selectAll]').on('click', function() {
+                $(':checkbox').prop('checked', this.checked);
+            });
+
+            $('#modal-form-gizi').validator().on('submit', function(e) {
+                if (!e.preventDefault()) {
+                    $.post($('#modal-form-gizi form').attr('action'), $('#modal-form-gizi form')
+                            .serialize())
+                        .done((response) => {
+                            $('#modal-form-gizi').modal('hide');
+                            alert(response);
+                            datapasiendirawat();
+                        })
+                        .fail((errors) => {
+                            alert(errors[0].message);
+                            return;
+                        })
+                }
+            });
+
         });
 
         function datapasiendirawat() {
@@ -161,12 +186,13 @@
             var ruangan = $("#ruangan option:selected").val();
 
             table = $("#table").DataTable({
-                "processing": true,
-                "serverSide": true,
+                "processing": false,
+                "serverSide": false,
                 "paging": true,
                 "autoWidth": false,
                 "bDestroy": true,
                 "stateSave": true,
+                "lengthMenu": [ [5, 10, 25, 50, -1], [5, 10, 25, 50, "All"] ],
                 "order": [
                     [1, 'asc'],
                 ],
@@ -203,7 +229,7 @@
                     }
                 },
                 columns: [{
-                        data: 'aksi',
+                        data: 'select_all',
                         className: "text-center",
                         searchable: false,
                         sortable: false
@@ -237,9 +263,41 @@
                     {
                         data: 'keterangan'
                     },
+                    {
+                        data: 'aksi',
+                        className: "text-center",
+                        searchable: false,
+                        sortable: false
+                    },
                 ],
             });
 
+        }
+
+        function giziForm(url) {
+            $('#modal-form-gizi').modal('show');
+            $('#modal-form-gizi .modal-title').text('Data Gizi/Diet Pasien');
+            $('#modal-form-gizi form')[0].reset();
+            $('#modal-form-gizi form').attr('action', url);
+            $('#modal-form-gizi [name=_method]').val('put');
+            $('#modal-form-gizi [name=roles]').val('').trigger('change');
+            $('#modal-form-gizi').on('shown.bs.modal', function() {
+                $(this).find('[autofocus]').focus();
+            })
+
+            $.get(url)
+                .done((response) => {
+                    $('#modal-form-gizi [name=no_registrasi]').val(response.no_registrasi);
+                    $('#modal-form-gizi [name=nama_pasien]').val(response.nama_pasien);
+                    if (response.data_gizi != null) {
+                        $('#modal-form-gizi [name=diet]').val(response.data_gizi.diet);
+                        $('#modal-form-gizi [name=keterangan]').val(response.data_gizi.keterangan);
+                    }
+                })
+                .fail((errors) => {
+                    alert('Tidak dapat menampilkan data');
+                    return;
+                })
         }
 
         function detailForm(url) {
@@ -343,7 +401,7 @@
             $('#modal-form #bed_hinai').val(null).prop("disabled", false).prop("readonly", false);
             $('#modal-form #tanggal_masuk').val(null).prop("disabled", false).prop("readonly", false);
             $('#modal-form #keterangan_fo').val(null).prop("disabled", false).prop("readonly", false);
-            $('#modal-form #keterangan_perawat').val(null).prop("disabled", false).prop("readonly", false);
+            $('.form-gizi #id_diet').val(null).prop("disabled", false).prop("readonly", false);
         }
 
         function detailPasien(url) {
@@ -374,6 +432,21 @@
                     alert('Tidak dapat menampilkan data');
                     return;
                 })
+        }
+
+        function cetak_label(url) {
+            resetForm();
+            if ($('input:checked').length < 1) {
+                alert('Tidak ada data yang dipilih. Silahkan pilih data yang ingin dicetak!');
+                return;
+            } else {
+                $('.form-gizi').attr('target', '_blank').attr('action', url).submit();
+            }
+        }
+
+        function cetak_label2(url,noreg) {
+            $('.form-gizi #id_diet').val(noreg).prop("readonly", true);
+            $('.form-gizi').attr('target', '_blank').attr('action', url).submit();
         }
 </script>
 @endpush

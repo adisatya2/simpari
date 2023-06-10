@@ -155,7 +155,7 @@ class PasienDirawatController extends Controller
                     <a class="dropdown-item" onclick="pindahForm(`' . route('pasiendirawat.edit', $bed_ruangan->no_kamar) . '`)">Pindah Kamar</a>
                     <a class="dropdown-item" href="' . url('master/pasien/cetak-barcode/' . $bed_ruangan->mrn) . '" target="_blank">Cetak Barcode</a>
                     <a class="dropdown-item" href="' . route('surveilans.edit', $bed_ruangan->no_registrasi) . '">Surveilans</a>
-                    <a class="dropdown-item">Gizi</a>
+                    <a class="dropdown-item" onclick="giziForm(`' . route('gizi.update', $bed_ruangan->no_registrasi) . '`)">Gizi</a>
                     ';
                 } else {
                     $button .= '
