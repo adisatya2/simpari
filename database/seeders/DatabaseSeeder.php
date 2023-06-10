@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CabangHerminaSeeder::class);
         $this->call(RolesSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(SettingSeeder::class);
         $this->call(ProfilaksisSeeder::class);
         $this->call(AlatInvasifSeeder::class);
         $this->call(IadpBundleSeeder::class);
