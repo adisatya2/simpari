@@ -12,7 +12,7 @@
 <style>
     @page {
         size: 3cm 10cm landscape;
-        margin: 5px 10px 5px 10px;
+        margin: 5px 5px 5px 5px;
         font-size: 0.7em;
     }
 
@@ -46,13 +46,16 @@
 <body>
     <table width="100%">
         <tr>
-            <td colspan="2">
+            <td>
                 {{ $item->data_pasien->nama_pasien }} ({{ $item->data_pasien->jk }})
+            </td>
+            <td class="text-right">
+                {{ $item->mrn }}
             </td>
         </tr>
         <tr>
             <td>
-                {{ $item->mrn }}
+                {{ $item->dpjp->nama_dokter }}
             </td>
             <td class="text-right">
                 {{ $item->no_kamar }}
@@ -66,7 +69,7 @@
         </tr>
     </table>
 
-    <table style="font-style: bold;border-collapse: collapse;font-size:15px" width="100%">
+    <table style="font-style: bold;border-collapse: collapse;font-size:15px;" width="100%">
         <tr>
             <td>
                 Diet
